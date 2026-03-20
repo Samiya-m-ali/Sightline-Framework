@@ -5,123 +5,299 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sightline — A Framework for Intent-Driven Navigation Design</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap');
 
   :root {
-    --sn-infinite-blue: #032D42;
-    --sn-wasabi: #63DF4E;
-    --sn-wasabi-dim: rgba(99,223,78,0.06);
-    --sn-wasabi-border: rgba(99,223,78,0.2);
-    --sn-dark-teal: #044355;
-    --sn-green: #81B5A1;
-    --bg: #F5F3EF;
-    --bg-warm: #FAF8F5;
-    --surface: #FFFFFF;
-    --border: #DDD9D2;
-    --border-strong: #C5C0B8;
-    --text: #1C1B18;
-    --text-secondary: #46443E;
-    --text-muted: #848078;
-    --info: #2563EB;
-    --info-bg: #EFF4FF;
-    --warm: #C44015;
-    --warm-bg: #FEF0EA;
-    --green-sem: #16784A;
-    --green-bg: #EEFAF2;
-    --purple: #7C3AED;
-    --purple-bg: #F4F0FE;
-    --red: #C42B2B;
-    --red-bg: #FEF0F0;
-    --aud-concept: #2563EB;
-    --aud-concept-bg: #EFF4FF;
-    --aud-concept-border: #BFCFEF;
-    --aud-decide: #92610A;
-    --aud-decide-bg: #FEF8EC;
-    --aud-decide-border: #E4D09A;
-    --aud-implement: #16784A;
-    --aud-implement-bg: #EEFAF2;
-    --aud-implement-border: #A8D8BC;
+    /* Green monochrome palette */
+    --green-900: #0D3B2E;
+    --green-800: #145C42;
+    --green-700: #1A7A56;
+    --green-600: #22966A;
+    --green-500: #2DB37F;
+    --green-400: #4FD4A0;
+    --green-300: #7EE4BC;
+    --green-200: #B2F0D6;
+    --green-100: #DCF8EC;
+    --green-50: #F0FBF6;
 
-    --shadow-sm: 0 1px 2px rgba(28,27,24,0.04), 0 1px 3px rgba(28,27,24,0.06);
-    --shadow-md: 0 2px 4px rgba(28,27,24,0.04), 0 4px 12px rgba(28,27,24,0.08);
-    --shadow-lg: 0 4px 8px rgba(28,27,24,0.04), 0 8px 24px rgba(28,27,24,0.1);
-    --shadow-lifted: 0 8px 16px rgba(28,27,24,0.06), 0 16px 40px rgba(28,27,24,0.1);
+    /* Warm neutrals */
+    --warm-50: #FAFAF8;
+    --warm-100: #F5F4F1;
+    --warm-200: #ECEAE5;
+    --warm-300: #D9D6CF;
+    --warm-400: #B5B1A8;
+    --warm-500: #8E8A80;
+    --warm-600: #6B675E;
+    --warm-700: #4A473F;
+    --warm-800: #2D2B26;
+    --warm-900: #1A1917;
+
+    /* Anti-pattern red (warm, muted — terracotta) */
+    --red-600: #B84233;
+    --red-100: #FCEAE7;
+    --red-border: #E8C4BD;
+
+    /* Functional */
+    --bg: var(--warm-50);
+    --surface: #FFFFFF;
+    --text: var(--warm-900);
+    --text-secondary: var(--warm-700);
+    --text-muted: var(--warm-500);
+    --border: var(--warm-200);
+    --border-strong: var(--warm-300);
+    --accent: var(--green-600);
+    --accent-light: var(--green-100);
+    --accent-dark: var(--green-900);
+
+    --shadow-sm: 0 1px 3px rgba(26,25,23,0.06);
+    --shadow-md: 0 2px 8px rgba(26,25,23,0.08);
+
+    --sidebar-width: 280px;
+    --content-max: 800px;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: 'DM Sans', -apple-system, sans-serif;
+    font-family: 'Roboto', -apple-system, sans-serif;
+    font-weight: 300;
     font-size: 16.5px;
     line-height: 1.78;
     color: var(--text);
     background: var(--bg);
-    background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
     -webkit-font-smoothing: antialiased;
   }
 
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 72px 28px 140px;
+  /* ========== LAYOUT ========== */
+  .layout {
+    display: flex;
+    min-height: 100vh;
   }
 
-  /* Typography */
-  h1 {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: 48px;
-    font-weight: 800;
-    line-height: 1.12;
-    margin-bottom: 16px;
-    letter-spacing: -1px;
-    color: var(--sn-infinite-blue);
+  /* Sticky sidebar */
+  .sidebar {
+    width: var(--sidebar-width);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 32px 0;
+    overflow-y: auto;
+    z-index: 100;
   }
-  h2 {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: 30px;
-    font-weight: 600;
-    line-height: 1.25;
-    margin-top: 72px;
-    margin-bottom: 10px;
-    padding-top: 36px;
-    border-top: 3px solid var(--sn-infinite-blue);
-  }
-  h2 .step-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+  .sidebar-logo {
+    font-family: 'Roboto', sans-serif;
     font-weight: 500;
-    letter-spacing: 3px;
+    font-size: 15px;
+    color: var(--accent-dark);
+    padding: 0 24px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+  }
+  .sidebar-logo span {
+    color: var(--accent);
+  }
+  .sidebar-section-label {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--sn-green);
+    color: var(--text-muted);
+    padding: 16px 24px 8px;
+  }
+  .sidebar a.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 24px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    transition: all 0.15s ease;
+  }
+  .sidebar a.nav-link:hover {
+    color: var(--text);
+    background: var(--warm-50);
+  }
+  .sidebar a.nav-link.active {
+    color: var(--accent-dark);
+    background: var(--green-50);
+    border-left-color: var(--accent);
+    font-weight: 500;
+  }
+  .sidebar .nav-num {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    width: 20px;
+    flex-shrink: 0;
+  }
+  .sidebar a.nav-link.active .nav-num {
+    color: var(--accent);
+  }
+
+  /* Sidebar subsections */
+  .sidebar .sub-links {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease;
+  }
+  .sidebar .sub-links.expanded {
+    max-height: 500px;
+  }
+  .sidebar a.sub-link {
+    display: block;
+    padding: 5px 24px 5px 54px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: all 0.15s ease;
+    line-height: 1.5;
+  }
+  .sidebar a.sub-link:hover {
+    color: var(--text-secondary);
+  }
+  .sidebar a.sub-link.active {
+    color: var(--accent-dark);
+    font-weight: 400;
+  }
+
+  /* Main content area */
+  .main {
+    margin-left: var(--sidebar-width);
+    flex: 1;
+    min-width: 0;
+  }
+  .content {
+    max-width: var(--content-max);
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* ========== SECTION CONTAINERS ========== */
+  .section {
+    padding: 64px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section:last-child {
+    border-bottom: none;
+  }
+
+  /* Step indicator stepper */
+  .stepper {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 40px;
+  }
+  .stepper-step {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .stepper-step.current {
+    color: var(--accent-dark);
+    font-weight: 500;
+  }
+  .stepper-step.completed {
+    color: var(--green-500);
+  }
+  .stepper-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--warm-300);
+    flex-shrink: 0;
+  }
+  .stepper-step.current .stepper-dot {
+    background: var(--accent);
+    box-shadow: 0 0 0 3px var(--green-100);
+  }
+  .stepper-step.completed .stepper-dot {
+    background: var(--green-400);
+  }
+  .stepper-line {
+    width: 24px;
+    height: 1px;
+    background: var(--warm-300);
+    margin: 0 6px;
+    flex-shrink: 0;
+  }
+
+  /* ========== TYPOGRAPHY ========== */
+  /* Level 1: Page title */
+  h1 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 42px;
+    font-weight: 300;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+    color: var(--accent-dark);
+  }
+  h1 strong {
+    font-weight: 500;
+  }
+
+  /* Level 2: Section heading */
+  h2 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.25;
+    margin-bottom: 8px;
+    color: var(--accent-dark);
+  }
+  .step-label {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
     display: block;
     margin-bottom: 6px;
   }
-  h2 .step-verb {
-    color: var(--sn-infinite-blue);
-  }
-  h2 .step-question {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 17px;
-    font-weight: 400;
+  .step-question {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
     color: var(--text-muted);
     display: block;
     margin-top: 6px;
     line-height: 1.5;
   }
+
+  /* Level 3: Subsection heading */
   h3 {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.35;
-    margin-top: 44px;
-    margin-bottom: 8px;
+    margin-top: 48px;
+    margin-bottom: 10px;
     color: var(--text);
   }
+
+  /* Level 4: Label / meta heading */
   h4 {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
     font-weight: 500;
-    letter-spacing: 2.5px;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
     color: var(--text-muted);
     margin-top: 32px;
@@ -129,278 +305,515 @@
   }
 
   p { margin-bottom: 16px; color: var(--text-secondary); }
-  p.lead { font-size: 19px; line-height: 1.7; color: var(--text); font-weight: 400; }
-  strong { color: var(--text); font-weight: 600; }
+  p.lead { font-size: 19px; line-height: 1.7; color: var(--text); font-weight: 300; }
+  strong { color: var(--text); font-weight: 500; }
   em { font-style: italic; }
-  a { color: var(--sn-dark-teal); text-decoration: none; border-bottom: 1px solid var(--border); transition: border-color 0.2s; }
-  a:hover { border-color: var(--sn-dark-teal); }
+  a { color: var(--green-700); text-decoration: none; border-bottom: 1px solid var(--green-200); transition: border-color 0.2s; }
+  a:hover { border-color: var(--green-700); }
 
-  .subtitle {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--sn-green);
-    margin-bottom: 12px;
-  }
-
-  /* Callouts */
+  /* ========== CALLOUTS ========== */
   .callout {
-    padding: 22px 26px;
-    border-radius: 10px;
-    margin: 28px 0;
-    border-left: 4px solid;
-    box-shadow: var(--shadow-sm);
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-top: 2px solid var(--accent);
+    border-left: none;
+    background: var(--green-50);
+    border-bottom: 1px solid var(--green-200);
+    border-right: 1px solid var(--green-200);
   }
   .callout p:last-child { margin-bottom: 0; }
-  .callout-blue { background: var(--info-bg); border-color: var(--info); }
-  .callout-warm { background: var(--warm-bg); border-color: var(--warm); }
-  .callout-green { background: var(--green-bg); border-color: var(--green-sem); }
-  .callout-purple { background: var(--purple-bg); border-color: var(--purple); }
-  .callout-red { background: var(--red-bg); border-color: var(--red); }
-  .callout-sn { background: var(--sn-wasabi-dim); border-color: var(--sn-wasabi); }
   .callout-label {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Roboto', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+    color: var(--green-700);
+  }
+  .callout-warm {
+    background: var(--green-100);
+    border-top-color: var(--green-500);
+  }
+  .callout-emphasis {
+    background: var(--surface);
+    border-top-color: var(--green-800);
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+  }
+  .callout-emphasis .callout-label { color: var(--green-800); }
+  .callout-red {
+    background: var(--red-100);
+    border-top-color: var(--red-600);
+    border-bottom: 1px solid var(--red-border);
+    border-right: 1px solid var(--red-border);
+  }
+  .callout-red .callout-label { color: var(--red-600); }
+
+  /* ========== TABLES ========== */
+  table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 14px; background: var(--surface); overflow: hidden; border: 1px solid var(--border); }
+  th { font-family: 'Roboto', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--warm-50); }
+  td { padding: 12px 16px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text-secondary); line-height: 1.6; font-weight: 300; }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { font-weight: 400; color: var(--text); }
+
+  /* ========== DIAGRAMS ========== */
+  .diagram {
+    background: var(--green-900);
+    color: var(--green-200);
+    padding: 28px 32px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    overflow-x: auto;
+    margin: 24px 0;
+    white-space: pre;
+  }
+  .diagram .highlight { color: var(--green-400); }
+  .diagram .warm { color: #F5C09E; }
+  .diagram .cool { color: var(--green-300); }
+  .diagram .dim { color: #4A7A6A; }
+
+  /* ========== CARDS ========== */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--accent);
+    padding: 24px 28px;
+    margin: 20px 0;
+  }
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .card-name {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--accent-dark);
+  }
+  .card-badge {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    background: var(--green-50);
+    border: 1px solid var(--green-200);
+    color: var(--green-700);
+  }
+  .card-def {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    font-weight: 300;
+  }
+  .card-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    font-size: 14px;
+  }
+  @media (max-width: 600px) { .card-meta { grid-template-columns: 1fr; } }
+  .card-meta-label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .card-meta-value { color: var(--text-secondary); line-height: 1.65; font-weight: 300; }
+
+  /* ========== PARADIGM BLOCKS ========== */
+  .paradigm {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--accent);
+    padding: 28px 32px;
+    margin: 28px 0;
+  }
+  .paradigm h3 { margin-top: 0; }
+  .paradigm-meta {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .paradigm-meta span {
+    padding: 2px 10px;
+    background: var(--green-50);
+    border: 1px solid var(--green-200);
+    color: var(--green-700);
+  }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+  .col-header {
+    font-family: 'Roboto', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .strength .col-header { color: var(--green-700); }
+  .weakness .col-header { color: var(--red-600); }
+  .col-item { font-size: 14px; font-weight: 300; line-height: 1.6; color: var(--text-secondary); padding: 6px 0; border-bottom: 1px solid var(--border); }
+  .col-item:last-child { border-bottom: none; }
+
+  .example-block {
+    background: var(--green-50);
+    border: 1px solid var(--green-200);
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-size: 14px;
+    font-weight: 300;
+  }
+  .example-block .callout-label { margin-bottom: 4px; }
+  .anti-pattern {
+    background: var(--red-100);
+    border: 1px solid var(--red-border);
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-size: 14px;
+    font-weight: 300;
+  }
+  .anti-pattern .callout-label { color: var(--red-600); }
+  .practitioner-note { font-style: italic; color: var(--text-muted); font-size: 13px; font-weight: 300; }
+
+  /* ========== SCOPE CARDS ========== */
+  .scope-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--accent);
+    padding: 24px 28px;
+    margin: 20px 0;
+  }
+  .scope-card-question {
+    font-family: 'Roboto', sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+  .scope-range {
+    padding: 10px 14px;
+    margin: 6px 0;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    background: var(--warm-50);
+    border: 1px solid var(--border);
+  }
+  .scope-range strong { color: var(--green-800); font-weight: 500; }
+
+  /* ========== AUDIT AUDIENCE BLOCKS ========== */
+  .aud-concept {
+    background: var(--green-50);
+    border: 1px solid var(--green-200);
+    padding: 18px 22px;
+    margin: 12px 0;
+  }
+  .aud-decide {
+    background: var(--warm-50);
+    border: 1px solid var(--warm-300);
+    padding: 18px 22px;
+    margin: 12px 0;
+  }
+  .aud-implement {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 18px 22px;
+    margin: 12px 0;
+  }
+  .aud-tag {
+    font-family: 'Roboto', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .aud-concept .aud-tag { color: var(--green-700); }
+  .aud-decide .aud-tag { color: var(--warm-600); }
+  .aud-implement .aud-tag { color: var(--warm-500); }
+  .aud-content { font-size: 14px; line-height: 1.72; color: var(--text-secondary); font-weight: 300; }
+  .aud-content p:last-child { margin-bottom: 0; }
+
+  .legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 14px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    margin: 20px 0;
+    font-size: 13px;
+    font-weight: 400;
+  }
+  .legend-item { display: flex; align-items: center; gap: 8px; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+
+  /* ========== EMOTION / QA CARDS ========== */
+  .qa-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--accent);
+    padding: 24px 28px;
+    margin: 20px 0;
+  }
+  .qa-card h4 { margin-top: 0; }
+
+  /* ========== TOC ========== */
+  .toc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--accent);
+    padding: 28px 32px;
+    margin: 32px 0;
+  }
+  .toc-title {
+    font-family: 'Roboto', sans-serif;
     font-size: 10px;
     font-weight: 500;
     letter-spacing: 2px;
     text-transform: uppercase;
-    margin-bottom: 10px;
-    display: block;
-  }
-  .callout-blue .callout-label { color: var(--info); }
-  .callout-warm .callout-label { color: var(--warm); }
-  .callout-green .callout-label { color: var(--green-sem); }
-  .callout-purple .callout-label { color: var(--purple); }
-  .callout-red .callout-label { color: var(--red); }
-  .callout-sn .callout-label { color: #3ab030; }
-
-  /* Tables */
-  table { width: 100%; border-collapse: collapse; margin: 28px 0; font-size: 14px; background: var(--surface); border-radius: 10px; overflow: hidden; box-shadow: var(--shadow-sm); }
-  th { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); text-align: left; padding: 14px 18px; border-bottom: 2px solid var(--border-strong); background: var(--bg-warm); }
-  td { padding: 14px 18px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text-secondary); line-height: 1.6; }
-  tr:last-child td { border-bottom: none; }
-  td:first-child { font-weight: 500; color: var(--text); }
-
-  /* Diagram */
-  .diagram {
-    background: var(--sn-infinite-blue);
-    background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
-    color: #C8DFE0;
-    padding: 30px 34px;
-    border-radius: 12px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    line-height: 1.65;
-    overflow-x: auto;
-    margin: 28px 0;
-    white-space: pre;
-    box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,0.04);
-  }
-  .diagram .highlight { color: var(--sn-wasabi); }
-  .diagram .warm { color: #FFB88C; }
-  .diagram .cool { color: var(--sn-green); }
-  .diagram .dim { color: #4E7072; }
-
-  /* Level cards */
-  .level-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 30px 34px;
-    margin: 22px 0;
-    position: relative;
-    border-left: 5px solid;
-    box-shadow: var(--shadow-md);
-    transition: box-shadow 0.25s ease, transform 0.25s ease;
-  }
-  .level-card:hover { box-shadow: var(--shadow-lifted); transform: translateY(-2px); }
-  .level-card-job { border-left-color: var(--sn-infinite-blue); }
-  .level-card-task { border-left-color: var(--sn-dark-teal); }
-  .level-card-activity { border-left-color: var(--sn-green); }
-  .level-card-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; }
-  .level-card-name { font-family: 'Fraunces', Georgia, serif; font-size: 24px; font-weight: 600; }
-  .level-card-job .level-card-name { color: var(--sn-infinite-blue); }
-  .level-card-task .level-card-name { color: var(--sn-dark-teal); }
-  .level-card-activity .level-card-name { color: var(--sn-green); }
-  .level-card-freq { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; padding: 4px 12px; border-radius: 6px; background: var(--bg); border: 1px solid var(--border); color: var(--text-muted); }
-  .level-card-def { font-size: 15px; line-height: 1.75; color: var(--text-secondary); margin-bottom: 18px; }
-  .level-card-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; font-size: 14px; }
-  @media (max-width: 600px) { .level-card-meta { grid-template-columns: 1fr; } }
-  .level-card-meta-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px; }
-  .level-card-meta-value { color: var(--text-secondary); line-height: 1.65; }
-
-  /* Paradigm blocks */
-  .paradigm {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 34px;
-    margin: 36px 0;
-    box-shadow: var(--shadow-md);
-    transition: box-shadow 0.25s ease;
-  }
-  .paradigm:hover { box-shadow: var(--shadow-lg); }
-  .paradigm h3 { margin-top: 0; font-family: 'Fraunces', Georgia, serif; font-size: 22px; }
-  .paradigm-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); margin-bottom: 14px; display: flex; gap: 12px; flex-wrap: wrap; }
-  .paradigm-meta span { padding: 3px 11px; border-radius: 6px; background: var(--bg); border: 1px solid var(--border); }
-
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 18px 0; }
-  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
-  .col-header { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
-  .strength .col-header { color: var(--green-sem); }
-  .weakness .col-header { color: var(--red); }
-  .col-item { font-size: 14px; line-height: 1.6; color: var(--text-secondary); padding: 7px 0; border-bottom: 1px solid var(--border); }
-  .col-item:last-child { border-bottom: none; }
-
-  .example-block { background: var(--bg-warm); border: 1px solid var(--border); border-radius: 8px; padding: 18px 22px; margin: 18px 0; font-size: 14px; box-shadow: var(--shadow-sm); }
-  .example-block .callout-label { margin-bottom: 6px; }
-  .anti-pattern { background: var(--red-bg); border: 1px solid #E8C0C0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; font-size: 14px; box-shadow: var(--shadow-sm); }
-
-  .screenshot { margin: 22px 0; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow-md); }
-  .screenshot img { width: 100%; display: block; }
-  .screenshot-caption { padding: 12px 18px; font-size: 12px; color: var(--text-muted); background: var(--bg-warm); font-family: 'JetBrains Mono', monospace; border-top: 1px solid var(--border); }
-
-  hr.light { border: none; border-top: 1px solid var(--border); margin: 36px 0; }
-
-  /* TOC */
-  .toc {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 32px 36px;
-    margin: 36px 0;
-    box-shadow: var(--shadow-md);
-  }
-  .toc-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 18px; }
-  .toc a { display: flex; align-items: baseline; gap: 14px; padding: 9px 0; color: var(--text-secondary); text-decoration: none; font-size: 15px; border-bottom: 1px solid var(--border); transition: all 0.2s; border-left: none; }
-  .toc a:last-child { border-bottom: none; }
-  .toc a:hover { color: var(--sn-infinite-blue); padding-left: 4px; }
-  .toc .num { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-muted); flex-shrink: 0; width: 24px; }
-  .toc .verb { font-weight: 600; color: var(--text); margin-right: 4px; }
-
-  /* Scoping exercise cards */
-  .scope-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 28px 32px;
-    margin: 22px 0;
-    box-shadow: var(--shadow-md);
-    transition: box-shadow 0.25s ease;
-  }
-  .scope-card:hover { box-shadow: var(--shadow-lg); }
-  .scope-card-question {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--text);
+    color: var(--text-muted);
     margin-bottom: 16px;
   }
-  .scope-range {
-    padding: 12px 16px;
-    border-radius: 8px;
-    margin: 8px 0;
-    font-size: 14px;
-    line-height: 1.65;
+  .toc a {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 8px 0;
     color: var(--text-secondary);
-    background: var(--bg-warm);
-    border: 1px solid var(--border);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 400;
+    border-bottom: 1px solid var(--border);
+    transition: all 0.15s;
+    border-left: none;
+    border-top: none;
   }
-  .scope-range strong { color: var(--sn-dark-teal); }
+  .toc a:last-child { border-bottom: none; }
+  .toc a:hover { color: var(--accent-dark); padding-left: 4px; }
+  .toc .num {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    width: 22px;
+  }
+  .toc .verb { font-weight: 500; color: var(--text); margin-right: 4px; }
 
-  /* Audience blocks */
-  .aud-concept { background: var(--aud-concept-bg); border: 1px solid var(--aud-concept-border); border-radius: 10px; padding: 22px 26px; margin: 14px 0; box-shadow: var(--shadow-sm); }
-  .aud-concept .aud-tag { color: var(--aud-concept); }
-  .aud-decide { background: var(--aud-decide-bg); border: 1px solid var(--aud-decide-border); border-radius: 10px; padding: 22px 26px; margin: 14px 0; box-shadow: var(--shadow-sm); }
-  .aud-decide .aud-tag { color: var(--aud-decide); }
-  .aud-implement { background: var(--aud-implement-bg); border: 1px solid var(--aud-implement-border); border-radius: 10px; padding: 22px 26px; margin: 14px 0; box-shadow: var(--shadow-sm); }
-  .aud-implement .aud-tag { color: var(--aud-implement); }
-  .aud-tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; display: block; }
-  .aud-content { font-size: 14px; line-height: 1.72; color: var(--text-secondary); }
-  .aud-content p:last-child { margin-bottom: 0; }
+  /* ========== EXEC SUMMARY ========== */
+  .exec-summary {
+    background: var(--surface);
+    border: 1px solid var(--green-200);
+    border-top: 2px solid var(--green-600);
+    padding: 36px 40px;
+    margin: 32px 0;
+  }
+  .exec-summary h3 {
+    margin-top: 0;
+    color: var(--accent-dark);
+  }
 
-  .legend { display: flex; gap: 22px; flex-wrap: wrap; padding: 18px 22px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; margin: 22px 0; font-size: 13px; box-shadow: var(--shadow-sm); }
-  .legend-item { display: flex; align-items: center; gap: 8px; }
-  .legend-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
-
-  .emotion-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 30px; margin: 26px 0; box-shadow: var(--shadow-md); transition: box-shadow 0.25s; }
-  .emotion-card:hover { box-shadow: var(--shadow-lg); }
-  .emotion-card h4 { margin-top: 0; }
-
+  /* ========== REFERENCES ========== */
   .ref-list { margin: 16px 0; font-size: 14px; }
-  .ref-list a { color: var(--sn-dark-teal); }
-  .ref-item { padding: 7px 0; border-bottom: 1px solid var(--border); color: var(--text-secondary); line-height: 1.6; }
+  .ref-item { padding: 6px 0; border-bottom: 1px solid var(--border); color: var(--text-secondary); line-height: 1.6; font-weight: 300; }
   .ref-item:last-child { border-bottom: none; }
-  .practitioner-note { font-style: italic; color: var(--text-muted); font-size: 13px; }
 
-  .appendix { margin-top: 88px; padding-top: 44px; border-top: 3px solid var(--border-strong); }
-  .appendix h2 { border-top: none; padding-top: 0; margin-top: 0; }
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 1080px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; }
+    .content { padding: 0 24px; }
+    .stepper { flex-wrap: wrap; }
+  }
 </style>
 </head>
 <body>
-<div class="container">
+<div class="layout">
 
 <!-- ============================================================ -->
+<!-- SIDEBAR -->
+<!-- ============================================================ -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-logo">Sightline<span>.</span></div>
+
+  <div class="sidebar-section-label">Overview</div>
+  <a href="#exec" data-section="exec" class="nav-link"><span class="nav-num"></span> Executive Summary</a>
+  <a href="#problem" data-section="problem" class="nav-link"><span class="nav-num"></span> The Problem</a>
+
+  <div class="sidebar-section-label">The Process</div>
+
+  <a href="#s1" data-section="s1" class="nav-link"><span class="nav-num">01</span> Decompose</a>
+  <div class="sub-links" data-parent="s1">
+    <a href="#s1-levels" data-sub="s1-levels" class="sub-link">The Three Levels</a>
+    <a href="#s1-litmus" data-sub="s1-litmus" class="sub-link">The Litmus Tests</a>
+    <a href="#s1-multi" data-sub="s1-multi" class="sub-link">Multiple User Types</a>
+  </div>
+
+  <a href="#s2" data-section="s2" class="nav-link"><span class="nav-num">02</span> Map</a>
+  <div class="sub-links" data-parent="s2">
+    <a href="#s2-anchor" data-sub="s2-anchor" class="sub-link">Navigation Anchor</a>
+    <a href="#s2-principles" data-sub="s2-principles" class="sub-link">Mapping Principles</a>
+    <a href="#s2-gravity" data-sub="s2-gravity" class="sub-link">Cross-Job Tasks</a>
+  </div>
+
+  <a href="#s3" data-section="s3" class="nav-link"><span class="nav-num">03</span> Scope</a>
+  <div class="sub-links" data-parent="s3">
+    <a href="#s3-dimensions" data-sub="s3-dimensions" class="sub-link">Six Dimensions</a>
+  </div>
+
+  <a href="#s4" data-section="s4" class="nav-link"><span class="nav-num">04</span> Assess</a>
+  <div class="sub-links" data-parent="s4">
+    <a href="#s4-role" data-sub="s4-role" class="sub-link">Role-Based Navigation</a>
+    <a href="#s4-adaptive" data-sub="s4-adaptive" class="sub-link">Adaptive Navigation</a>
+    <a href="#s4-contexts" data-sub="s4-contexts" class="sub-link">User Contexts</a>
+  </div>
+
+  <a href="#s5" data-section="s5" class="nav-link"><span class="nav-num">05</span> Select</a>
+  <div class="sub-links" data-parent="s5">
+    <a href="#s5-paradigms" data-sub="s5-paradigms" class="sub-link">Eight Paradigms</a>
+    <a href="#s5-compose" data-sub="s5-compose" class="sub-link">Composing Navigation</a>
+    <a href="#s5-platforms" data-sub="s5-platforms" class="sub-link">Cross-Platform</a>
+  </div>
+
+  <a href="#s6" data-section="s6" class="nav-link"><span class="nav-num">06</span> Audit</a>
+  <div class="sub-links" data-parent="s6">
+    <a href="#s6-principles" data-sub="s6-principles" class="sub-link">Seven Principles</a>
+  </div>
+
+  <div class="sidebar-section-label">Reference</div>
+  <a href="#questions" data-section="questions" class="nav-link"><span class="nav-num"></span> Common Questions</a>
+  <a href="#appendix" data-section="appendix" class="nav-link"><span class="nav-num"></span> Appendix</a>
+</nav>
+
+<!-- ============================================================ -->
+<!-- MAIN CONTENT -->
+<!-- ============================================================ -->
+<div class="main">
+
 <!-- HEADER -->
-<!-- ============================================================ -->
+<div class="section" id="header">
+<div class="content">
+  <div class="step-label">Sightline</div>
+  <h1>A Framework for <strong>Intent-Driven</strong><br>Navigation Design</h1>
+  <p class="lead">A structured method for decomposing user intent into Jobs, Tasks, and Activities &mdash; then mapping each level to the right navigation paradigm.</p>
+  <p>Designed for product designers defining information architecture, developers building navigation systems, and product managers who need to explain and defend IA decisions.</p>
+</div>
+</div>
 
-<div class="subtitle">Sightline</div>
-<h1>A Framework for Intent-Driven<br>Navigation Design</h1>
-<p class="lead">A structured method for decomposing user intent into Jobs, Tasks, and Activities &mdash; then mapping each level to the right navigation paradigm.</p>
-<p>Designed for product designers defining information architecture, developers building navigation systems, and product managers who need to explain and defend IA decisions. Self-contained &mdash; hand it to any of those audiences and it stands on its own.</p>
+<!-- EXECUTIVE SUMMARY -->
+<div class="section" id="exec">
+<div class="content">
+  <div class="exec-summary">
+    <h3>Executive Summary</h3>
+    <p>Navigation is the single most persistent element of any software product. Users interact with it on every screen, every session, every day. When navigation works, people find what they need and get their work done. When it doesn't, they get lost, call support, abandon tasks, and lose trust in the product. Most navigation problems trace back to the same root cause: <strong>the navigation was designed around the product's internal structure instead of the user's intent.</strong></p>
+    <p><strong>Sightline</strong> is a six-step framework that fixes this. It starts with what users are actually trying to accomplish &mdash; their Jobs to Be Done &mdash; and works outward to navigation structure. The core model decomposes user intent into three levels:</p>
+    <p><strong>Jobs</strong> are the outcomes users care about &mdash; stable, product-independent, tied to their role. <strong>Tasks</strong> are the plannable units of work that advance a Job. <strong>Activities</strong> are the concrete UI interactions within a Task. Each level maps to a tier of navigation: primary, secondary, and in-page.</p>
+    <p>The framework then walks teams through scoping constraints (how many Jobs, how deep the hierarchy, what platforms), assessing behavioral dimensions (role differences, user expertise, urgency), selecting from eight proven navigation paradigms, and auditing the result against seven principles.</p>
+    <p><strong>The outcome:</strong> navigation decisions that are defensible, user-centered, and durable &mdash; rather than arbitrary, org-chart-driven, or subject to redesign every quarter. Teams that use Sightline ship navigation systems that reduce support load, improve feature adoption, and accelerate onboarding &mdash; because the structure matches how users actually think about their work.</p>
+  </div>
+</div>
+</div>
 
-<div class="toc">
-  <div class="toc-title">The Process</div>
-  <a href="#s1"><span class="num">01</span> <span class="verb">Decompose</span> &mdash; What are my users' Jobs to Be Done?</a>
-  <a href="#s2"><span class="num">02</span> <span class="verb">Map</span> &mdash; How does intent translate to navigation tiers?</a>
-  <a href="#s3"><span class="num">03</span> <span class="verb">Scope</span> &mdash; What are my product's navigation constraints?</a>
-  <a href="#s4"><span class="num">04</span> <span class="verb">Assess</span> &mdash; How do roles and context shape the navigation?</a>
-  <a href="#s5"><span class="num">05</span> <span class="verb">Select</span> &mdash; Which navigation paradigms fit?</a>
-  <a href="#s6"><span class="num">06</span> <span class="verb">Audit</span> &mdash; How do I know my navigation works?</a>
+<!-- THE PROBLEM -->
+<div class="section" id="problem">
+<div class="content">
+  <span class="step-label">Context</span>
+  <h2>The Problem with Most Navigation Systems</h2>
+  <p>Most navigation systems are designed backwards. Teams start with the features they've built, group them into categories that make sense to the engineering team or the product org, and bolt on a menu structure. The result is navigation that mirrors the company's internal structure rather than the user's mental model.</p>
+  <p>This creates predictable failure patterns. <strong>Users can't find features that exist</strong> &mdash; because the feature lives under a label that matches the team that built it, not the job the user is trying to do. <strong>Navigation changes every quarter</strong> &mdash; because it's tied to the feature roadmap rather than to stable user outcomes. <strong>Onboarding takes weeks instead of hours</strong> &mdash; because new users have to learn the product's internal logic before they can navigate it. <strong>Support tickets pile up with "how do I..." questions</strong> &mdash; because the navigation doesn't provide clear sightlines from intent to action.</p>
+  <p>The root cause is a missing step: <strong>nobody decomposed user intent before designing navigation structure.</strong> Without understanding what users are trying to accomplish and how they think about their work, navigation design becomes a guessing game &mdash; one that gets more expensive to fix with every release.</p>
+  <p>Sightline provides the missing step. It gives teams a repeatable process for translating user intent into navigation architecture &mdash; so the structure serves the user from day one.</p>
+</div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="section" id="toc-section">
+<div class="content">
+  <div class="toc">
+    <div class="toc-title">The Process</div>
+    <a href="#s1"><span class="num">01</span> <span class="verb">Decompose</span> &mdash; What are my users' Jobs to Be Done?</a>
+    <a href="#s2"><span class="num">02</span> <span class="verb">Map</span> &mdash; How does intent translate to navigation tiers?</a>
+    <a href="#s3"><span class="num">03</span> <span class="verb">Scope</span> &mdash; What are my product's navigation constraints?</a>
+    <a href="#s4"><span class="num">04</span> <span class="verb">Assess</span> &mdash; How do roles and context shape the navigation?</a>
+    <a href="#s5"><span class="num">05</span> <span class="verb">Select</span> &mdash; Which navigation paradigms fit?</a>
+    <a href="#s6"><span class="num">06</span> <span class="verb">Audit</span> &mdash; How do I know my navigation works?</a>
+  </div>
+</div>
 </div>
 
 
 <!-- ============================================================ -->
 <!-- STEP 01: DECOMPOSE -->
 <!-- ============================================================ -->
+<div class="section" id="s1">
+<div class="content">
 
-<h2 id="s1"><span class="step-label">Step 01</span><span class="step-verb">Decompose</span><span class="step-question">What are my users' Jobs to Be Done?</span></h2>
+<div class="stepper">
+  <div class="stepper-step current"><div class="stepper-dot"></div> 01</div><div class="stepper-line"></div>
+  <div class="stepper-step"><div class="stepper-dot"></div> 02</div><div class="stepper-line"></div>
+  <div class="stepper-step"><div class="stepper-dot"></div> 03</div><div class="stepper-line"></div>
+  <div class="stepper-step"><div class="stepper-dot"></div> 04</div><div class="stepper-line"></div>
+  <div class="stepper-step"><div class="stepper-dot"></div> 05</div><div class="stepper-line"></div>
+  <div class="stepper-step"><div class="stepper-dot"></div> 06</div>
+</div>
 
-<p>Users don't think in pages, menus, or modules. They think in <strong>outcomes they're trying to achieve</strong>. A navigation system should mirror that intent hierarchy &mdash; not your org chart, not your database schema, and not whatever your backend team decided to name the API endpoints.</p>
+<span class="step-label">Step 01</span>
+<h2>Decompose</h2>
+<span class="step-question">What are my users' Jobs to Be Done?</span>
+
+<p style="margin-top: 20px;">Users don't think in pages, menus, or modules. They think in <strong>outcomes they're trying to achieve</strong>. A navigation system should mirror that intent hierarchy &mdash; not your org chart, not your database schema, and not whatever your backend team decided to name the API endpoints.</p>
 
 <p>This model builds on Jobs to Be Done theory (the Job level) and Hierarchical Task Analysis (the Task and Activity levels) &mdash; see the <a href="#appendix">Appendix</a> for origins and further reading. Most users have <strong>3&ndash;7 Jobs</strong> &mdash; that's normal and expected. Your navigation system needs to accommodate all of them.</p>
 
-<h3>The Three Levels</h3>
+<h3 id="s1-levels">The Three Levels</h3>
 
-<div class="level-card level-card-job">
-  <div class="level-card-header"><div class="level-card-name">Job</div><div class="level-card-freq">Change frequency: Rarely</div></div>
-  <div class="level-card-def">The overarching outcome a user is trying to achieve. Emotionally resonant, context-independent, and product-independent. This is the <em>why</em>.</div>
-  <div class="level-card-meta">
-    <div><div class="level-card-meta-label">Changes when...</div><div class="level-card-meta-value">The user's role, goals, or life circumstances change. A promotion, a career shift, a new business model &mdash; these are the forces that redefine a Job. For platform administrators, the Job is the outcome they're enabling for others &mdash; "Enable my team to collaborate securely" &mdash; and it changes when organizational needs change, even though every Task underneath is product-specific.</div></div>
-    <div><div class="level-card-meta-label">Example</div><div class="level-card-meta-value">"Keep my team's financial health strong so we can grow sustainably" &mdash; true whether the user has your software, a spreadsheet, or a paper ledger.</div></div>
+<div class="card">
+  <div class="card-header"><div class="card-name">Job</div><div class="card-badge">Changes: Rarely</div></div>
+  <div class="card-def">The overarching outcome a user is trying to achieve. Emotionally resonant, context-independent, and product-independent. This is the <em>why</em>.</div>
+  <div class="card-meta">
+    <div><div class="card-meta-label">Changes when...</div><div class="card-meta-value">The user's role, goals, or life circumstances change. A promotion, a career shift, a new business model &mdash; these are the forces that redefine a Job.</div></div>
+    <div><div class="card-meta-label">Example</div><div class="card-meta-value">"Keep my team's financial health strong so we can grow sustainably" &mdash; true whether the user has your software, a spreadsheet, or a paper ledger.</div></div>
   </div>
 </div>
 
-<div class="level-card level-card-task">
-  <div class="level-card-header"><div class="level-card-name">Task</div><div class="level-card-freq">Change frequency: Periodically</div></div>
-  <div class="level-card-def">A discrete, goal-oriented unit of work that advances the Job. Has a clear start and end, requires deliberate effort, and can be planned or delegated.</div>
-  <div class="level-card-meta">
-    <div><div class="level-card-meta-label">Changes when...</div><div class="level-card-meta-value">Workflows, processes, or business needs evolve. New tools get adopted, teams restructure, compliance requirements shift &mdash; the Job stays the same but the work to advance it changes.</div></div>
-    <div><div class="level-card-meta-label">Example</div><div class="level-card-meta-value">"Create and send monthly budget reports" might become "Set up automated reporting dashboards" &mdash; same Job, different Task.</div></div>
+<div class="card">
+  <div class="card-header"><div class="card-name">Task</div><div class="card-badge">Changes: Periodically</div></div>
+  <div class="card-def">A discrete, goal-oriented unit of work that advances the Job. Has a clear start and end, requires deliberate effort, and can be planned or delegated.</div>
+  <div class="card-meta">
+    <div><div class="card-meta-label">Changes when...</div><div class="card-meta-value">Workflows, processes, or business needs evolve. New tools get adopted, teams restructure, compliance requirements shift.</div></div>
+    <div><div class="card-meta-label">Example</div><div class="card-meta-value">"Create and send monthly budget reports" might become "Set up automated reporting dashboards" &mdash; same Job, different Task.</div></div>
   </div>
 </div>
 
-<div class="level-card level-card-activity">
-  <div class="level-card-header"><div class="level-card-name">Activity</div><div class="level-card-freq">Change frequency: Frequently</div></div>
-  <div class="level-card-def">A concrete, atomic interaction within a Task. Happens in real-time, is tool-dependent, and represents the unit of UI interaction design.</div>
-  <div class="level-card-meta">
-    <div><div class="level-card-meta-label">Changes when...</div><div class="level-card-meta-value">The tool or interface is redesigned. A button becomes a drag target, a form becomes a wizard, a manual step gets automated. Same Task, different interaction.</div></div>
-    <div><div class="level-card-meta-label">Example</div><div class="level-card-meta-value">"Select date range, pull data, choose template, export PDF" &mdash; each of these would change if the reporting tool was redesigned.</div></div>
+<div class="card">
+  <div class="card-header"><div class="card-name">Activity</div><div class="card-badge">Changes: Frequently</div></div>
+  <div class="card-def">A concrete, atomic interaction within a Task. Happens in real-time, is tool-dependent, and represents the unit of UI interaction design.</div>
+  <div class="card-meta">
+    <div><div class="card-meta-label">Changes when...</div><div class="card-meta-value">The tool or interface is redesigned. A button becomes a drag target, a form becomes a wizard, a manual step gets automated.</div></div>
+    <div><div class="card-meta-label">Example</div><div class="card-meta-value">"Select date range, pull data, choose template, export PDF" &mdash; each would change if the reporting tool was redesigned.</div></div>
   </div>
 </div>
 
-<h3>The Litmus Tests</h3>
+<h3 id="s1-litmus">The Litmus Tests</h3>
 <p>In practice, the boundaries between levels blur. These tests help you classify correctly:</p>
 <h4>Is it a Job?</h4>
 <p>Ask: <strong>"Would this still be true if the product didn't exist?"</strong> Jobs are product-independent. If the statement only makes sense inside your product, it's probably a Task.</p>
@@ -408,61 +821,67 @@
 <p>Ask: <strong>"Would someone put this on a to-do list?"</strong> Tasks are plannable. If you can imagine delegating it to a colleague with a brief explanation, it's a Task. If you'd have to point at the screen, it's an Activity.</p>
 <h4>Is it an Activity?</h4>
 <p>Ask: <strong>"Does this require a specific UI element to exist?"</strong> Activities are tool-dependent. If the action would change significantly with a redesigned interface, it's an Activity.</p>
-
 <h4>Still not sure if it's a Task or an Activity?</h4>
-<p>Ask: <strong>"Would the user plan a session around doing this?"</strong> If the user would set aside time &mdash; "I need to spend 20 minutes doing my updates" or "I need to go through all the new feedback this morning" &mdash; that's a Task. The individual interactions within that session (clicking status dropdowns, reading each feedback entry) are Activities. Tasks get intentional time blocks. Activities happen within them.</p>
+<p>Ask: <strong>"Would the user plan a session around doing this?"</strong> If the user would set aside time &mdash; "I need to spend 20 minutes doing my updates" &mdash; that's a Task. The individual interactions within that session are Activities.</p>
 
-<div class="callout callout-blue">
+<div class="callout">
   <span class="callout-label">Key Insight</span>
-  <p><strong>Jobs rarely change</strong> &mdash; they're tied to the user's role and goals, not your product. <strong>Tasks change periodically</strong> as workflows and business needs evolve. <strong>Activities change frequently</strong>, every time the interface is updated. Your navigation at each level should match this rate of change. If your primary navigation is shifting every time you redesign a feature, that's a signal you've mapped Activities at the Job level.</p>
+  <p><strong>Jobs rarely change</strong> &mdash; they're tied to the user's role and goals. <strong>Tasks change periodically</strong> as workflows evolve. <strong>Activities change frequently</strong>, every time the interface is updated. Your navigation at each level should match this rate of change. If your primary navigation shifts every time you redesign a feature, you've mapped Activities at the Job level.</p>
 </div>
 
-<h3>Decomposing for Multiple User Types</h3>
+<h3 id="s1-multi">Decomposing for Multiple User Types</h3>
 
 <p>Most products serve more than one persona. A project management tool serves Project Managers, Developers, and Designers &mdash; each with overlapping but distinct Job maps. Don't try to decompose all personas simultaneously. Instead:</p>
 
-<p><strong>Decompose one persona at a time.</strong> Give each persona its own complete Job &rarr; Task &rarr; Activity hierarchy. This keeps each map clean and prevents you from prematurely averaging distinct mental models into a single muddled structure.</p>
+<p><strong>Decompose one persona at a time.</strong> Give each persona its own complete Job &rarr; Task &rarr; Activity hierarchy. This keeps each map clean and prevents premature averaging.</p>
 
-<p><strong>Then overlay the maps.</strong> Once you have 2&ndash;3 individual maps, lay them side by side. Look for three things: <strong>shared Jobs</strong> (both the PM and the Developer care about "Keep the project on track"), <strong>shared Tasks under different Jobs</strong> (both check project status, but for different reasons), and <strong>persona-exclusive Jobs</strong> (only the Developer has "Ship high-quality code"). Mark these overlaps and divergences &mdash; they directly feed the role-based navigation decisions in <a href="#s4">Step 04</a>.</p>
+<p><strong>Then overlay the maps.</strong> Once you have 2&ndash;3 individual maps, lay them side by side. Look for: <strong>shared Jobs</strong>, <strong>shared Tasks under different Jobs</strong>, and <strong>persona-exclusive Jobs</strong>. Mark these overlaps and divergences &mdash; they feed the role-based decisions in <a href="#s4">Step 04</a>.</p>
 
-<p><strong>Calculate your overlap ratio.</strong> If two personas share more than 70% of their Jobs, you're likely building one navigation with different defaults. If they share less than 30%, you may be building two different products. The space in between is where navigation design gets interesting &mdash; and where this framework earns its keep.</p>
+<p><strong>Calculate your overlap ratio.</strong> If two personas share more than 70% of their Jobs, you're likely building one navigation with different defaults. If they share less than 30%, you may be building two different products.</p>
 
-<div class="callout callout-warm">
+<div class="callout-warm callout">
   <span class="callout-label">A Note on Cross-Job Tasks</span>
-  <p>As you decompose, you'll notice that some Tasks serve multiple Jobs. "Generate a financial report" might advance both "Keep stakeholders informed" and "Ensure regulatory compliance." Don't force these Tasks into a single Job during decomposition &mdash; acknowledge them and move on. We'll address how to handle cross-Job Tasks in the <a href="#s2">Map step</a>.</p>
+  <p>Some Tasks serve multiple Jobs. "Generate a financial report" might advance both "Keep stakeholders informed" and "Ensure regulatory compliance." Don't force these into a single Job &mdash; acknowledge them and move on. We'll address cross-Job Tasks in the <a href="#s2">Map step</a>.</p>
+</div>
+
+</div>
 </div>
 
 
 <!-- ============================================================ -->
 <!-- STEP 02: MAP -->
 <!-- ============================================================ -->
+<div class="section" id="s2">
+<div class="content">
 
-<h2 id="s2"><span class="step-label">Step 02</span><span class="step-verb">Map</span><span class="step-question">How does intent translate to navigation tiers?</span></h2>
+<div class="stepper">
+  <div class="stepper-step completed"><div class="stepper-dot"></div> 01</div><div class="stepper-line"></div>
+  <div class="stepper-step current"><div class="stepper-dot"></div> 02</div><div class="stepper-line"></div>
+  <div class="stepper-step"><div class="stepper-dot"></div> 03</div><div class="stepper-line"></div>
+  <div class="stepper-step"><div class="stepper-dot"></div> 04</div><div class="stepper-line"></div>
+  <div class="stepper-step"><div class="stepper-dot"></div> 05</div><div class="stepper-line"></div>
+  <div class="stepper-step"><div class="stepper-dot"></div> 06</div>
+</div>
 
-<p>You've decomposed your users' Jobs, Tasks, and Activities. Now you need to map them to navigation tiers. But before you assign levels to UI patterns, you need to answer a foundational question: <strong>what organizes your user's mental model?</strong></p>
+<span class="step-label">Step 02</span>
+<h2>Map</h2>
+<span class="step-question">How does intent translate to navigation tiers?</span>
+
+<p style="margin-top: 20px;">You've decomposed your users' Jobs, Tasks, and Activities. Now you need to map them to navigation tiers. But first, answer a foundational question: <strong>what organizes your user's mental model?</strong></p>
 
 <p>The answer determines how your JTBD hierarchy translates to navigation structure. Get this wrong and your navigation will fight the user's thinking &mdash; even if every individual component is well-designed.</p>
 
-<h3>Choosing Your Navigation Anchor</h3>
+<h3 id="s2-anchor">Choosing Your Navigation Anchor</h3>
 
-<p>Users organize their work in one of four dominant mental models. Each model produces a different mapping from Jobs, Tasks, and Activities to primary, secondary, and in-page navigation. Most products are hybrids, but one model dominates &mdash; identify that dominant model and let it drive your primary navigation.</p>
+<p>Users organize their work in one of four dominant mental models. Most products are hybrids, but one model dominates &mdash; identify it and let it drive your primary navigation.</p>
 
 <!-- PROCESS-FIRST -->
-<div class="level-card" style="border-left-color: var(--sn-infinite-blue);">
-  <div class="level-card-header">
-    <div class="level-card-name" style="color: var(--sn-infinite-blue);">Process-first</div>
-    <div class="level-card-freq">Jobs = Primary nav</div>
-  </div>
-  <div class="level-card-def">The user thinks in distinct phases or workspaces, each with its own tools and mindset. They say: "I'm in research mode" or "I'm doing my weekly review." The phases are the primary organizer.</div>
-  <div class="level-card-meta">
-    <div>
-      <div class="level-card-meta-label">Diagnostic</div>
-      <div class="level-card-meta-value">Do your users describe their work as distinct modes or phases? Does each phase involve different tools and a different mindset? Are the phases relatively independent &mdash; the user works in one phase at a time, not tracking entities across phases?</div>
-    </div>
-    <div>
-      <div class="level-card-meta-label">Real-world examples</div>
-      <div class="level-card-meta-value"><strong>TurboTax</strong> &mdash; linear flow through Personal Info &rarr; Income &rarr; Deductions &rarr; Review &rarr; File. <strong>Shopify Admin</strong> &mdash; Products, Orders, Marketing, Analytics are distinct workspaces. <strong>HubSpot</strong> &mdash; Marketing, Sales, Service are separate hubs with their own toolsets.</div>
-    </div>
+<div class="card">
+  <div class="card-header"><div class="card-name">Process-first</div><div class="card-badge">Jobs = Primary nav</div></div>
+  <div class="card-def">The user thinks in distinct phases or workspaces, each with its own tools and mindset. They say: "I'm in research mode" or "I'm doing my weekly review."</div>
+  <div class="card-meta">
+    <div><div class="card-meta-label">Diagnostic</div><div class="card-meta-value">Do users describe their work as distinct modes or phases? Does each phase involve different tools and a different mindset?</div></div>
+    <div><div class="card-meta-label">Examples</div><div class="card-meta-value"><strong>TurboTax</strong> &mdash; linear flow through phases. <strong>Shopify Admin</strong> &mdash; Products, Orders, Marketing as distinct workspaces. <strong>HubSpot</strong> &mdash; Marketing, Sales, Service as separate hubs.</div></div>
   </div>
 </div>
 
@@ -484,21 +903,12 @@
 <span class="dim">"Schedule interview call"      Buttons, forms, inline actions</span></div>
 
 <!-- ENTITY-FIRST -->
-<div class="level-card" style="border-left-color: var(--sn-dark-teal);">
-  <div class="level-card-header">
-    <div class="level-card-name" style="color: var(--sn-dark-teal);">Entity-first</div>
-    <div class="level-card-freq">Entities = Primary nav</div>
-  </div>
-  <div class="level-card-def">The user tracks specific things &mdash; features, accounts, projects, cases &mdash; that persist over time and move through a lifecycle. They say: "How's the Johnson account doing?" or "Where are we on Feature X?" The entity is the anchor; Jobs become lenses on that entity.</div>
-  <div class="level-card-meta">
-    <div>
-      <div class="level-card-meta-label">Diagnostic</div>
-      <div class="level-card-meta-value">Do your users refer to their work by name? Do they track specific entities that move through multiple Jobs over time? Is their primary question "what's the status of X?" rather than "what phase am I in?"</div>
-    </div>
-    <div>
-      <div class="level-card-meta-label">Real-world examples</div>
-      <div class="level-card-meta-value"><strong>Salesforce</strong> &mdash; Accounts, Contacts, Opportunities are the primary objects. Each has tabs for different concerns. <strong>Jira</strong> &mdash; Issues move through workflows; the issue is the anchor. <strong>GitHub</strong> &mdash; Repositories are entities with Code, Issues, PRs as Job-scoped tabs within each.</div>
-    </div>
+<div class="card">
+  <div class="card-header"><div class="card-name">Entity-first</div><div class="card-badge">Entities = Primary nav</div></div>
+  <div class="card-def">The user tracks specific things &mdash; features, accounts, projects, cases &mdash; that persist over time. They say: "How's the Johnson account doing?" The entity is the anchor; Jobs become lenses on that entity.</div>
+  <div class="card-meta">
+    <div><div class="card-meta-label">Diagnostic</div><div class="card-meta-value">Do users refer to their work by name? Do they track entities through multiple Jobs over time? Is their primary question "what's the status of X?"</div></div>
+    <div><div class="card-meta-label">Examples</div><div class="card-meta-value"><strong>Salesforce</strong> &mdash; Accounts, Contacts, Opportunities as primary objects. <strong>Jira</strong> &mdash; Issues move through workflows. <strong>GitHub</strong> &mdash; Repositories with Code, Issues, PRs as tabs.</div></div>
   </div>
 </div>
 
@@ -519,22 +929,13 @@
 <span class="cool">TASK &rarr; ACTIVITY</span>          &mdash;&mdash;&rarr;  <span class="cool">In-Page Navigation</span>              Contextual / transient
 <span class="dim">"Write requirements"           Forms, editors, inline actions</span></div>
 
-<!-- QUEUE/INBOX-FIRST (NEW IN SIGHTLINE) -->
-<div class="level-card" style="border-left-color: var(--warm);">
-  <div class="level-card-header">
-    <div class="level-card-name" style="color: var(--warm);">Queue/Inbox-first</div>
-    <div class="level-card-freq">Incoming stream = Primary nav</div>
-  </div>
-  <div class="level-card-def">The user's work arrives as a stream of items that need processing &mdash; tickets, messages, notifications, requests, approvals. The user doesn't go find work; <strong>work comes to them</strong>. The primary organizing construct is the queue or inbox, filtered and sorted by urgency, assignment, or status. The user's first question isn't "what phase am I in?" or "what's the status of X?" &mdash; it's <strong>"what should I work on next?"</strong></div>
-  <div class="level-card-meta">
-    <div>
-      <div class="level-card-meta-label">Diagnostic</div>
-      <div class="level-card-meta-value">Does work arrive continuously rather than being initiated by the user? Is the user's primary interaction processing items from a list? Are the items transient (resolved and archived) rather than persistent entities tracked over long periods? Does the user's effectiveness depend on processing speed and prioritization?</div>
-    </div>
-    <div>
-      <div class="level-card-meta-label">Real-world examples</div>
-      <div class="level-card-meta-value"><strong>Zendesk</strong> &mdash; ticket queues filtered by status, priority, and assignment. The queue IS the navigation. <strong>Gmail</strong> &mdash; inbox with labels, filters, and priority sorting. <strong>Slack</strong> &mdash; message streams organized by channel and thread. <strong>PagerDuty</strong> &mdash; incident queue that narrows the UI to what needs attention now. <strong>GitHub Pull Requests</strong> &mdash; review queue for code that needs processing.</div>
-    </div>
+<!-- QUEUE/INBOX-FIRST -->
+<div class="card">
+  <div class="card-header"><div class="card-name">Queue/Inbox-first</div><div class="card-badge">Incoming stream = Primary nav</div></div>
+  <div class="card-def">The user's work arrives as a stream of items that need processing. The user doesn't go find work; <strong>work comes to them</strong>. Their first question is <strong>"what should I work on next?"</strong></div>
+  <div class="card-meta">
+    <div><div class="card-meta-label">Diagnostic</div><div class="card-meta-value">Does work arrive continuously rather than being initiated by the user? Is the primary interaction processing items from a list? Are items transient (resolved and archived) rather than persistent?</div></div>
+    <div><div class="card-meta-label">Examples</div><div class="card-meta-value"><strong>Zendesk</strong> &mdash; ticket queues filtered by status and priority. <strong>Gmail</strong> &mdash; inbox with labels and smart categories. <strong>Slack</strong> &mdash; message streams by channel. <strong>PagerDuty</strong> &mdash; incident queue.</div></div>
   </div>
 </div>
 
@@ -555,27 +956,18 @@
 <span class="cool">ACTIVITY</span>                 &mdash;&mdash;&rarr;  <span class="cool">In-Page Navigation</span>              Contextual / transient
 <span class="dim">"Reply" / "Escalate"           Buttons, quick actions, shortcuts</span></div>
 
-<div class="callout callout-warm">
+<div class="callout">
   <span class="callout-label">Reactive vs. Proactive Work</span>
-  <p>Queue/Inbox-first is the model for <strong>reactive workflows</strong> &mdash; where the system surfaces what needs attention. The other three models assume <strong>proactive workflows</strong> &mdash; where the user initiates navigation toward their goals. This distinction matters because reactive navigation needs to <em>bring work to the user</em> (prioritized queues, notification badges, urgency indicators), while proactive navigation needs to <em>let the user find work</em> (browsable hierarchies, search, hub pages). Many products blend both: a support tool is queue-first for agents but process-first for managers building reports.</p>
+  <p>Queue/Inbox-first is the model for <strong>reactive workflows</strong> &mdash; the system surfaces what needs attention. The other three assume <strong>proactive workflows</strong> &mdash; the user initiates navigation toward their goals. Reactive navigation needs to <em>bring work to the user</em>; proactive navigation needs to <em>let the user find work</em>. Many products blend both.</p>
 </div>
 
 <!-- ACTIVITY/MODE-FIRST -->
-<div class="level-card" style="border-left-color: var(--sn-green);">
-  <div class="level-card-header">
-    <div class="level-card-name" style="color: var(--sn-green);">Activity/Mode-first</div>
-    <div class="level-card-freq">Dominant activity = Separate mode</div>
-  </div>
-  <div class="level-card-def">The user's core work requires deep, immersive focus &mdash; writing, designing, coding, editing video. When they're in the activity, everything else should disappear. The product has two worlds: an immersive creation mode and a management/browse mode, connected by an explicit mode-switch.</div>
-  <div class="level-card-meta">
-    <div>
-      <div class="level-card-meta-label">Diagnostic</div>
-      <div class="level-card-meta-value">Is there one dominant activity that requires full-screen focus? Does that activity account for the majority of usage time? Would showing navigation during this activity be a distraction rather than a help?</div>
-    </div>
-    <div>
-      <div class="level-card-meta-label">Real-world examples</div>
-      <div class="level-card-meta-value"><strong>Figma</strong> &mdash; File browser (management) &harr; Canvas (design). Two distinct modes with different nav. <strong>VS Code</strong> &mdash; The editor dominates; explorer, terminal, and panels are secondary. <strong>Substack/Ghost</strong> &mdash; Full-screen editor for writing, dashboard for everything else. <strong>Adobe Premiere</strong> &mdash; Edit, Color, Audio, Deliver are immersive activity modes.</div>
-    </div>
+<div class="card">
+  <div class="card-header"><div class="card-name">Activity/Mode-first</div><div class="card-badge">Dominant activity = Separate mode</div></div>
+  <div class="card-def">The user's core work requires deep, immersive focus. The product has two worlds: an immersive creation mode and a management/browse mode, connected by an explicit mode-switch.</div>
+  <div class="card-meta">
+    <div><div class="card-meta-label">Diagnostic</div><div class="card-meta-value">Is there one dominant activity that requires full-screen focus? Does that activity account for the majority of usage time?</div></div>
+    <div><div class="card-meta-label">Examples</div><div class="card-meta-value"><strong>Figma</strong> &mdash; File browser &harr; Canvas. <strong>VS Code</strong> &mdash; Editor dominates. <strong>Substack/Ghost</strong> &mdash; Full-screen editor for writing, dashboard for everything else.</div></div>
   </div>
 </div>
 
@@ -591,163 +983,162 @@
 <span class="dim">"Write the article,            Full-screen focus, contextual
  design the interface"          toolbars only, nav recedes</span></div>
 
-<div class="callout callout-purple">
+<div class="callout-emphasis callout">
   <span class="callout-label">Most products are hybrids</span>
-  <p>Pure instances of any single model are rare. Salesforce is entity-dominant with process elements (opportunity stages). Figma is activity-dominant with entity-secondary (file browser). A support tool might be queue-first for agents but entity-first for managers tracking specific accounts. Identify your <strong>dominant</strong> model, let it drive primary navigation, then layer the secondary models into lower tiers.</p>
+  <p>Pure instances of any single model are rare. Salesforce is entity-dominant with process elements. A support tool might be queue-first for agents but entity-first for managers. Identify your <strong>dominant</strong> model, let it drive primary navigation, then layer secondary models into lower tiers.</p>
 </div>
 
-<h3>Mapping Principles (Apply to All Models)</h3>
+<h3 id="s2-principles">Mapping Principles (Apply to All Models)</h3>
 
-<p>Regardless of which model you chose, three principles govern how the JTBD levels translate to navigation tiers:</p>
+<p><strong>Persistence mirrors stability.</strong> Whatever occupies your primary navigation should be the most stable element of the experience. It should rarely change between releases.</p>
 
-<p><strong>Persistence mirrors stability.</strong> Whatever occupies your primary navigation &mdash; whether that's Jobs (process-first), entities (entity-first), queue views (queue-first), or modes (activity-first) &mdash; should be the most stable element of the experience. It should rarely change between releases. Secondary and in-page navigation can evolve more freely.</p>
-
-<p><strong>Screen real estate mirrors scope.</strong> The primary anchor earns the most persistent screen space (header, sidebar root). Secondary concerns live inside that anchor's territory. In-page interactions live inside the page.</p>
+<p><strong>Screen real estate mirrors scope.</strong> The primary anchor earns the most persistent screen space. Secondary concerns live inside that anchor's territory. In-page interactions live inside the page.</p>
 
 <p><strong>Interaction cost mirrors commitment.</strong> Switching between primary-level items is a significant context shift. Switching between secondary items should be lightweight. In-page activities should require near-zero navigation.</p>
 
-<div class="callout callout-blue">
+<div class="callout">
   <span class="callout-label">The Persistence Test</span>
-  <p>If a navigation element disappears when it shouldn't, or persists when it's irrelevant, you've got a level mismatch. Two legitimate exceptions: in activity/mode-first products, the immersive mode deliberately hides primary navigation &mdash; this is an explicit mode-switch, not a mismatch. In queue-first products, entering an item's detail view may collapse the queue to a narrow panel or hide it entirely &mdash; this is acceptable if the user can return to the queue in one interaction. The test still applies within each mode.</p>
+  <p>If a navigation element disappears when it shouldn't, or persists when it's irrelevant, you've got a level mismatch. Legitimate exceptions: immersive modes hide primary nav deliberately; queue-first detail views may collapse the queue to a panel.</p>
 </div>
 
-<h3 id="job-gravity">Handling Cross-Job Tasks: Job Gravity</h3>
+<h3 id="s2-gravity">Handling Cross-Job Tasks: Job Gravity</h3>
 
-<p>In the Decompose step, you may have identified Tasks that serve multiple Jobs. Now you need to decide where those Tasks live in the navigation. Three approaches, each with different tradeoffs:</p>
+<p>Tasks that serve multiple Jobs need a home in the navigation. Three approaches:</p>
 
 <table>
   <tr><th>Approach</th><th>How it works</th><th>Best when...</th><th>Tradeoff</th></tr>
-  <tr><td>Duplicate</td><td>The Task appears under multiple Jobs as separate entries.</td><td>The Jobs have genuinely different workflows around the same Task, and implementations are diverging.</td><td>Users distrust the nav ("which is real?"). Maintenance doubles.</td></tr>
-  <tr><td>Single home</td><td>The Task lives under one Job only. No cross-links.</td><td>Usage from the secondary Job is negligible (&lt;5%). The pointer overhead isn't worth it.</td><td>Secondary-Job users can't find the Task without being told.</td></tr>
-  <tr><td>Job Gravity</td><td>Single canonical home under the most-used Job. Lightweight pointers from other Jobs lead to the same destination.</td><td>Multiple Jobs legitimately need the Task with significant usage from more than one.</td><td>Pointer mechanisms add design and engineering work.</td></tr>
+  <tr><td>Duplicate</td><td>Task appears under multiple Jobs as separate entries.</td><td>The Jobs have genuinely different workflows around the same Task.</td><td>Users distrust the nav. Maintenance doubles.</td></tr>
+  <tr><td>Single home</td><td>Task lives under one Job only.</td><td>Usage from secondary Job is negligible (&lt;5%).</td><td>Secondary-Job users can't find it.</td></tr>
+  <tr><td>Job Gravity</td><td>Single canonical home under the most-used Job. Pointers from other Jobs.</td><td>Multiple Jobs legitimately need the Task.</td><td>Pointer mechanisms add work.</td></tr>
 </table>
 
-<p>Job Gravity is the recommended default for most cross-Job Tasks. In entity-first products, Job Gravity is less of a concern because entity scoping naturally separates the same Task into different contexts. In queue-first products, cross-Job Tasks are rare because the queue itself is the organizing principle &mdash; items arrive pre-categorized.</p>
+<p>Job Gravity is the recommended default. The four pointer mechanisms: <strong>1.</strong> Cross-link in secondary nav. <strong>2.</strong> Contextual shortcut inline. <strong>3.</strong> Search / &#8984;K result. <strong>4.</strong> User-pinned favorite.</p>
 
-<div class="diagram"><span class="dim">Job Gravity in practice (process-first or hybrid):</span>
-
-<span class="highlight">JOB: Stakeholder Reporting</span>          <span class="highlight">JOB: Compliance</span>
-  |                                       |
-  |-- Create monthly report  &lt;------------+  <span class="warm">(pointer, not a copy)</span>
-  |-- Schedule distribution               |-- Audit trail review
-  +-- Track read receipts                 +-- File regulatory docs
-
-The report Task lives under "Stakeholder Reporting" because
-that's where 80% of usage originates. Compliance gets a
-pointer to the same destination.</div>
-
-<h4>The Four Pointer Mechanisms</h4>
-
-<p>When using Job Gravity, these mechanisms create paths to a Task's canonical home without duplicating it:</p>
-
-<p><strong>1. Cross-link in secondary nav.</strong> Under the secondary Job's section, include a "Related" grouping. Style it visually distinct from primary Tasks.</p>
-
-<p><strong>2. Contextual shortcut.</strong> When a user is working in the secondary Job and needs the Task, surface it inline.</p>
-
-<p><strong>3. Search / command palette result.</strong> The Task appears in &#8984;K regardless of current Job context.</p>
-
-<p><strong>4. User-pinned favorite.</strong> The user pins the Task to their personal quick-access area.</p>
+</div>
+</div>
 
 
 <!-- ============================================================ -->
 <!-- STEP 03: SCOPE -->
 <!-- ============================================================ -->
+<div class="section" id="s3">
+<div class="content">
 
-<h2 id="s3"><span class="step-label">Step 03</span><span class="step-verb">Scope</span><span class="step-question">What are my product's navigation constraints?</span></h2>
+<div class="stepper">
+  <div class="stepper-step completed"><div class="stepper-dot"></div> 01</div><div class="stepper-line"></div>
+  <div class="stepper-step completed"><div class="stepper-dot"></div> 02</div><div class="stepper-line"></div>
+  <div class="stepper-step current"><div class="stepper-dot"></div> 03</div><div class="stepper-line"></div>
+  <div class="stepper-step"><div class="stepper-dot"></div> 04</div><div class="stepper-line"></div>
+  <div class="stepper-step"><div class="stepper-dot"></div> 05</div><div class="stepper-line"></div>
+  <div class="stepper-step"><div class="stepper-dot"></div> 06</div>
+</div>
 
-<p>Before assessing behavioral complexity or selecting paradigms, take five minutes to profile your product across six dimensions. Your answers directly constrain which navigation patterns will work and which will break. Work through each question and note where your product falls.</p>
+<span class="step-label">Step 03</span>
+<h2>Scope</h2>
+<span class="step-question">What are my product's navigation constraints?</span>
+
+<p style="margin-top: 20px;" id="s3-dimensions">Before assessing behavioral complexity or selecting paradigms, profile your product across six dimensions. Your answers directly constrain which patterns will work and which will break.</p>
 
 <div class="scope-card">
   <div class="scope-card-question">1. How many top-level Jobs does your product support?</div>
-  <div class="scope-range"><strong>&le;5 Jobs:</strong> You can likely expose all of them in a single navigation layer &mdash; top bar or bottom tabs. Start with flat paradigms and keep it simple.</div>
-  <div class="scope-range"><strong>5&ndash;15 Jobs:</strong> You need a nav pattern that handles volume &mdash; side navigation with groupings, or a hub with categorized entry points. Consider a command palette as an accelerator.</div>
-  <div class="scope-range"><strong>15+ Jobs:</strong> No single structural paradigm holds them all. You need a compound approach &mdash; hub-and-spoke plus search, or role-based filtering to reduce the visible set per user.</div>
+  <div class="scope-range"><strong>&le;5 Jobs:</strong> Expose all in a single layer &mdash; top bar or bottom tabs.</div>
+  <div class="scope-range"><strong>5&ndash;15 Jobs:</strong> Side navigation with groupings, or a hub with categorized entry points. Consider &#8984;K as an accelerator.</div>
+  <div class="scope-range"><strong>15+ Jobs:</strong> Compound approach &mdash; hub-and-spoke plus search, or role-based filtering.</div>
 </div>
 
 <div class="scope-card">
   <div class="scope-card-question">2. How deep is your Task tree?</div>
-  <div class="scope-range"><strong>1 level</strong> (Tasks directly under Jobs): Tabs or segmented controls within each Job. No breadcrumbs needed.</div>
-  <div class="scope-range"><strong>2 levels:</strong> Collapsible sidebar sections handle this well. Consider breadcrumbs as a supplement.</div>
-  <div class="scope-range"><strong>3+ levels:</strong> The sidebar handles the top two levels; breadcrumb drill-down handles the rest. Without breadcrumbs, users will get lost. Supported by NNG's enterprise complexity research.</div>
+  <div class="scope-range"><strong>1 level:</strong> Tabs or segmented controls within each Job. No breadcrumbs needed.</div>
+  <div class="scope-range"><strong>2 levels:</strong> Collapsible sidebar sections. Consider breadcrumbs as a supplement.</div>
+  <div class="scope-range"><strong>3+ levels:</strong> Sidebar for top two levels; breadcrumbs for the rest. Without breadcrumbs, users will get lost.</div>
 </div>
 
 <div class="scope-card">
   <div class="scope-card-question">3. How varied is your user expertise?</div>
-  <div class="scope-range"><strong>Uniform</strong> (most users at similar skill level): One navigation system serves all. Optimize for the dominant expertise level.</div>
-  <div class="scope-range"><strong>Moderate spread:</strong> Structural nav for everyone, command palette as an accelerator for power users. Role-aware defaults can help surface different starting points.</div>
-  <div class="scope-range"><strong>Extreme spread</strong> (novices to power users): You need layered navigation &mdash; visible structural nav for discovery, keyboard shortcuts and &#8984;K for speed, possibly guided flows for onboarding. See Jared Spool on trained-use vs. walk-up-and-use interfaces.</div>
+  <div class="scope-range"><strong>Uniform:</strong> One navigation system. Optimize for the dominant expertise level.</div>
+  <div class="scope-range"><strong>Moderate spread:</strong> Structural nav for everyone, &#8984;K for power users. Role-aware defaults help.</div>
+  <div class="scope-range"><strong>Extreme spread:</strong> Layered navigation &mdash; visible structural nav for discovery, keyboard shortcuts for speed, guided flows for onboarding.</div>
 </div>
 
 <div class="scope-card">
   <div class="scope-card-question">4. How concentrated is usage?</div>
-  <div class="scope-range"><strong>Highly concentrated</strong> (~80% of sessions involve 2&ndash;3 Tasks): Elevate those Tasks to Job-level prominence. Everything else can be secondary. Optimize the critical path ruthlessly.</div>
-  <div class="scope-range"><strong>Evenly distributed:</strong> No single Task dominates. Navigation needs to give equal weight to many options &mdash; side nav or hub patterns work better than top bars with limited slots.</div>
-  <div class="scope-range"><strong>Mixed</strong> (some daily Tasks, some quarterly): The quarterly Tasks can't be buried &mdash; they need to be findable when needed, even if they're not prominent daily. Search and command palette become important safety nets.</div>
+  <div class="scope-range"><strong>Highly concentrated</strong> (~80% of sessions involve 2&ndash;3 Tasks): Elevate those Tasks to Job-level prominence.</div>
+  <div class="scope-range"><strong>Evenly distributed:</strong> Navigation needs equal weight across many options &mdash; side nav or hub patterns.</div>
+  <div class="scope-range"><strong>Mixed</strong> (daily + quarterly Tasks): Quarterly Tasks can't be buried. Search and &#8984;K become safety nets.</div>
 </div>
 
 <div class="scope-card">
   <div class="scope-card-question">5. How much navigation learning will users tolerate?</div>
-  <div class="scope-range"><strong>Near-zero:</strong> Navigation must be immediately obvious. Favor familiar patterns &mdash; top tabs, bottom bars, visible labels. No hidden interactions. Steve Krug's <em>Don't Make Me Think</em> is the classic reference.</div>
-  <div class="scope-range"><strong>Moderate:</strong> Users will invest some time if the product is central to their work. You can use richer patterns (collapsible sidebar, &#8984;K) if you provide good onboarding.</div>
-  <div class="scope-range"><strong>High:</strong> Users will learn complex navigation because the product is mission-critical and used daily. Training budgets exist. You can optimize for power-user efficiency over first-use simplicity. See NNG's enterprise UX research.</div>
+  <div class="scope-range"><strong>Near-zero:</strong> Must be immediately obvious. Familiar patterns only &mdash; top tabs, bottom bars, visible labels.</div>
+  <div class="scope-range"><strong>Moderate:</strong> Users will invest time if the product is central to their work. Richer patterns with good onboarding.</div>
+  <div class="scope-range"><strong>High:</strong> Mission-critical, daily use. Training budgets exist. Optimize for power-user efficiency.</div>
 </div>
 
 <div class="scope-card">
   <div class="scope-card-question">6. What platforms does your product serve?</div>
-  <div class="scope-range"><strong>Desktop-only:</strong> You have full access to side navigation, top bars, hover states, keyboard shortcuts, and multi-panel layouts. Optimize for screen real estate and pointer precision.</div>
-  <div class="scope-range"><strong>Responsive web (desktop + mobile browser):</strong> Your composition formula needs a responsive strategy. Side nav typically collapses to a hamburger or bottom sheet. Tabs may move from top to bottom. Hover-dependent interactions (mega-menus, contextual tooltips) need touch alternatives. Plan how each of your four layers adapts.</div>
-  <div class="scope-range"><strong>Native mobile (iOS/Android):</strong> Platform conventions apply. iOS favors bottom tab bars; Android favors top tabs and navigation drawers. &#8984;K becomes pull-down search. Contextual actions become swipe gestures or long-press menus. Your primary and secondary layers must respect platform-native patterns or risk feeling foreign.</div>
-  <div class="scope-range"><strong>Multi-platform (desktop + native mobile):</strong> You're maintaining two composition formulas that share a JTBD hierarchy but may use different paradigms at each layer. The Job and Task mapping stays identical; the paradigm selection diverges per platform. Document both.</div>
+  <div class="scope-range"><strong>Desktop-only:</strong> Full access to side nav, hover states, keyboard shortcuts, multi-panel layouts.</div>
+  <div class="scope-range"><strong>Responsive web:</strong> Your composition formula needs a responsive strategy. Side nav collapses; hover interactions need touch alternatives.</div>
+  <div class="scope-range"><strong>Native mobile:</strong> Platform conventions apply. iOS favors bottom tabs; Android favors top tabs and drawers. &#8984;K becomes pull-down search.</div>
+  <div class="scope-range"><strong>Multi-platform:</strong> Two composition formulas sharing a JTBD hierarchy but using different paradigms per platform.</div>
 </div>
 
-<div class="callout callout-green">
+<div class="callout">
   <span class="callout-label">What to do with your answers</span>
-  <p>Your scoping profile directly feeds the next two steps. High Job count + deep Task tree + extreme expertise spread + multi-platform = you're building an enterprise-grade layered navigation system. Low Job count + shallow Tasks + near-zero tolerance + mobile-only = you're building a consumer-style flat navigation. Most products land somewhere in between &mdash; your specific combination of answers will tell you which paradigms to prioritize in Step 05.</p>
+  <p>Your scoping profile feeds the next two steps. High Job count + deep Task tree + extreme expertise + multi-platform = enterprise-grade layered navigation. Low Job count + shallow Tasks + near-zero tolerance + mobile-only = consumer-style flat navigation. Your specific combination tells you which paradigms to prioritize in Step 05.</p>
+</div>
+
+</div>
 </div>
 
 
 <!-- ============================================================ -->
 <!-- STEP 04: ASSESS -->
 <!-- ============================================================ -->
+<div class="section" id="s4">
+<div class="content">
 
-<h2 id="s4"><span class="step-label">Step 04</span><span class="step-verb">Assess</span><span class="step-question">How do roles and context shape the navigation?</span></h2>
+<div class="stepper">
+  <div class="stepper-step completed"><div class="stepper-dot"></div> 01</div><div class="stepper-line"></div>
+  <div class="stepper-step completed"><div class="stepper-dot"></div> 02</div><div class="stepper-line"></div>
+  <div class="stepper-step completed"><div class="stepper-dot"></div> 03</div><div class="stepper-line"></div>
+  <div class="stepper-step current"><div class="stepper-dot"></div> 04</div><div class="stepper-line"></div>
+  <div class="stepper-step"><div class="stepper-dot"></div> 05</div><div class="stepper-line"></div>
+  <div class="stepper-step"><div class="stepper-dot"></div> 06</div>
+</div>
 
-<p>Three behavioral dimensions constrain your paradigm options: role-based flexing operates at the Job level (different roles have different Job maps), adaptive flexing operates at the Task and Activity levels (navigation changes based on what the user is doing right now), and user context shapes how every tier should <em>feel</em> (the same Task needs different navigation behavior depending on the user's state of mind).</p>
+<span class="step-label">Step 04</span>
+<h2>Assess</h2>
+<span class="step-question">How do roles and context shape the navigation?</span>
 
-<h3>Role-Based Navigation &mdash; Job-level flexing</h3>
+<p style="margin-top: 20px;">Three behavioral dimensions constrain your paradigm options: role-based flexing at the Job level, adaptive flexing at the Task and Activity levels, and user context that shapes how every tier should <em>feel</em>.</p>
 
-<p>The question: how different are the Job maps between your user roles, and therefore how different should the navigation be?</p>
+<h3 id="s4-role">Role-Based Navigation</h3>
 
 <table>
   <tr><th>Approach</th><th>How it works</th><th>When to use</th><th>Risk</th></tr>
-  <tr><td>Separate apps</td><td>Each role gets its own application with its own nav.</td><td>Roles share &lt;20% of Jobs. ServiceNow's admin portal vs. employee self-service &mdash; completely different Job maps.</td><td>Maintenance doubles.</td></tr>
+  <tr><td>Separate apps</td><td>Each role gets its own application.</td><td>Roles share &lt;20% of Jobs.</td><td>Maintenance doubles.</td></tr>
   <tr><td>Role-filtered</td><td>One nav, items shown/hidden by role.</td><td>Roles share core Jobs but differ in access.</td><td>Ghost nav &mdash; users sense hidden items.</td></tr>
-  <tr><td>Role-aware defaults</td><td>Same nav, different starting points and pinned items by role.</td><td>Same Jobs, different frequency patterns.</td><td>Lowest risk. Full nav remains explorable.</td></tr>
+  <tr><td>Role-aware defaults</td><td>Same nav, different starting points by role.</td><td>Same Jobs, different frequency patterns.</td><td>Lowest risk.</td></tr>
 </table>
 
-<div class="callout callout-blue">
+<div class="callout">
   <span class="callout-label">Recommendation</span>
-  <p>Start with role-aware defaults. Only escalate to role-filtered when Jobs genuinely diverge. Only build separate apps when Job maps have less than 20% overlap. If you decomposed for multiple personas in Step 01, your overlap ratio tells you exactly which approach to use.</p>
+  <p>Start with role-aware defaults. Only escalate to role-filtered when Jobs genuinely diverge. Only build separate apps when Job maps have less than 20% overlap. When roles share more than 70% of Jobs, treat them as one role with different defaults &mdash; a PM lands on a project dashboard; a team lead lands on the team view. Same nav, different starting points.</p>
 </div>
 
-<div class="callout callout-purple">
-  <span class="callout-label">When roles overlap heavily</span>
-  <p>When roles share more than 70% of their Jobs, treat them as one role with different defaults rather than separate role buckets. A PM and a team lead with 90% Job overlap don't need different navigation &mdash; they need different starting points. The PM lands on a project dashboard; the team lead lands on the team view. Same nav, different defaults. Only invest in role-filtered or separate navigation when the Job maps genuinely diverge (&lt;70% overlap), which usually means the roles serve fundamentally different audiences or functions within the organization.</p>
-</div>
-
-<h3>Adaptive / Contextual Navigation &mdash; Task &amp; Activity-level flexing</h3>
+<h3 id="s4-adaptive">Adaptive / Contextual Navigation</h3>
 
 <table>
-  <tr><th>Type</th><th>JTBD Level</th><th>How it works</th><th>Example</th><th>Risk</th></tr>
-  <tr><td>Workflow-state</td><td>Activity</td><td>Nav changes based on workflow progress.</td><td>Editor toolbar shifts from editing to review tools when doc enters "Review" state.</td><td>"Where did my button go?"</td></tr>
-  <tr><td>Frequency-adaptive</td><td>Task</td><td>Frequently-used items gain prominence.</td><td>Slack's sidebar reorders channels by recent activity.</td><td>Spatial memory breaks.</td></tr>
-  <tr><td>Data-state-driven</td><td>Task</td><td>System data changes navigation priority.</td><td>An overdue SLA ticket rises to the top of the queue. A blocked critical-path issue surfaces a warning banner.</td><td>Users lose sense of control if overused.</td></tr>
-  <tr><td>Mode-switching</td><td>Job (border)</td><td>Entire nav restructures on mode change.</td><td>Figma: file browser &rarr; canvas. Different Jobs, different nav.</td><td>Two mental models.</td></tr>
+  <tr><th>Type</th><th>Level</th><th>How it works</th><th>Example</th><th>Risk</th></tr>
+  <tr><td>Workflow-state</td><td>Activity</td><td>Nav changes based on workflow progress.</td><td>Editor toolbar shifts from editing to review tools.</td><td>"Where did my button go?"</td></tr>
+  <tr><td>Frequency-adaptive</td><td>Task</td><td>Frequently-used items gain prominence.</td><td>Slack reorders channels by recent activity.</td><td>Spatial memory breaks.</td></tr>
+  <tr><td>Data-state-driven</td><td>Task</td><td>System data changes navigation priority.</td><td>Overdue SLA ticket rises to queue top. Blocked issue surfaces a warning.</td><td>Loss of user control if overused.</td></tr>
+  <tr><td>Mode-switching</td><td>Job</td><td>Entire nav restructures on mode change.</td><td>Figma: file browser &rarr; canvas.</td><td>Two mental models.</td></tr>
 </table>
 
-<div class="callout callout-warm">
+<div class="callout">
   <span class="callout-label">Data-State-Driven Priority</span>
-  <p>This is distinct from frequency-adaptive navigation. Frequency-adaptive responds to <strong>what the user does often</strong>. Data-state-driven responds to <strong>what the system's data says is urgent right now</strong> &mdash; SLA breaches, blocked dependencies, overdue tasks, anomalous metrics. The navigation priority isn't just about user behavior patterns; it's about the <em>state of the work</em> driving prominence. Use sparingly: if everything is urgent, nothing is. Reserve data-state escalation for genuinely time-sensitive or high-impact signals.</p>
+  <p>Distinct from frequency-adaptive. Frequency responds to <strong>what the user does often</strong>. Data-state responds to <strong>what the system says is urgent now</strong> &mdash; SLA breaches, blocked dependencies, overdue tasks. Use sparingly: if everything is urgent, nothing is.</p>
 </div>
 
 <div class="callout callout-red">
@@ -755,63 +1146,69 @@ pointer to the same destination.</div>
   <p>Never remove navigation options silently. If something will disappear, move, or change, the user needs to understand why. Adaptive navigation must be <em>transparently</em> adaptive.</p>
 </div>
 
-<h3>User Contexts &mdash; How state of mind shapes navigation behavior</h3>
+<h3 id="s4-contexts">User Contexts</h3>
 
-<p>Most navigation frameworks ignore the user's state of mind. But the context a user brings to a Task &mdash; whether they're uncertain, expert, exploring, or under pressure &mdash; changes how the navigation tier should <em>behave</em>, even when the structural mapping stays the same.</p>
+<p>The context a user brings to a Task &mdash; whether they're uncertain, expert, exploring, or under pressure &mdash; changes how navigation should <em>behave</em>, even when the structural mapping stays the same.</p>
 
-<h4>How to identify which contexts apply to your users</h4>
-
-<p><strong>Listen to language.</strong> In user interviews and support tickets, anxious users say "I'm worried about..." or "what happens if I...?" Confident users say "I just want to..." or "why can't I just...?" Exploratory users ask "what does this do?" or "what's this for?" Urgent users say "I need to fix this right now" or "this is broken."</p>
-
-<p><strong>Look at session patterns.</strong> Short sessions with high page-per-minute rates suggest urgency or confidence. Long sessions with low page-per-minute suggest exploration. Sessions that start and abandon midway suggest anxiety. Your analytics can surface these patterns without any qualitative research.</p>
-
-<p><strong>Map to user lifecycle.</strong> New users are more likely to be anxious or exploratory. Power users are more likely to be confident. Users returning after an incident are urgent. Your onboarding cohort vs. retained cohort vs. reactivated cohort roughly maps to these contexts.</p>
-
-<p>Four user contexts matter most for navigation design:</p>
-
-<div class="emotion-card">
-  <h4>Context: Anxiety / First-time uncertainty</h4>
-  <p><strong>What it feels like:</strong> Fear of making a mistake, uncertainty about consequences, worry about getting locked out or losing data.</p>
-  <p><strong>Navigation implication:</strong> Narrow the navigation. Reduce choices. Guide with steppers and linear flows. The user doesn't want freedom to explore &mdash; they want to feel safe and guided.</p>
-  <div class="example-block"><span class="callout-label">Example: Stripe's onboarding</span>A first-time merchant setting up payments. Stripe collapses the full dashboard into a focused checklist &mdash; a guided stepper that isolates the user from complexity.</div>
+<div class="qa-card">
+  <h4>Anxiety / First-time uncertainty</h4>
+  <p><strong>What it feels like:</strong> Fear of making a mistake, uncertainty about consequences.</p>
+  <p><strong>Navigation implication:</strong> Narrow the navigation. Reduce choices. Guide with steppers and linear flows.</p>
+  <div class="example-block"><span class="callout-label">Example: Stripe's onboarding</span>Stripe collapses the full dashboard into a focused checklist &mdash; a guided stepper that isolates the user from complexity.</div>
 </div>
 
-<div class="emotion-card">
-  <h4>Context: Confidence / High-frequency flow</h4>
-  <p><strong>What it feels like:</strong> Mastery, impatience with unnecessary steps, desire for speed. "I know exactly what I need &mdash; get out of my way."</p>
-  <p><strong>Navigation implication:</strong> Minimize structural navigation. Provide keyboard shortcuts, command palette access, and direct-action buttons that bypass the hierarchy.</p>
-  <div class="example-block"><span class="callout-label">Example: Salesforce Global Actions</span>An experienced sales rep logging their 15th call of the day. Salesforce's Global Actions "+" button lets them create a record from anywhere, bypassing hierarchy entirely.</div>
+<div class="qa-card">
+  <h4>Confidence / High-frequency flow</h4>
+  <p><strong>What it feels like:</strong> Mastery, impatience with unnecessary steps. "I know exactly what I need."</p>
+  <p><strong>Navigation implication:</strong> Minimize structural navigation. Provide keyboard shortcuts, &#8984;K, and direct-action buttons that bypass hierarchy.</p>
+  <div class="example-block"><span class="callout-label">Example: Salesforce Global Actions</span>The "+" button lets experienced reps create a record from anywhere, bypassing hierarchy entirely.</div>
 </div>
 
-<div class="emotion-card">
-  <h4>Context: Exploration / Discovery</h4>
-  <p><strong>What it feels like:</strong> Uncertainty about what questions to ask, interest in browsing, building a mental model. "I don't know what I don't know."</p>
-  <p><strong>Navigation implication:</strong> Expose multiple entry points with enough context to help self-selection. Hub layouts, visible tab bars, and card-based overviews work well.</p>
-  <div class="example-block"><span class="callout-label">Example: Google Analytics 4 Home</span>A new marketing manager opening analytics for the first time. GA4's home screen shows summary cards &mdash; each a window into a different dimension &mdash; helping the user self-select which rabbit hole to explore.</div>
+<div class="qa-card">
+  <h4>Exploration / Discovery</h4>
+  <p><strong>What it feels like:</strong> Uncertainty about what questions to ask. "I don't know what I don't know."</p>
+  <p><strong>Navigation implication:</strong> Expose multiple entry points with enough context to help self-selection. Hub layouts, visible tab bars, and card-based overviews.</p>
+  <div class="example-block"><span class="callout-label">Example: Google Analytics 4 Home</span>GA4's home screen shows summary cards &mdash; each a window into a different dimension &mdash; helping users self-select.</div>
 </div>
 
-<div class="emotion-card">
-  <h4>Context: Urgency / Crisis response</h4>
-  <p><strong>What it feels like:</strong> Pressure, time sensitivity, tunnel vision. "Something is broken and I need to fix it now."</p>
-  <p><strong>Navigation implication:</strong> Strip away non-essential options. Surface critical Tasks in one click from anywhere. The interface should focus down to just what's needed.</p>
-  <div class="example-block"><span class="callout-label">Example: PagerDuty's Incident View</span>An IT admin during a production outage. PagerDuty narrows the entire UI to the active incident &mdash; timeline, responders, runbooks, status. Normal navigation recedes.</div>
+<div class="qa-card">
+  <h4>Urgency / Crisis response</h4>
+  <p><strong>What it feels like:</strong> Pressure, tunnel vision. "Something is broken and I need to fix it now."</p>
+  <p><strong>Navigation implication:</strong> Strip away non-essential options. Surface critical Tasks in one click from anywhere.</p>
+  <div class="example-block"><span class="callout-label">Example: PagerDuty's Incident View</span>PagerDuty narrows the entire UI to the active incident &mdash; timeline, responders, runbooks, status. Normal navigation recedes.</div>
 </div>
 
-<div class="callout callout-sn">
+<div class="callout-emphasis callout">
   <span class="callout-label">Connecting Context to Structure</span>
-  <p>The JTBD hierarchy tells you <strong>what tier</strong> of navigation something belongs to. The user's context tells you <strong>how that tier should behave</strong>. An anxious first-timer and a confident power user may be performing the same Task at the same tier &mdash; but the navigation should feel different for each. When selecting paradigms in the next step, test your choices against these four contexts. Ask: "Does this paradigm serve my anxious users? My confident users? My explorers? My urgent users?" If it fails any context that represents a significant portion of your user base, you need an additional layer or an adaptation strategy.</p>
+  <p>The JTBD hierarchy tells you <strong>what tier</strong> of navigation something belongs to. User context tells you <strong>how that tier should behave</strong>. When selecting paradigms in Step 05, test your choices against these four contexts: does this paradigm serve my anxious users? My confident users? My explorers? My urgent users?</p>
+</div>
+
+</div>
 </div>
 
 
 <!-- ============================================================ -->
 <!-- STEP 05: SELECT -->
 <!-- ============================================================ -->
+<div class="section" id="s5">
+<div class="content">
 
-<h2 id="s5"><span class="step-label">Step 05</span><span class="step-verb">Select</span><span class="step-question">Which navigation paradigms fit?</span></h2>
+<div class="stepper">
+  <div class="stepper-step completed"><div class="stepper-dot"></div> 01</div><div class="stepper-line"></div>
+  <div class="stepper-step completed"><div class="stepper-dot"></div> 02</div><div class="stepper-line"></div>
+  <div class="stepper-step completed"><div class="stepper-dot"></div> 03</div><div class="stepper-line"></div>
+  <div class="stepper-step completed"><div class="stepper-dot"></div> 04</div><div class="stepper-line"></div>
+  <div class="stepper-step current"><div class="stepper-dot"></div> 05</div><div class="stepper-line"></div>
+  <div class="stepper-step"><div class="stepper-dot"></div> 06</div>
+</div>
 
-<p>Now that you've decomposed your Jobs, mapped them to tiers, scoped your constraints, and assessed behavioral dimensions &mdash; you're ready to select structural paradigms. Eight paradigms, each with a natural affinity for specific JTBD levels. Real products combine 2&ndash;3.</p>
+<span class="step-label">Step 05</span>
+<h2>Select</h2>
+<span class="step-question">Which navigation paradigms fit?</span>
 
-<!-- PARADIGM 1: TOP NAV -->
+<p style="margin-top: 20px;" id="s5-paradigms">Eight paradigms, each with a natural affinity for specific JTBD levels. Real products combine 2&ndash;3.</p>
+
+<!-- PARADIGM 1 -->
 <div class="paradigm">
   <h3>1. Top Navigation Bar</h3>
   <div class="paradigm-meta"><span>Job-level</span><span>Always visible</span><span>4&ndash;7 items</span></div>
@@ -820,12 +1217,11 @@ pointer to the same destination.</div>
     <div class="strength"><div class="col-header">Strengths</div><div class="col-item">Universally understood</div><div class="col-item">Always accessible</div><div class="col-item">Maps to 4&ndash;7 Jobs cleanly</div><div class="col-item">Extends via mega-menus</div></div>
     <div class="weakness"><div class="col-header">Weaknesses</div><div class="col-item">Breaks beyond ~7 items</div><div class="col-item">Competes for vertical space</div><div class="col-item">Deep hierarchies need secondary patterns</div><div class="col-item">Mobile adaptation is non-trivial</div></div>
   </div>
-  <div class="example-block"><span class="callout-label">Examples</span><strong>Shopify Admin</strong> &mdash; top nav for 5&ndash;6 core seller Jobs. <strong>GitHub</strong> &mdash; top bar for profile nav, tabs within repos (Job &rarr; Task).</div>
+  <div class="example-block"><span class="callout-label">Examples</span><strong>Shopify Admin</strong> &mdash; top nav for 5&ndash;6 core seller Jobs. <strong>GitHub</strong> &mdash; top bar for profile nav, tabs within repos.</div>
   <div class="anti-pattern"><span class="callout-label">Anti-pattern: The Link Wall</span>12&ndash;15 items in the top bar. Nothing is prominent because everything is.</div>
-  <p class="practitioner-note">Enterprise: Often becomes a thin utility bar. Consumer: For &le;5 Jobs, often the only nav you need.</p>
 </div>
 
-<!-- PARADIGM 2: SIDE NAV -->
+<!-- PARADIGM 2 -->
 <div class="paradigm">
   <h3>2. Side Navigation (Rail / Drawer)</h3>
   <div class="paradigm-meta"><span>Job + Task level</span><span>Persistent or toggle</span><span>8&ndash;25+ items</span></div>
@@ -836,10 +1232,9 @@ pointer to the same destination.</div>
   </div>
   <div class="example-block"><span class="callout-label">Examples</span><strong>Figma</strong> &mdash; sidebar shifts between file browser and design Tasks. <strong>Salesforce</strong> &mdash; App Launcher admits the side nav can't hold everything.</div>
   <div class="anti-pattern"><span class="callout-label">Anti-pattern: Accordion Hell</span>Three levels of nested accordions. Use breadcrumbs for deeper levels.</div>
-  <p class="practitioner-note">Enterprise: Default pattern, requires governance. Consumer: Rarely needed; when used, heavily curated.</p>
 </div>
 
-<!-- PARADIGM 3: TAB BAR -->
+<!-- PARADIGM 3 -->
 <div class="paradigm">
   <h3>3. Tab Bar / Segmented Control</h3>
   <div class="paradigm-meta"><span>Task-level</span><span>Within Job context</span><span>3&ndash;5 items</span></div>
@@ -850,15 +1245,13 @@ pointer to the same destination.</div>
   </div>
   <div class="example-block"><span class="callout-label">Examples</span><strong>Notion</strong> &mdash; tabs for database views. <strong>Instagram</strong> &mdash; bottom tabs for 5 core Jobs.</div>
   <div class="anti-pattern"><span class="callout-label">Anti-pattern: Scrolling Tab Bar</span>If your tabs scroll, they're not tabs. Switch patterns.</div>
-  <p class="practitioner-note">Enterprise: Good within entity views; watch for overload. Consumer: Bottom tab bar is the most important mobile pattern.</p>
-
-  <div class="callout callout-blue" style="margin-top: 18px;">
+  <div class="callout" style="margin-top: 16px;">
     <span class="callout-label">Parallel Views Are Tasks, Not Activities</span>
-    <p>Board view, List view, Timeline view, Calendar view &mdash; these are Task-level. Each view represents a different way of engaging with the same work: a Board emphasizes status and flow, a Timeline emphasizes scheduling. Use tabs or a segmented control, not a dropdown. Tabs expose all options simultaneously, which matters because users often switch between views as part of their workflow. A dropdown hides the options, adding friction to a high-frequency switch.</p>
+    <p>Board view, List view, Timeline view &mdash; these are Task-level. Each represents a different way of engaging with the same work. Use tabs, not a dropdown. Tabs expose all options simultaneously, which matters for high-frequency switching.</p>
   </div>
 </div>
 
-<!-- PARADIGM 4: BREADCRUMB -->
+<!-- PARADIGM 4 -->
 <div class="paradigm">
   <h3>4. Breadcrumb + Drill-down</h3>
   <div class="paradigm-meta"><span>Activity depth</span><span>Path-based</span><span>Unlimited</span></div>
@@ -867,12 +1260,11 @@ pointer to the same destination.</div>
     <div class="strength"><div class="col-header">Strengths</div><div class="col-item">Infinite depth, zero clutter</div><div class="col-item">Focuses attention</div><div class="col-item">Clear wayfinding</div><div class="col-item">Maximum viewport space</div></div>
     <div class="weakness"><div class="col-header">Weaknesses</div><div class="col-item">Sibling nav requires backtracking</div><div class="col-item">Parallel options invisible</div><div class="col-item">Deep paths feel like a maze</div><div class="col-item">Each click is a commitment</div></div>
   </div>
-  <div class="example-block"><span class="callout-label">Examples</span><strong>AWS Console</strong> &mdash; breadcrumbs for deep hierarchies. <strong>Stripe Dashboard</strong> &mdash; breadcrumbs + persistent sidebar (strong compound).</div>
+  <div class="example-block"><span class="callout-label">Examples</span><strong>AWS Console</strong> &mdash; breadcrumbs for deep hierarchies. <strong>Stripe Dashboard</strong> &mdash; breadcrumbs + persistent sidebar.</div>
   <div class="anti-pattern"><span class="callout-label">Anti-pattern: Truncated Middle</span>"Home &gt; ... &gt; Current Page" &mdash; the middle is where users need context.</div>
-  <p class="practitioner-note">Enterprise: Almost always needed somewhere. Consumer: If you need breadcrumbs, reconsider the hierarchy depth.</p>
 </div>
 
-<!-- PARADIGM 5: COMMAND PALETTE -->
+<!-- PARADIGM 5 -->
 <div class="paradigm">
   <h3>5. Command Palette / Search-first</h3>
   <div class="paradigm-meta"><span>Cross-cutting</span><span>On-demand (&#8984;K)</span><span>Infinite</span></div>
@@ -883,10 +1275,9 @@ pointer to the same destination.</div>
   </div>
   <div class="example-block"><span class="callout-label">Examples</span><strong>Linear</strong> &mdash; &#8984;K is central but paired with full sidebar. <strong>macOS Spotlight</strong> &mdash; consumer archetype.</div>
   <div class="anti-pattern"><span class="callout-label">Anti-pattern: Search as Sole Navigation</span>No structural fallback = new users can't browse or build a mental model.</div>
-  <p class="practitioner-note">Enterprise: Increasingly table-stakes. Consumer: Surface as a visible search bar.</p>
 </div>
 
-<!-- PARADIGM 6: HUB & SPOKE -->
+<!-- PARADIGM 6 -->
 <div class="paradigm">
   <h3>6. Hub &amp; Spoke / Dashboard</h3>
   <div class="paradigm-meta"><span>Job-level entry</span><span>Central home</span><span>Unlimited via cards</span></div>
@@ -897,10 +1288,9 @@ pointer to the same destination.</div>
   </div>
   <div class="example-block"><span class="callout-label">Examples</span><strong>Microsoft 365</strong> &mdash; hub with tiles, spokes with their own nav. <strong>Apple Home</strong> &mdash; rooms as spokes.</div>
   <div class="anti-pattern"><span class="callout-label">Anti-pattern: Metrics Cemetery</span>Charts and KPIs everywhere, paths to action nowhere.</div>
-  <p class="practitioner-note">Enterprise: Best hubs are personalized by role. Consumer: Works when Jobs are distinct.</p>
 </div>
 
-<!-- PARADIGM 7: CONTEXTUAL / FLOATING -->
+<!-- PARADIGM 7 -->
 <div class="paradigm">
   <h3>7. Contextual / Floating Navigation</h3>
   <div class="paradigm-meta"><span>Activity-level</span><span>Context-based</span><span>3&ndash;8 actions</span></div>
@@ -909,61 +1299,41 @@ pointer to the same destination.</div>
     <div class="strength"><div class="col-header">Strengths</div><div class="col-item">Zero clutter when inactive</div><div class="col-item">Actions at point of attention</div><div class="col-item">Contextually filtered</div><div class="col-item">Responsive to state</div></div>
     <div class="weakness"><div class="col-header">Weaknesses</div><div class="col-item">Low discoverability</div><div class="col-item">Inconsistent placement</div><div class="col-item">Can feel unpredictable</div><div class="col-item">Competing overlays</div></div>
   </div>
-  <div class="example-block"><span class="callout-label">Examples</span><strong>Figma</strong> &mdash; toolbar adapts to selection type. <strong>Google Docs</strong> &mdash; formatting on text selection, "+" for blocks.</div>
+  <div class="example-block"><span class="callout-label">Examples</span><strong>Figma</strong> &mdash; toolbar adapts to selection type. <strong>Google Docs</strong> &mdash; formatting on text selection.</div>
   <div class="anti-pattern"><span class="callout-label">Anti-pattern: The Surprise Menu</span>Hover-only actions with no affordance. Provide at least a subtle hint.</div>
-  <p class="practitioner-note">Enterprise: Show 5 common actions, nest the rest. Consumer: The FAB &mdash; one action, zero confusion.</p>
 </div>
 
-<!-- PARADIGM 8: WORK QUEUE (NEW IN SIGHTLINE) -->
+<!-- PARADIGM 8 -->
 <div class="paradigm">
   <h3>8. Work Queue / Filtered List</h3>
   <div class="paradigm-meta"><span>Queue-level</span><span>Persistent</span><span>Unlimited via filters</span></div>
-  <p>A filterable, sortable, prioritized list of items that need processing. The primary navigation <em>is</em> the work itself &mdash; not a menu pointing to work elsewhere. The user's main interaction is scanning, selecting, and processing items from this list.</p>
+  <p>A filterable, sortable, prioritized list of items that need processing. The primary navigation <em>is</em> the work itself.</p>
   <div class="two-col">
     <div class="strength"><div class="col-header">Strengths</div><div class="col-item">Work IS the navigation</div><div class="col-item">Natural priority ordering</div><div class="col-item">Scales via filters and saved views</div><div class="col-item">Supports reactive workflows</div></div>
     <div class="weakness"><div class="col-header">Weaknesses</div><div class="col-item">No structural hierarchy visible</div><div class="col-item">Filter configuration complexity</div><div class="col-item">Queue anxiety (overwhelming volume)</div><div class="col-item">Hard to surface non-queue Tasks</div></div>
   </div>
-  <div class="example-block"><span class="callout-label">Examples</span><strong>Zendesk</strong> &mdash; ticket views as the primary workspace; filters, macros, and saved views customize the queue. <strong>Gmail</strong> &mdash; inbox with labels, stars, and smart categories. <strong>Linear</strong> &mdash; issue lists with custom views that function as the primary navigation. <strong>GitHub Pull Request review queue</strong> &mdash; filtered list of PRs awaiting review.</div>
-  <div class="anti-pattern"><span class="callout-label">Anti-pattern: The Unfiltered Firehose</span>Hundreds of items with no saved views, no default sorting, and no visual priority signals. The user has to configure the queue before they can use it. Provide sensible defaults: "My items," "High priority," "Recently updated."</div>
-  <p class="practitioner-note">Enterprise: The default pattern for support, operations, and approval workflows. Pair with saved views and keyboard shortcuts for power users. Consumer: Inbox patterns (email, notifications, messages) &mdash; sort by recency, group by sender/thread.</p>
+  <div class="example-block"><span class="callout-label">Examples</span><strong>Zendesk</strong> &mdash; ticket views as primary workspace. <strong>Gmail</strong> &mdash; inbox with labels and smart categories. <strong>Linear</strong> &mdash; issue lists with custom views.</div>
+  <div class="anti-pattern"><span class="callout-label">Anti-pattern: The Unfiltered Firehose</span>Hundreds of items with no saved views or default sorting. Provide sensible defaults: "My items," "High priority," "Recently updated."</div>
 </div>
 
 
-<h3>Composing Your Navigation System</h3>
+<h3 id="s5-compose">Composing Your Navigation System</h3>
 
-<p>Individual paradigms are building blocks. The real design decision is how you layer them. A well-composed navigation system has up to four layers, each serving a distinct purpose. Tension arises when two paradigms compete for the same layer, not when you have "too many" paradigms total.</p>
+<p>Individual paradigms are building blocks. A well-composed system has up to four layers. Tension arises when two paradigms compete for the same layer.</p>
 
 <h4>Layer 1: Primary Structure</h4>
-
-<p>One paradigm that serves your navigation anchor &mdash; the model you identified in the Map step. This is the backbone of your navigation.</p>
-
-<p>If your anchor is <strong>Jobs/phases</strong> (process-first) and you have &le;5: top nav bar. If 5&ndash;15: side nav. If 15+: hub &amp; spoke.</p>
-
-<p>If your anchor is <strong>entities</strong> (entity-first): side nav or list view for the entity collection. Hub &amp; spoke if entities are highly distinct.</p>
-
-<p>If your anchor is a <strong>queue</strong> (queue-first): work queue / filtered list as the primary content area, with a thin top bar or sidebar for queue view switching (My Queue, Unassigned, All).</p>
-
-<p>If your anchor is <strong>modes</strong> (activity-first): the primary structure is the mode-switch mechanism itself. The management mode then gets its own primary structure using any of the above.</p>
+<p><strong>Process-first</strong> &le;5: top nav. 5&ndash;15: side nav. 15+: hub &amp; spoke. <strong>Entity-first:</strong> side nav or list view. <strong>Queue-first:</strong> work queue with thin sidebar for view switching. <strong>Activity-first:</strong> the mode-switch mechanism itself.</p>
 
 <h4>Layer 2: Secondary Structure</h4>
-
-<p>One paradigm that serves the tier inside your primary anchor. This is where most Task-level navigation happens.</p>
-
-<p><strong>Tab bar or segmented control</strong> when you have 3&ndash;5 parallel options within the primary anchor &mdash; Job-phase tabs inside an entity, Task tabs inside a Job workspace, detail tabs within a queue item. <strong>Collapsible sub-sections</strong> within a side nav when the secondary tier has more than 5 items or needs grouping. These two are mutually exclusive at the same level.</p>
+<p><strong>Tab bar</strong> for 3&ndash;5 parallel options within the primary anchor. <strong>Collapsible sub-sections</strong> for 5+ items. Mutually exclusive at the same level.</p>
 
 <h4>Layer 3: Depth Handling (conditional)</h4>
-
-<p>Only needed if your Task tree goes beyond 2 levels. Most consumer products skip this layer. Most enterprise products need it.</p>
-
-<p><strong>Breadcrumb + drill-down</strong> is the standard depth handler. It works alongside any primary and secondary structure &mdash; the side nav handles the top two levels, breadcrumbs handle everything below. If you don't need depth handling, skip this layer entirely. Adding breadcrumbs to a shallow product creates visual noise without utility.</p>
+<p>Only needed beyond 2 levels. <strong>Breadcrumb + drill-down</strong> is the standard depth handler. Skip this for shallow products.</p>
 
 <h4>Layer 4: Accelerators (additive)</h4>
+<p><strong>&#8984;K</strong> for users who know what they want. <strong>Contextual actions</strong> for Activity-level interactions. Both can coexist. Neither counts toward structural complexity.</p>
 
-<p>These paradigms layer on top of any structural combination. They never conflict with structural paradigms because they operate in a different interaction mode &mdash; invoked on demand rather than persistently visible.</p>
-
-<p><strong>Command palette (&#8984;K)</strong> &mdash; for users who know what they want. Add when your Scope step revealed moderate-to-high expertise or mixed usage concentration. <strong>Contextual / floating actions</strong> &mdash; for Activity-level interactions. Add when core Tasks involve manipulation (editing, creating, configuring) rather than just consumption (reading, reviewing). Both accelerators can coexist. Neither counts toward structural complexity.</p>
-
-<div class="callout callout-sn">
+<div class="callout-emphasis callout">
   <span class="callout-label">The Composition Formula</span>
   <p><strong>[Primary] + [Secondary] + [Depth] + [Accelerators]</strong></p>
   <p>One paradigm per structural slot. Two in the same slot = conflict. Empty primary or secondary = gap. Depth and accelerators are optional.</p>
@@ -971,149 +1341,160 @@ pointer to the same destination.</div>
 
 <div class="example-block">
   <span class="callout-label">Composition Examples</span>
-  <p><strong>Salesforce</strong> (entity-first):<br>Side nav (entities) + Tabs (concerns per entity) + Breadcrumbs + &#8984;K</p>
-  <p><strong>Instagram</strong> (process-first):<br>Bottom tab bar (Jobs) + Full-screen pages (Tasks) + None + Contextual actions</p>
-  <p><strong>Figma</strong> (activity-first):<br>Mode-switch (browse &harr; canvas) + Side panel (layers/assets) + None + &#8984;K + Contextual toolbar</p>
-  <p><strong>Zendesk</strong> (queue-first):<br>Work queue (ticket views) + Tabs (ticket detail sections) + None + Macros + Keyboard shortcuts</p>
+  <p><strong>Salesforce</strong> (entity-first): Side nav + Tabs + Breadcrumbs + &#8984;K</p>
+  <p><strong>Instagram</strong> (process-first): Bottom tab bar + Full-screen pages + None + Contextual actions</p>
+  <p><strong>Figma</strong> (activity-first): Mode-switch + Side panel + None + &#8984;K + Contextual toolbar</p>
+  <p><strong>Zendesk</strong> (queue-first): Work queue + Tabs + None + Macros + Keyboard shortcuts</p>
 </div>
 
-<h3>Adapting Composition Across Platforms</h3>
+<h3 id="s5-platforms">Adapting Composition Across Platforms</h3>
 
-<p>If your Scope step revealed a multi-platform product, your JTBD hierarchy stays the same but the paradigm selection diverges per platform. The most common adaptations:</p>
+<p>If your product is multi-platform, your JTBD hierarchy stays the same but paradigm selection diverges per platform:</p>
 
 <table>
   <tr><th>Desktop Layer</th><th>Common Mobile Adaptation</th></tr>
-  <tr><td>Side navigation (primary)</td><td>Bottom tab bar (if &le;5 items) or hamburger drawer</td></tr>
+  <tr><td>Side navigation</td><td>Bottom tab bar (&le;5 items) or hamburger drawer</td></tr>
   <tr><td>Top navigation bar</td><td>Bottom tab bar or collapsible header</td></tr>
-  <tr><td>Work queue (primary)</td><td>Full-screen list with pull-to-refresh; detail view pushes as new screen</td></tr>
+  <tr><td>Work queue</td><td>Full-screen list with pull-to-refresh</td></tr>
   <tr><td>Tab bar (secondary)</td><td>Scrollable top tabs or segmented control</td></tr>
-  <tr><td>Breadcrumbs (depth)</td><td>Back button + page title (native stack navigation)</td></tr>
+  <tr><td>Breadcrumbs</td><td>Back button + page title (native stack nav)</td></tr>
   <tr><td>&#8984;K command palette</td><td>Pull-down search or dedicated search tab</td></tr>
-  <tr><td>Contextual / floating actions</td><td>FAB, swipe gestures, long-press menus</td></tr>
+  <tr><td>Contextual / floating</td><td>FAB, swipe gestures, long-press menus</td></tr>
 </table>
 
-<p>Document both compositions explicitly. Don't treat mobile as "the desktop nav, but collapsed" &mdash; treat it as a parallel composition that shares the same JTBD mapping but uses platform-appropriate paradigms.</p>
+</div>
+</div>
 
 
 <!-- ============================================================ -->
 <!-- STEP 06: AUDIT -->
 <!-- ============================================================ -->
+<div class="section" id="s6">
+<div class="content">
 
-<h2 id="s6"><span class="step-label">Step 06</span><span class="step-verb">Audit</span><span class="step-question">How do I know my navigation works?</span></h2>
-
-<p>Seven principles for auditing your navigation system. Each includes conceptual framing, a decision question, and an implementation example &mdash; color-coded by audience.</p>
-
-<div class="legend">
-  <div class="legend-item"><div class="legend-dot" style="background: var(--aud-concept);"></div> Conceptual (Designers, PMs) &mdash; the why</div>
-  <div class="legend-item"><div class="legend-dot" style="background: var(--aud-decide);"></div> Decision (Practitioners) &mdash; the what do I do</div>
-  <div class="legend-item"><div class="legend-dot" style="background: var(--aud-implement);"></div> Implementation (Developers) &mdash; the how it looks</div>
+<div class="stepper">
+  <div class="stepper-step completed"><div class="stepper-dot"></div> 01</div><div class="stepper-line"></div>
+  <div class="stepper-step completed"><div class="stepper-dot"></div> 02</div><div class="stepper-line"></div>
+  <div class="stepper-step completed"><div class="stepper-dot"></div> 03</div><div class="stepper-line"></div>
+  <div class="stepper-step completed"><div class="stepper-dot"></div> 04</div><div class="stepper-line"></div>
+  <div class="stepper-step completed"><div class="stepper-dot"></div> 05</div><div class="stepper-line"></div>
+  <div class="stepper-step current"><div class="stepper-dot"></div> 06</div>
 </div>
 
-<!-- PRINCIPLE 1 -->
+<span class="step-label">Step 06</span>
+<h2>Audit</h2>
+<span class="step-question">How do I know my navigation works?</span>
+
+<p style="margin-top: 20px;" id="s6-principles">Seven principles for auditing your navigation system. Each includes conceptual framing, a decision question, and an implementation example.</p>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background: var(--green-600);"></div> Conceptual (Designers, PMs)</div>
+  <div class="legend-item"><div class="legend-dot" style="background: var(--warm-500);"></div> Decision (Practitioners)</div>
+  <div class="legend-item"><div class="legend-dot" style="background: var(--warm-400);"></div> Implementation (Developers)</div>
+</div>
+
 <h3>Principle 1: Frequency Overrides Hierarchy</h3>
-<div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>If 80% of sessions involve the same Task, that Task earns Job-level prominence &mdash; regardless of logical position. Optimize for what users <em>do</em>, not what the IA says.</p></div></div>
-<div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content"><p><strong>Question:</strong> Are your 3 highest-frequency Tasks reachable in &le;1 click from anywhere? <strong>Heuristic:</strong> &gt;40% of sessions = persistent Job-level shortcut. Pre-launch, estimate frequency from user research, competitive analysis, and prototype testing &mdash; refine with real analytics post-launch.</p></div></div>
+<div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>If 80% of sessions involve the same Task, that Task earns Job-level prominence &mdash; regardless of logical position.</p></div></div>
+<div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content"><p><strong>Question:</strong> Are your 3 highest-frequency Tasks reachable in &le;1 click? <strong>Heuristic:</strong> &gt;40% of sessions = persistent shortcut.</p></div></div>
 <div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>"Create Invoice" lives under Finance &rarr; Billing &rarr; Invoices, but it's the most-used Task. Give it a "+" button in the header, a &#8984;K shortcut, and a pinned sidebar entry.</p></div></div>
 
-<!-- PRINCIPLE 2 -->
 <h3>Principle 2: Stability Matches Persistence</h3>
 <div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>Top nav should change as rarely as your Jobs &mdash; almost never. In-page controls can change every release.</p></div></div>
 <div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content"><p><strong>Question:</strong> Has top-level nav changed in 6 months? <strong>Heuristic:</strong> Primary nav &le;1x/year. Secondary quarterly. In-page every sprint.</p></div></div>
 <div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>GitHub's top nav (Code, Issues, PRs, Actions, Projects) has been stable for years. New features add within sections, not alongside them.</p></div></div>
 
-<!-- PRINCIPLE 3 -->
 <h3>Principle 3: Context Must Be Preserved</h3>
 <div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>Switching Tasks within a Job should preserve state. It should feel like switching tabs, not closing one app and opening another.</p></div></div>
-<div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content"><p><strong>Question:</strong> Task A &rarr; Task B &rarr; Task A &mdash; is state preserved? If switching causes data loss or scroll reset, it's a hard transition when it should be soft.</p></div></div>
+<div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content"><p><strong>Question:</strong> Task A &rarr; Task B &rarr; Task A &mdash; is state preserved? If switching causes data loss or scroll reset, it's broken.</p></div></div>
 <div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>Notion: switching database views preserves filters, sort order, and scroll position. The lens changes; the context persists.</p></div></div>
 
-<!-- PRINCIPLE 4 -->
 <h3>Principle 4: Progressive Disclosure, Not Confusion</h3>
-<div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>Don't expose Activity-level nav until the user commits to a Task. Each tier reveals the next. But the user must always see which Job and Task they're inside. Disclosure forward; visibility all the way back.</p></div></div>
-<div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content"><p><strong>Question:</strong> At the deepest point, can the user tell which Job and Task they're inside? If only a page title &mdash; add breadcrumbs or a sidebar path.</p></div></div>
+<div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>Don't expose Activity-level nav until the user commits to a Task. Each tier reveals the next. But the user must always see which Job and Task they're inside.</p></div></div>
+<div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content"><p><strong>Question:</strong> At the deepest point, can the user tell which Job and Task they're inside? If only a page title &mdash; add breadcrumbs.</p></div></div>
 <div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>Stripe: sidebar shows Job section, header shows Task entity, breadcrumbs show depth. All three tiers visible simultaneously.</p></div></div>
 
-<!-- PRINCIPLE 5 -->
 <h3>Principle 5: Escape Velocity</h3>
 <div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>From any point, a user should reach any higher level in &le;2 interactions.</p></div></div>
 <div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content"><p><strong>Question:</strong> Clicks from deepest point to Job level? &le;2 = good. 3 = okay with breadcrumbs. 4+ = broken.</p></div></div>
 <div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>Three escape mechanisms: persistent sidebar, un-truncated breadcrumbs, command palette. Most complex products need at least two.</p></div></div>
 
-<!-- PRINCIPLE 6 -->
 <h3>Principle 6: Navigation as Wayfinding</h3>
 <div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>At every moment, navigation must answer three questions. If any is unanswerable, the system is broken.</p></div></div>
 <div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content">
-<p>Walk 5 representative flows. At each screen, ask all three:</p>
-<div class="diagram" style="margin: 14px 0; font-size: 12px;">1. <span class="highlight">Where am I?</span>       &rarr; Active states, breadcrumbs, page titles
+<div class="diagram" style="margin: 8px 0; font-size: 12px;">1. <span class="highlight">Where am I?</span>       &rarr; Active states, breadcrumbs, page titles
 2. <span class="highlight">Where can I go?</span>     &rarr; Visible nav options, available actions
 3. <span class="highlight">How do I get back?</span>  &rarr; Back buttons, breadcrumbs, persistent nav
 
 If any answer is unclear at any point,
 the navigation system is broken.</div>
 </div></div>
-<div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>"Where am I?" &mdash; Active sidebar highlighted, title matches label. "Where can I go?" &mdash; Sibling Tasks as tabs, Activities as toolbar buttons. "How do I get back?" &mdash; Clickable breadcrumb, persistent sidebar, working browser back.</p></div></div>
+<div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>"Where am I?" &mdash; Active sidebar highlighted. "Where can I go?" &mdash; Sibling Tasks as tabs. "How do I get back?" &mdash; Clickable breadcrumb, persistent sidebar, working browser back.</p></div></div>
 
-<!-- PRINCIPLE 7 (NEW IN SIGHTLINE) -->
 <h3>Principle 7: Navigation Must Feel Instant</h3>
-<div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>Structural correctness means nothing if navigation feels slow. Every transition in the navigation hierarchy &mdash; switching Jobs, opening Tasks, returning to a previous state &mdash; should feel like it happens in response to the user's action, not after it. In high-frequency tools used hundreds of times daily, navigation latency is the difference between a tool that <em>helps</em> and one that <em>frustrates</em>.</p></div></div>
-<div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content"><p><strong>Question:</strong> Do your three highest-frequency navigation transitions complete in under 200ms perceived time? <strong>Heuristic:</strong> Primary nav switches should feel instant (&lt;100ms). Secondary nav switches should feel fast (&lt;300ms). Depth navigation (drill-down) can tolerate up to 500ms if a loading indicator appears within 100ms. If your most-used transition involves a full page reload or visible spinner, it's too slow &mdash; regardless of what the performance metrics say.</p></div></div>
-<div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>Optimistic UI for tab switches (render immediately, backfill data). Preload adjacent views on hover or focus. Skeleton screens for deeper transitions. Linear and Notion both pre-cache sidebar items so switching between pages feels instant &mdash; the content appears before the URL finishes updating.</p></div></div>
+<div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>Structural correctness means nothing if navigation feels slow. Every transition should feel like it happens in response to the user's action, not after it.</p></div></div>
+<div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content"><p><strong>Question:</strong> Do your three highest-frequency transitions complete in under 200ms perceived time? <strong>Heuristic:</strong> Primary switches &lt;100ms. Secondary &lt;300ms. Depth transitions &lt;500ms with a loading indicator within 100ms.</p></div></div>
+<div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>Optimistic UI for tab switches. Preload adjacent views on hover. Skeleton screens for deeper transitions. Linear and Notion pre-cache sidebar items so page switches feel instant.</p></div></div>
 
-<div class="callout callout-sn">
+<div class="callout-emphasis callout">
   <span class="callout-label">Final Heuristic</span>
-  <p>Map your Jobs and Tasks on paper first. Count the Jobs. Measure the Task depth. Note the frequency patterns. Identify your navigation anchor. Then pick paradigms and compose them using the formula. The hierarchy dictates the paradigm, never the reverse.</p>
+  <p>Map your Jobs and Tasks on paper first. Count the Jobs. Measure the Task depth. Note the frequency patterns. Identify your navigation anchor. Then pick paradigms and compose them. The hierarchy dictates the paradigm, never the reverse.</p>
 </div>
 
 <p><strong>Using this framework:</strong> Follow the six steps in order. Decompose (1), Map (2), Scope (3), Assess (4), Select (5), Audit (6). Resist jumping to paradigm selection &mdash; the steps before it are what make the selection defensible.</p>
+
+</div>
+</div>
 
 
 <!-- ============================================================ -->
 <!-- COMMON QUESTIONS -->
 <!-- ============================================================ -->
+<div class="section" id="questions">
+<div class="content">
 
-<h2 id="questions"><span class="step-label">Reference</span><span class="step-verb">Common Questions</span></h2>
-
+<span class="step-label">Reference</span>
+<h2>Common Questions</h2>
 <p>Edge cases and ambiguities that come up when applying the framework to real products.</p>
 
-<div class="emotion-card">
+<div class="qa-card">
   <h4>A Task looks the same in two different Jobs &mdash; do I need Job Gravity?</h4>
-  <p>It depends on whether the user is asking the same question or a different question when they perform the action.</p>
-  <p><strong>Same Task, multiple Jobs:</strong> "Generate a financial report" is the same work whether the user arrives from Stakeholder Reporting or Compliance. The output is the same, the workflow is the same &mdash; it just serves two purposes. This is a cross-Job Task. Job Gravity applies: pick a canonical home, add pointers from the other Job. Another example: "Export CSV" might serve both "Analyze my data" and "Share results with my team" &mdash; same export, different purpose. One home, pointers from the other.</p>
-  <p><strong>Same Activity, different Task context:</strong> "Review analytics" during Discovery (understanding user needs) and "Review analytics" during Measurement (evaluating a shipped feature) involve the same screen but fundamentally different questions. The user needs different filters, different metrics, different framing. These are genuinely different Tasks that happen to share an Activity. No need for Job Gravity &mdash; design each Task's view appropriately for its context. In entity-first products, entity scoping resolves this naturally.</p>
+  <p>It depends on whether the user is asking the same question or a different question.</p>
+  <p><strong>Same Task, multiple Jobs:</strong> "Generate a financial report" is the same work from either Stakeholder Reporting or Compliance. Job Gravity applies: pick a canonical home, add pointers.</p>
+  <p><strong>Same Activity, different Task context:</strong> "Review analytics" during Discovery and during Measurement involve the same screen but different questions. These are different Tasks &mdash; design each view for its context. No Job Gravity needed.</p>
 </div>
 
-<div class="emotion-card">
+<div class="qa-card">
   <h4>My product blends queue-first and entity-first &mdash; which wins?</h4>
-  <p>This is common in products like CRMs and support tools. The key question is: <strong>does the user start their day by opening a specific entity, or by scanning a queue?</strong></p>
-  <p>If agents start by working through a ticket queue and only open specific tickets from that queue, the queue is primary and the entity (ticket) is secondary. If account managers start by opening a specific account and then reviewing its associated tickets, the entity is primary and the queue is a secondary tool within it.</p>
-  <p>Many products legitimately need both: a queue-first view for processing work and an entity-first view for investigating specific items. In this case, treat them as two modes within your primary navigation &mdash; "Queue" and "Accounts" as peer items in the top bar or sidebar &mdash; similar to how activity-first products have management and immersive modes.</p>
+  <p>Ask: <strong>does the user start their day by opening a specific entity, or by scanning a queue?</strong> If agents work through a ticket queue, the queue is primary. If account managers open specific accounts, the entity is primary.</p>
+  <p>Many products need both: treat them as two modes within your primary navigation &mdash; "Queue" and "Accounts" as peer items in the sidebar.</p>
 </div>
 
-<div class="emotion-card">
-  <h4>How do I handle navigation for AI-assisted or automated features?</h4>
-  <p>As products embed AI suggestions, automated workflows, and proactive surfacing, a new navigation question emerges: where do system-initiated items live? AI-suggested next actions, automated alerts, and predictive surfacing are <strong>not user-initiated navigation</strong> &mdash; they're the system pushing items into the user's sightline.</p>
-  <p>Treat AI/automated items as a layer that sits <em>alongside</em> the structural navigation, not within it. A "Suggested" or "For You" section in a queue, an AI sidebar panel, or inline suggestions within a Task view are all valid patterns. The key principle: AI-surfaced items should <strong>never replace or reorder structural navigation without user consent</strong>. They're accelerators, like &#8984;K &mdash; additive, not structural. The user must always be able to fall back to the JTBD-driven hierarchy they know.</p>
+<div class="qa-card">
+  <h4>How do I handle navigation for AI-assisted features?</h4>
+  <p>Treat AI/automated items as a layer that sits <em>alongside</em> structural navigation, not within it. A "Suggested" section in a queue, an AI sidebar panel, or inline suggestions within a Task view are valid patterns.</p>
+  <p>The key principle: AI-surfaced items should <strong>never replace or reorder structural navigation without user consent</strong>. They're accelerators &mdash; additive, not structural.</p>
+</div>
+
+</div>
 </div>
 
 
 <!-- ============================================================ -->
 <!-- APPENDIX -->
 <!-- ============================================================ -->
+<div class="section" id="appendix">
+<div class="content">
 
-<div class="appendix">
-<h2 id="appendix"><span class="step-label">Appendix</span><span class="step-verb">Origins &amp; Further Reading</span></h2>
+<span class="step-label">Appendix</span>
+<h2>Origins &amp; Further Reading</h2>
 
-<p>This framework draws from two intellectual traditions. Understanding their origins helps you adapt it to contexts not explicitly covered here.</p>
+<p>This framework draws from two intellectual traditions.</p>
 
 <h3>Jobs to Be Done (The Job Level)</h3>
 
-<p>JTBD theory holds that users "hire" products to make progress. The Job is the fundamental unit &mdash; stable, emotionally resonant, product-independent. Three strands inform this framework:</p>
+<p>JTBD theory holds that users "hire" products to make progress. The Job is the fundamental unit &mdash; stable, emotionally resonant, product-independent.</p>
 
-<p><strong>Clayton Christensen</strong> popularized JTBD for innovation strategy. A milkshake competes with a banana and a bagel because the Job ("make my commute less boring") is product-independent.</p>
-
-<p><strong>Tony Ulwick</strong> (Outcome-Driven Innovation) systematized JTBD into a quantitative methodology &mdash; Jobs as measurable, prioritizable functional outcomes.</p>
-
-<p><strong>Bob Moesta</strong> (The Switch Framework) focuses on emotional dimensions &mdash; push, pull, anxiety, inertia. His work directly informs the user context section in <a href="#s4">Step 04</a>.</p>
+<p><strong>Clayton Christensen</strong> popularized JTBD for innovation strategy. <strong>Tony Ulwick</strong> (Outcome-Driven Innovation) systematized it into a quantitative methodology. <strong>Bob Moesta</strong> (The Switch Framework) focuses on emotional dimensions &mdash; his work directly informs the user context section in <a href="#s4">Step 04</a>.</p>
 
 <h3>Hierarchical Task Analysis (The Task &amp; Activity Levels)</h3>
 
@@ -1123,12 +1504,104 @@ the navigation system is broken.</div>
   <div class="ref-item">Christensen &mdash; <a href="https://hbr.org/2016/09/know-your-customers-jobs-to-be-done">"Know Your Customers' Jobs to Be Done"</a> (HBR, 2016)</div>
   <div class="ref-item">Ulwick &mdash; ODI overview at <a href="https://strategyn.com">strategyn.com</a> &middot; <em>Jobs to Be Done: Theory to Practice</em></div>
   <div class="ref-item">Moesta &mdash; <a href="https://demandside.com">demandside.com</a> &middot; <em>Demand-Side Sales 101</em></div>
-  <div class="ref-item">HTA &mdash; Annett &amp; Duncan (1967) &middot; Stanton, <em>Handbook of Human Factors and Ergonomics Methods</em></div>
+  <div class="ref-item">HTA &mdash; Annett &amp; Duncan (1967) &middot; Stanton, <em>Handbook of Human Factors and Ergonomtic Methods</em></div>
   <div class="ref-item">Activity Theory &mdash; Kaptelinin &amp; Nardi, <em>Acting with Technology</em> (MIT Press, 2006)</div>
 </div>
 
 </div>
-
 </div>
+
+</div><!-- end .main -->
+</div><!-- end .layout -->
+
+<!-- ============================================================ -->
+<!-- SCROLL-AWARE SIDEBAR WITH SUBSECTION TRACKING -->
+<!-- ============================================================ -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var sections = document.querySelectorAll('.section[id]');
+  var navLinks = document.querySelectorAll('.sidebar a.nav-link[data-section]');
+  var subLinkGroups = document.querySelectorAll('.sidebar .sub-links');
+  var subLinks = document.querySelectorAll('.sidebar a.sub-link[data-sub]');
+
+  // Collect all subsection targets (h3s and p elements with IDs inside sections)
+  var subTargets = [];
+  subLinks.forEach(function(link) {
+    var id = link.getAttribute('data-sub');
+    var el = document.getElementById(id);
+    if (el) subTargets.push({ id: id, el: el });
+  });
+
+  function updateActiveSection() {
+    var currentSection = '';
+    var currentSub = '';
+    var scrollPos = window.scrollY + 140;
+
+    // Find current main section
+    sections.forEach(function(section) {
+      if (section.offsetTop <= scrollPos) {
+        currentSection = section.id;
+      }
+    });
+
+    // Find current subsection
+    subTargets.forEach(function(target) {
+      if (target.el.offsetTop <= scrollPos) {
+        currentSub = target.id;
+      }
+    });
+
+    // Update main nav links
+    navLinks.forEach(function(link) {
+      link.classList.remove('active');
+      if (link.getAttribute('data-section') === currentSection) {
+        link.classList.add('active');
+      }
+    });
+
+    // Expand/collapse subsection groups
+    subLinkGroups.forEach(function(group) {
+      if (group.getAttribute('data-parent') === currentSection) {
+        group.classList.add('expanded');
+      } else {
+        group.classList.remove('expanded');
+      }
+    });
+
+    // Update sub links
+    subLinks.forEach(function(link) {
+      link.classList.remove('active');
+      if (link.getAttribute('data-sub') === currentSub) {
+        link.classList.add('active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveSection);
+  updateActiveSection();
+
+  // Smooth scroll for main nav links
+  navLinks.forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      var target = document.getElementById(this.getAttribute('data-section'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Smooth scroll for sub links
+  subLinks.forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      var target = document.getElementById(this.getAttribute('data-sub'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+});
+</script>
 </body>
 </html>
