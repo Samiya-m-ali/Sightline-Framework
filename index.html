@@ -375,6 +375,24 @@
   .diagram .cool { color: var(--green-300); }
   .diagram .dim { color: #4A7A6A; }
 
+  /* Light diagram variant — embedded in cards */
+  .diagram-light {
+    background: var(--green-50);
+    color: var(--text-secondary);
+    padding: 24px 28px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    overflow-x: auto;
+    white-space: pre;
+    border-top: 1px solid var(--green-200);
+    margin: 20px -28px -24px -28px;
+  }
+  .diagram-light .highlight { color: var(--green-700); }
+  .diagram-light .warm { color: var(--warm-600); }
+  .diagram-light .cool { color: var(--green-600); }
+  .diagram-light .dim { color: var(--text-muted); }
+
   /* ========== CARDS ========== */
   .card {
     background: var(--surface);
@@ -508,14 +526,18 @@
     margin-bottom: 14px;
   }
   .scope-range {
-    padding: 10px 14px;
-    margin: 6px 0;
+    padding: 8px 0;
+    margin: 0;
     font-size: 14px;
     font-weight: 300;
     line-height: 1.65;
     color: var(--text-secondary);
-    background: var(--warm-50);
-    border: 1px solid var(--border);
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .scope-range:last-child {
+    border-bottom: none;
   }
   .scope-range strong { color: var(--green-800); font-weight: 500; }
 
@@ -656,16 +678,15 @@
   <div class="sidebar-logo">Sightline<span>.</span></div>
 
   <div class="sidebar-section-label">Overview</div>
-  <a href="#exec" data-section="exec" class="nav-link"><span class="nav-num"></span> Executive Summary</a>
-  <a href="#problem" data-section="problem" class="nav-link"><span class="nav-num"></span> The Problem</a>
+  <a href="#problem" data-section="problem" class="nav-link"><span class="nav-num"></span> Why It Breaks</a>
 
   <div class="sidebar-section-label">The Process</div>
 
-  <a href="#s1" data-section="s1" class="nav-link"><span class="nav-num">01</span> Decompose</a>
+  <a href="#s1" data-section="s1" class="nav-link"><span class="nav-num">01</span> Define</a>
   <div class="sub-links" data-parent="s1">
     <a href="#s1-levels" data-sub="s1-levels" class="sub-link">The Three Levels</a>
     <a href="#s1-litmus" data-sub="s1-litmus" class="sub-link">The Litmus Tests</a>
-    <a href="#s1-multi" data-sub="s1-multi" class="sub-link">Multiple User Types</a>
+    <a href="#s1-multi" data-sub="s1-multi" class="sub-link">Defining for Multiple Users</a>
   </div>
 
   <a href="#s2" data-section="s2" class="nav-link"><span class="nav-num">02</span> Map</a>
@@ -702,6 +723,7 @@
   <div class="sidebar-section-label">Reference</div>
   <a href="#questions" data-section="questions" class="nav-link"><span class="nav-num"></span> Common Questions</a>
   <a href="#appendix" data-section="appendix" class="nav-link"><span class="nav-num"></span> Appendix</a>
+  <a href="#tldr" data-section="tldr" class="nav-link"><span class="nav-num"></span> At a Glance</a>
 </nav>
 
 <!-- ============================================================ -->
@@ -712,24 +734,9 @@
 <!-- HEADER -->
 <div class="section" id="header">
 <div class="content">
-  <div class="step-label">Sightline</div>
-  <h1>A Framework for <strong>Intent-Driven</strong><br>Navigation Design</h1>
-  <p class="lead">A structured method for decomposing user intent into Jobs, Tasks, and Activities &mdash; then mapping each level to the right navigation paradigm.</p>
-  <p>Designed for product designers defining information architecture, developers building navigation systems, and product managers who need to explain and defend IA decisions.</p>
-</div>
-</div>
-
-<!-- EXECUTIVE SUMMARY -->
-<div class="section" id="exec">
-<div class="content">
-  <div class="exec-summary">
-    <h3>Executive Summary</h3>
-    <p>Navigation is the single most persistent element of any software product. Users interact with it on every screen, every session, every day. When navigation works, people find what they need and get their work done. When it doesn't, they get lost, call support, abandon tasks, and lose trust in the product. Most navigation problems trace back to the same root cause: <strong>the navigation was designed around the product's internal structure instead of the user's intent.</strong></p>
-    <p><strong>Sightline</strong> is a six-step framework that fixes this. It starts with what users are actually trying to accomplish &mdash; their Jobs to Be Done &mdash; and works outward to navigation structure. The core model decomposes user intent into three levels:</p>
-    <p><strong>Jobs</strong> are the outcomes users care about &mdash; stable, product-independent, tied to their role. <strong>Tasks</strong> are the plannable units of work that advance a Job. <strong>Activities</strong> are the concrete UI interactions within a Task. Each level maps to a tier of navigation: primary, secondary, and in-page.</p>
-    <p>The framework then walks teams through scoping constraints (how many Jobs, how deep the hierarchy, what platforms), assessing behavioral dimensions (role differences, user expertise, urgency), selecting from eight proven navigation paradigms, and auditing the result against seven principles.</p>
-    <p><strong>The outcome:</strong> navigation decisions that are defensible, user-centered, and durable &mdash; rather than arbitrary, org-chart-driven, or subject to redesign every quarter. Teams that use Sightline ship navigation systems that reduce support load, improve feature adoption, and accelerate onboarding &mdash; because the structure matches how users actually think about their work.</p>
-  </div>
+  <h1 style="font-size: 54px; font-weight: 300; letter-spacing: -1px; margin-bottom: 8px;">Sightline</h1>
+  <p style="font-size: 19px; font-weight: 400; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5;">A Framework for Intent-Driven Navigation Design</p>
+  <p class="lead">A structured method for translating user intent &mdash; Jobs, Tasks, and Activities &mdash; into navigation architecture. Built for product designers, developers, and product managers who need to design, build, and defend navigation decisions.</p>
 </div>
 </div>
 
@@ -737,11 +744,11 @@
 <div class="section" id="problem">
 <div class="content">
   <span class="step-label">Context</span>
-  <h2>The Problem with Most Navigation Systems</h2>
-  <p>Most navigation systems are designed backwards. Teams start with the features they've built, group them into categories that make sense to the engineering team or the product org, and bolt on a menu structure. The result is navigation that mirrors the company's internal structure rather than the user's mental model.</p>
-  <p>This creates predictable failure patterns. <strong>Users can't find features that exist</strong> &mdash; because the feature lives under a label that matches the team that built it, not the job the user is trying to do. <strong>Navigation changes every quarter</strong> &mdash; because it's tied to the feature roadmap rather than to stable user outcomes. <strong>Onboarding takes weeks instead of hours</strong> &mdash; because new users have to learn the product's internal logic before they can navigate it. <strong>Support tickets pile up with "how do I..." questions</strong> &mdash; because the navigation doesn't provide clear sightlines from intent to action.</p>
-  <p>The root cause is a missing step: <strong>nobody decomposed user intent before designing navigation structure.</strong> Without understanding what users are trying to accomplish and how they think about their work, navigation design becomes a guessing game &mdash; one that gets more expensive to fix with every release.</p>
-  <p>Sightline provides the missing step. It gives teams a repeatable process for translating user intent into navigation architecture &mdash; so the structure serves the user from day one.</p>
+  <h2>Why Does Navigation Keep Breaking?</h2>
+  <p>Navigation is one of the hardest parts of product design to get right &mdash; and one of the easiest to get wrong incrementally. Teams invest real thought into their information architecture. The challenge is that navigation decisions compound: each feature launch, each new user role, each platform addition adds pressure to a structure that was built for a simpler version of the product.</p>
+  <p>Over time, patterns emerge. <strong>Users struggle to find features that exist</strong> because labels reflect internal team structures rather than user goals. <strong>Navigation changes with each release cycle</strong> because it's anchored to the feature roadmap rather than stable user outcomes. <strong>Onboarding takes longer than it should</strong> because new users have to reverse-engineer the product's internal logic. <strong>Support tickets accumulate</strong> around "how do I..." questions that the navigation should have answered on its own.</p>
+  <p>The underlying challenge isn't a lack of effort &mdash; it's a lack of shared structure. The work of connecting user intent to navigation decisions tends to happen informally: in someone's head, on a whiteboard that gets erased, in a design file that diverges from implementation. The thinking happens, but it doesn't persist across the team or survive the pressures of a shipping schedule.</p>
+  <p>Sightline gives that thinking a structured, repeatable home. It provides a shared language for connecting what users are trying to accomplish to how they navigate your product &mdash; so the architecture stays grounded in intent as the product evolves.</p>
 </div>
 </div>
 
@@ -750,7 +757,7 @@
 <div class="content">
   <div class="toc">
     <div class="toc-title">The Process</div>
-    <a href="#s1"><span class="num">01</span> <span class="verb">Decompose</span> &mdash; What are my users' Jobs to Be Done?</a>
+    <a href="#s1"><span class="num">01</span> <span class="verb">Define</span> &mdash; What are my users' Jobs to Be Done?</a>
     <a href="#s2"><span class="num">02</span> <span class="verb">Map</span> &mdash; How does intent translate to navigation tiers?</a>
     <a href="#s3"><span class="num">03</span> <span class="verb">Scope</span> &mdash; What are my product's navigation constraints?</a>
     <a href="#s4"><span class="num">04</span> <span class="verb">Assess</span> &mdash; How do roles and context shape the navigation?</a>
@@ -762,7 +769,7 @@
 
 
 <!-- ============================================================ -->
-<!-- STEP 01: DECOMPOSE -->
+<!-- STEP 01: DEFINE -->
 <!-- ============================================================ -->
 <div class="section" id="s1">
 <div class="content">
@@ -777,7 +784,7 @@
 </div>
 
 <span class="step-label">Step 01</span>
-<h2>Decompose</h2>
+<h2>Define</h2>
 <span class="step-question">What are my users' Jobs to Be Done?</span>
 
 <p style="margin-top: 20px;">Users don't think in pages, menus, or modules. They think in <strong>outcomes they're trying to achieve</strong>. A navigation system should mirror that intent hierarchy &mdash; not your org chart, not your database schema, and not whatever your backend team decided to name the API endpoints.</p>
@@ -829,11 +836,11 @@
   <p><strong>Jobs rarely change</strong> &mdash; they're tied to the user's role and goals. <strong>Tasks change periodically</strong> as workflows evolve. <strong>Activities change frequently</strong>, every time the interface is updated. Your navigation at each level should match this rate of change. If your primary navigation shifts every time you redesign a feature, you've mapped Activities at the Job level.</p>
 </div>
 
-<h3 id="s1-multi">Decomposing for Multiple User Types</h3>
+<h3 id="s1-multi">Defining for Multiple User Types</h3>
 
-<p>Most products serve more than one persona. A project management tool serves Project Managers, Developers, and Designers &mdash; each with overlapping but distinct Job maps. Don't try to decompose all personas simultaneously. Instead:</p>
+<p>Most products serve more than one persona. A project management tool serves Project Managers, Developers, and Designers &mdash; each with overlapping but distinct Job maps. Don't try to define all personas simultaneously. Instead:</p>
 
-<p><strong>Decompose one persona at a time.</strong> Give each persona its own complete Job &rarr; Task &rarr; Activity hierarchy. This keeps each map clean and prevents premature averaging.</p>
+<p><strong>Define one persona at a time.</strong> Give each persona its own complete Job &rarr; Task &rarr; Activity hierarchy. This keeps each map clean and prevents premature averaging.</p>
 
 <p><strong>Then overlay the maps.</strong> Once you have 2&ndash;3 individual maps, lay them side by side. Look for: <strong>shared Jobs</strong>, <strong>shared Tasks under different Jobs</strong>, and <strong>persona-exclusive Jobs</strong>. Mark these overlaps and divergences &mdash; they feed the role-based decisions in <a href="#s4">Step 04</a>.</p>
 
@@ -867,7 +874,7 @@
 <h2>Map</h2>
 <span class="step-question">How does intent translate to navigation tiers?</span>
 
-<p style="margin-top: 20px;">You've decomposed your users' Jobs, Tasks, and Activities. Now you need to map them to navigation tiers. But first, answer a foundational question: <strong>what organizes your user's mental model?</strong></p>
+<p style="margin-top: 20px;">You've defined your users' Jobs, Tasks, and Activities. Now you need to map them to navigation tiers. But first, answer a foundational question: <strong>what organizes your user's mental model?</strong></p>
 
 <p>The answer determines how your JTBD hierarchy translates to navigation structure. Get this wrong and your navigation will fight the user's thinking &mdash; even if every individual component is well-designed.</p>
 
@@ -883,9 +890,7 @@
     <div><div class="card-meta-label">Diagnostic</div><div class="card-meta-value">Do users describe their work as distinct modes or phases? Does each phase involve different tools and a different mindset?</div></div>
     <div><div class="card-meta-label">Examples</div><div class="card-meta-value"><strong>TurboTax</strong> &mdash; linear flow through phases. <strong>Shopify Admin</strong> &mdash; Products, Orders, Marketing as distinct workspaces. <strong>HubSpot</strong> &mdash; Marketing, Sales, Service as separate hubs.</div></div>
   </div>
-</div>
-
-<div class="diagram"><span class="dim">PROCESS-FIRST MAPPING</span>
+  <div class="diagram-light"><span class="dim">MAPPING</span>
 
 <span class="highlight">JOB / Phase</span>              &mdash;&mdash;&rarr;  <span class="highlight">Primary Navigation</span>              Always visible
 <span class="dim">"Research" / "Delivery"         Top bar, sidebar root</span>
@@ -901,6 +906,7 @@
 
 <span class="cool">ACTIVITY</span>                 &mdash;&mdash;&rarr;  <span class="cool">In-Page Navigation</span>              Contextual / transient
 <span class="dim">"Schedule interview call"      Buttons, forms, inline actions</span></div>
+</div>
 
 <!-- ENTITY-FIRST -->
 <div class="card">
@@ -910,9 +916,7 @@
     <div><div class="card-meta-label">Diagnostic</div><div class="card-meta-value">Do users refer to their work by name? Do they track entities through multiple Jobs over time? Is their primary question "what's the status of X?"</div></div>
     <div><div class="card-meta-label">Examples</div><div class="card-meta-value"><strong>Salesforce</strong> &mdash; Accounts, Contacts, Opportunities as primary objects. <strong>Jira</strong> &mdash; Issues move through workflows. <strong>GitHub</strong> &mdash; Repositories with Code, Issues, PRs as tabs.</div></div>
   </div>
-</div>
-
-<div class="diagram"><span class="dim">ENTITY-FIRST MAPPING</span>
+  <div class="diagram-light"><span class="dim">MAPPING</span>
 
 <span class="highlight">ENTITY</span>                   &mdash;&mdash;&rarr;  <span class="highlight">Primary Navigation</span>              Always visible
 <span class="dim">"Feature X" / "Acme Acct"      Entity list, entity detail</span>
@@ -928,6 +932,7 @@
 
 <span class="cool">TASK &rarr; ACTIVITY</span>          &mdash;&mdash;&rarr;  <span class="cool">In-Page Navigation</span>              Contextual / transient
 <span class="dim">"Write requirements"           Forms, editors, inline actions</span></div>
+</div>
 
 <!-- QUEUE/INBOX-FIRST -->
 <div class="card">
@@ -937,9 +942,7 @@
     <div><div class="card-meta-label">Diagnostic</div><div class="card-meta-value">Does work arrive continuously rather than being initiated by the user? Is the primary interaction processing items from a list? Are items transient (resolved and archived) rather than persistent?</div></div>
     <div><div class="card-meta-label">Examples</div><div class="card-meta-value"><strong>Zendesk</strong> &mdash; ticket queues filtered by status and priority. <strong>Gmail</strong> &mdash; inbox with labels and smart categories. <strong>Slack</strong> &mdash; message streams by channel. <strong>PagerDuty</strong> &mdash; incident queue.</div></div>
   </div>
-</div>
-
-<div class="diagram"><span class="dim">QUEUE/INBOX-FIRST MAPPING</span>
+  <div class="diagram-light"><span class="dim">MAPPING</span>
 
 <span class="highlight">QUEUE VIEWS</span>              &mdash;&mdash;&rarr;  <span class="highlight">Primary Navigation</span>              Always visible
 <span class="dim">"My Queue" / "Unassigned"      Filtered lists, inbox views</span>
@@ -955,6 +958,7 @@
 
 <span class="cool">ACTIVITY</span>                 &mdash;&mdash;&rarr;  <span class="cool">In-Page Navigation</span>              Contextual / transient
 <span class="dim">"Reply" / "Escalate"           Buttons, quick actions, shortcuts</span></div>
+</div>
 
 <div class="callout">
   <span class="callout-label">Reactive vs. Proactive Work</span>
@@ -969,9 +973,7 @@
     <div><div class="card-meta-label">Diagnostic</div><div class="card-meta-value">Is there one dominant activity that requires full-screen focus? Does that activity account for the majority of usage time?</div></div>
     <div><div class="card-meta-label">Examples</div><div class="card-meta-value"><strong>Figma</strong> &mdash; File browser &harr; Canvas. <strong>VS Code</strong> &mdash; Editor dominates. <strong>Substack/Ghost</strong> &mdash; Full-screen editor for writing, dashboard for everything else.</div></div>
   </div>
-</div>
-
-<div class="diagram"><span class="dim">ACTIVITY/MODE-FIRST MAPPING</span>
+  <div class="diagram-light"><span class="dim">MAPPING</span>
 
 <span class="highlight">MANAGEMENT MODE</span>          &mdash;&mdash;&rarr;  <span class="highlight">Standard Navigation</span>             Top bar, sidebar
 <span class="dim">"Browse projects, check         Jobs and entities organized
@@ -982,6 +984,7 @@
 <span class="warm">IMMERSIVE MODE</span>           &mdash;&mdash;&rarr;  <span class="warm">Minimal / Hidden Navigation</span>     Reduced or none
 <span class="dim">"Write the article,            Full-screen focus, contextual
  design the interface"          toolbars only, nav recedes</span></div>
+</div>
 
 <div class="callout-emphasis callout">
   <span class="callout-label">Most products are hybrids</span>
@@ -1420,14 +1423,7 @@
 
 <h3>Principle 6: Navigation as Wayfinding</h3>
 <div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>At every moment, navigation must answer three questions. If any is unanswerable, the system is broken.</p></div></div>
-<div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content">
-<div class="diagram" style="margin: 8px 0; font-size: 12px;">1. <span class="highlight">Where am I?</span>       &rarr; Active states, breadcrumbs, page titles
-2. <span class="highlight">Where can I go?</span>     &rarr; Visible nav options, available actions
-3. <span class="highlight">How do I get back?</span>  &rarr; Back buttons, breadcrumbs, persistent nav
-
-If any answer is unclear at any point,
-the navigation system is broken.</div>
-</div></div>
+<div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content"><p><strong>Three questions your navigation must answer at every moment:</strong></p><p><strong>1. Where am I?</strong> &rarr; Active states, breadcrumbs, page titles. <strong>2. Where can I go?</strong> &rarr; Visible nav options, available actions. <strong>3. How do I get back?</strong> &rarr; Back buttons, breadcrumbs, persistent nav.</p><p>If any answer is unclear at any point, the navigation system is broken.</p></div></div>
 <div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>"Where am I?" &mdash; Active sidebar highlighted. "Where can I go?" &mdash; Sibling Tasks as tabs. "How do I get back?" &mdash; Clickable breadcrumb, persistent sidebar, working browser back.</p></div></div>
 
 <h3>Principle 7: Navigation Must Feel Instant</h3>
@@ -1440,7 +1436,7 @@ the navigation system is broken.</div>
   <p>Map your Jobs and Tasks on paper first. Count the Jobs. Measure the Task depth. Note the frequency patterns. Identify your navigation anchor. Then pick paradigms and compose them. The hierarchy dictates the paradigm, never the reverse.</p>
 </div>
 
-<p><strong>Using this framework:</strong> Follow the six steps in order. Decompose (1), Map (2), Scope (3), Assess (4), Select (5), Audit (6). Resist jumping to paradigm selection &mdash; the steps before it are what make the selection defensible.</p>
+<p><strong>Using this framework:</strong> Follow the six steps in order. Define (1), Map (2), Scope (3), Assess (4), Select (5), Audit (6). Resist jumping to paradigm selection &mdash; the steps before it are what make the selection defensible.</p>
 
 </div>
 </div>
@@ -1506,6 +1502,27 @@ the navigation system is broken.</div>
   <div class="ref-item">Moesta &mdash; <a href="https://demandside.com">demandside.com</a> &middot; <em>Demand-Side Sales 101</em></div>
   <div class="ref-item">HTA &mdash; Annett &amp; Duncan (1967) &middot; Stanton, <em>Handbook of Human Factors and Ergonomtic Methods</em></div>
   <div class="ref-item">Activity Theory &mdash; Kaptelinin &amp; Nardi, <em>Acting with Technology</em> (MIT Press, 2006)</div>
+</div>
+
+</div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- AT A GLANCE (TL;DR) -->
+<!-- ============================================================ -->
+<div class="section" id="tldr">
+<div class="content">
+
+<span class="step-label">TL;DR</span>
+<h2>At a Glance</h2>
+
+<div class="exec-summary">
+  <p>Navigation is the single most persistent element of any software product. When it works, people get things done. When it doesn't, they get lost, call support, and lose trust. Most navigation problems trace back to one root cause: <strong>the structure was designed around the product's internals instead of the user's intent.</strong></p>
+  <p><strong>Sightline</strong> is a six-step framework that fixes this by starting with what users are trying to accomplish and working outward to navigation structure. The core model defines user intent at three levels:</p>
+  <p><strong>Jobs</strong> &mdash; the outcomes users care about (stable, role-tied). <strong>Tasks</strong> &mdash; the plannable units of work that advance a Job. <strong>Activities</strong> &mdash; the concrete UI interactions within a Task. Each level maps to a tier of navigation: primary, secondary, and in-page.</p>
+  <p>The six steps: <strong>Define</strong> user Jobs, Tasks, and Activities. <strong>Map</strong> them to navigation tiers. <strong>Scope</strong> your product's constraints. <strong>Assess</strong> role and context dimensions. <strong>Select</strong> from eight navigation paradigms. <strong>Audit</strong> against seven principles.</p>
+  <p><strong>The outcome:</strong> navigation decisions that are defensible, user-centered, and durable &mdash; rather than arbitrary, org-chart-driven, or subject to redesign every quarter.</p>
 </div>
 
 </div>
