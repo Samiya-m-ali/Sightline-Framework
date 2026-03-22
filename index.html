@@ -819,6 +819,44 @@
     margin: 12px 0;
   }
   .aud-test .aud-tag { color: var(--terra-600); }
+  details.hybrid-resolver {
+    margin: 24px 0;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  details.hybrid-resolver summary {
+    padding: 16px 22px;
+    font-family: 'Century Gothic', 'AppleGothic', 'Futura', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--text);
+    cursor: pointer;
+    background: var(--warm-50);
+    border-bottom: 1px solid transparent;
+    transition: background 0.15s ease;
+  }
+  details.hybrid-resolver[open] summary {
+    border-bottom-color: var(--border);
+  }
+  details.hybrid-resolver summary:hover {
+    background: var(--warm-100);
+  }
+  details.hybrid-resolver .resolver-content {
+    padding: 24px 22px;
+  }
+  [data-theme="dark"] details.hybrid-resolver {
+    border-color: var(--border);
+  }
+  [data-theme="dark"] details.hybrid-resolver summary {
+    background: var(--warm-100);
+    color: var(--text);
+  }
+  [data-theme="dark"] details.hybrid-resolver[open] summary {
+    border-bottom-color: var(--border);
+  }
+  [data-theme="dark"] details.hybrid-resolver summary:hover {
+    background: var(--warm-200);
+  }
   .aud-content { font-size: 14px; line-height: 1.72; color: var(--text-secondary); font-weight: 300; }
   .aud-content p:last-child { margin-bottom: 0; }
 
@@ -1082,7 +1120,7 @@
 
 <p style="margin-top: 20px;">Users don't think in pages, menus, or modules. They think in <strong>outcomes they're trying to achieve</strong>. A navigation system should mirror that intent hierarchy &mdash; not your org chart, not your database schema, and not whatever your backend team decided to name the API endpoints.</p>
 
-<p>This model builds on Jobs to Be Done theory (the Job level) and Hierarchical Task Analysis (the Task and Activity levels) &mdash; see the <a href="#appendix">Appendix</a> for origins and further reading. Most users have <strong>3&ndash;7 Jobs</strong> &mdash; that's normal and expected. Your navigation system needs to accommodate all of them.</p>
+<p>Most users have <strong>3&ndash;7 Jobs</strong>. If you're finding significantly more, you're probably classifying Tasks as Jobs. If you're finding fewer than 3, you may be grouping multiple Jobs under one umbrella. Your navigation system needs to accommodate all of them.</p>
 
 <h3 id="s1-levels">The Three Levels</h3>
 
@@ -1138,10 +1176,10 @@
 
 <div class="card">
   <div class="card-header"><div class="card-name">Tiebreaker 1: Scope and Delegation</div></div>
-  <div class="card-def">Can this be delegated <strong>as a whole</strong> to a different person or role, with the expectation that they'll figure out the sub-steps? If yes, it behaves like a Job &mdash; it has enough scope to contain its own Tasks. If it would need to be broken down before someone else could take it on, it's a Task within a larger Job.</div>
+  <div class="card-def">Can this be delegated <strong>as a whole</strong> to a different person or role, with the expectation that they'll figure out the sub-steps?</div>
   <div class="card-meta">
-    <div><div class="card-meta-label">Example: Job</div><div class="card-meta-value">"Run quarterly compliance audit" &mdash; you'd assign this to a compliance lead and they'd determine which checks to run, which reports to pull, and what to flag.</div></div>
-    <div><div class="card-meta-label">Example: Task</div><div class="card-meta-value">"Scan license usage" &mdash; this is a specific action within a compliance audit or a reporting workflow. You'd give someone the instruction, not a mandate.</div></div>
+    <div><div class="card-meta-label">If yes &mdash; classify as a Job</div><div class="card-meta-value">It has enough scope to contain its own Tasks. Example: "Run quarterly compliance audit" &mdash; you'd assign this to a compliance lead and they'd determine which checks to run, which reports to pull, and what to flag.</div></div>
+    <div><div class="card-meta-label">If no &mdash; classify as a Task</div><div class="card-meta-value">It needs to be broken down before someone else could take it on. Example: "Scan license usage" &mdash; this is a specific action within a compliance audit or a reporting workflow. You'd give someone the instruction, not a mandate.</div></div>
   </div>
 </div>
 
@@ -1176,11 +1214,6 @@
   <p>Task: "Run retrospective" &mdash; Frequency: <strong>Quarterly</strong> (per sprint cycle), Criticality: <strong>Supporting</strong></p>
 </div>
 
-<div class="callout-emphasis callout">
-  <span class="callout-label">Why This Matters Downstream</span>
-  <p>A Task that is both <strong>Daily</strong> and <strong>Blocking</strong> must be reachable in one interaction from the product's landing state &mdash; regardless of where it sits in the Job hierarchy. This is the data that makes Step 06's Frequency Overrides Hierarchy principle actionable rather than subjective. Without frequency annotations, that audit principle has no input and the practitioner has to guess.</p>
-</div>
-
 <h3 id="s1-multi">Defining for Multiple User Types</h3>
 
 <p>Most products serve more than one persona. A project management tool serves Project Managers, Developers, and Designers &mdash; each with overlapping but distinct Job maps. Don't try to define all personas simultaneously. Instead:</p>
@@ -1189,7 +1222,7 @@
 
 <p><strong>Then overlay the maps.</strong> Once you have 2&ndash;3 individual maps, lay them side by side. Look for: <strong>shared Jobs</strong>, <strong>shared Tasks under different Jobs</strong>, and <strong>persona-exclusive Jobs</strong>. Mark these overlaps and divergences &mdash; they feed the role-based decisions in <a href="#s4">Step 04</a>.</p>
 
-<p><strong>Calculate your overlap ratio.</strong> If two personas share more than 70% of their Jobs, you're likely building one navigation with different defaults. If they share less than 30%, you may be building two different products. You'll use this overlap ratio to choose your role-based navigation approach in Step 04 &mdash; the ratio maps directly to three approaches ranging from shared navigation with different defaults to fully separate applications.</p>
+<p><strong>Note your overlaps and divergences</strong> &mdash; they feed directly into the role-based navigation decisions in <a href="#s4">Step 04</a>.</p>
 
 </div>
 </div>
@@ -1351,13 +1384,13 @@
 
 <h3 id="s2-dominant">Identifying Your Dominant Model</h3>
 
-<p>The most common mistake teams make here is projecting the product's current structure onto the user's mental model. Your database might be entity-centric, your roadmap might be process-oriented, and your support queue might be the highest-traffic feature &mdash; but none of those tell you how <em>users</em> organize their work. To find the dominant model, you need to look past the product and into the user's world.</p>
+<p>The most common mistake teams make here is projecting the product's current structure onto the user's mental model. <strong>Your database might be entity-centric</strong>, <strong>your roadmap might be process-oriented</strong>, and <strong>your support queue might be the highest-traffic feature</strong> &mdash; but none of those tell you how <em>users</em> organize their work. To find the dominant model, you need to look past the product and into the user's world.</p>
 
 <p>Run these four diagnostic checks. If three or more point to the same model, that's your dominant anchor.</p>
 
 <div class="card">
   <div class="card-header"><div class="card-name">1. Listen to the Language</div></div>
-  <div class="card-def">Scan support tickets, user interviews, or session recordings and note how users frame what they're doing. The nouns and verbs people reach for naturally reveal the anchor.</div>
+  <div class="card-def">Scan support tickets, user interviews, or session recordings for how users describe their <strong>sessions and goals</strong> &mdash; not their moment-to-moment interactions. The nouns and verbs people reach for when explaining what they came to do and why reveal the anchor.</div>
   <div class="card-meta">
     <div><div class="card-meta-label">Process-first</div><div class="card-meta-value">"I'm in my weekly review" / "I need to do my month-end close"</div></div>
     <div><div class="card-meta-label">Entity-first</div><div class="card-meta-value">"I need to check on the Anderson account" / "What's happening with Project Alpha?"</div></div>
@@ -1368,7 +1401,7 @@
 
 <div class="card">
   <div class="card-header"><div class="card-name">2. Map What Triggers a Session</div></div>
-  <div class="card-def">Categorize why users open the product. The trigger tells you what the user is optimizing for when they first arrive &mdash; which is exactly what primary navigation needs to serve.</div>
+  <div class="card-def">Categorize why users open the product at the <strong>session level</strong> &mdash; what prompts them to sit down and start. The trigger tells you what the user is optimizing for when they first arrive, which is exactly what primary navigation needs to serve.</div>
   <div class="card-meta">
     <div><div class="card-meta-label">Process-first</div><div class="card-meta-value">A recurring ritual &mdash; "every Monday I do X"</div></div>
     <div><div class="card-meta-label">Entity-first</div><div class="card-meta-value">A status check &mdash; "I need to see where this thing stands"</div></div>
@@ -1379,7 +1412,7 @@
 
 <div class="card">
   <div class="card-header"><div class="card-name">3. Look at Session Shape</div></div>
-  <div class="card-def">Observe the pattern of a typical session. If you have analytics, session duration and page-transition patterns reveal this empirically. If not, five minutes of observation will usually do it.</div>
+  <div class="card-def">Observe the <strong>overall arc</strong> of a typical session, not individual clicks. If you have analytics, session duration and page-transition patterns reveal this empirically. If not, five minutes of observation will usually do it. You're looking for the shape of the session &mdash; linear, deep-dive, burst-processing, or immersive &mdash; not the sequence of individual actions.</div>
   <div class="card-meta">
     <div><div class="card-meta-label">Process-first</div><div class="card-meta-value">Linear or semi-linear &mdash; enter a phase, do the work, move to the next phase</div></div>
     <div><div class="card-meta-label">Entity-first</div><div class="card-meta-value">Deep on one object &mdash; find the thing, examine it from multiple angles, act on it</div></div>
@@ -1390,7 +1423,7 @@
 
 <div class="card">
   <div class="card-header"><div class="card-name">4. The Blank Screen Test</div></div>
-  <div class="card-def">Forget the current UI entirely. If the user opened a blank screen and could type or say what they want, what would they ask for? This strips away the bias of how the product is currently built and gets to underlying intent.</div>
+  <div class="card-def">Forget the current UI entirely. If the user opened a blank screen and could type or say what they want, <strong>what would they ask for first?</strong> You're looking for their session-level goal, not a specific action. This strips away the bias of how the product is currently built and gets to underlying intent.</div>
   <div class="card-meta">
     <div><div class="card-meta-label">Process-first</div><div class="card-meta-value">"Start my month-end close"</div></div>
     <div><div class="card-meta-label">Entity-first</div><div class="card-meta-value">"Take me to Project Alpha"</div></div>
@@ -1403,22 +1436,21 @@
 
 <p>A clean 3-of-4 or 4-of-4 result is ideal, but many products &mdash; especially enterprise tools, agile workflows, and multi-role platforms &mdash; will produce a 2/2 split or a 3/1 with a strong dissenting signal. This is not an error in your analysis. It means the product genuinely serves multiple mental models, and the navigation needs to account for that explicitly rather than forcing a single anchor.</p>
 
-<div class="callout-emphasis callout">
-  <span class="callout-label">Do Not Force a Dominant Model</span>
-  <p>The most common failure mode here is picking one anchor and burying the other. If your diagnostics split, forcing a single model will surface as a Step 06 audit failure &mdash; typically Frequency Overrides Hierarchy or Stability Matches Persistence. Resolve the split now rather than discovering the conflict downstream.</p>
-</div>
-
-<p><strong>Step A: Score the diagnostics.</strong> Assign each of the four diagnostics (Language, Session Trigger, Session Shape, Blank Screen) to the model it most clearly supports. If a diagnostic genuinely could go either way, mark it as split rather than forcing it into one column. Count the results:</p>
+<p><strong>Score the diagnostics.</strong> Assign each of the four diagnostics (Language, Session Trigger, Session Shape, Blank Screen) to the model it most clearly supports. If a diagnostic genuinely could go either way, mark it as split rather than forcing it into one column. Count the results:</p>
 
 <table>
   <tr><th>Result</th><th>Interpretation</th><th>Action</th></tr>
   <tr><td>4&ndash;0 or 3&ndash;0 (with 1 split)</td><td>Clear dominant model</td><td>Proceed with that model as your primary anchor. No hybrid needed.</td></tr>
   <tr><td>3&ndash;1</td><td>Dominant model with a secondary signal</td><td>Primary anchor is the 3-count model. Check whether the dissenting diagnostic points to a high-frequency Task (use frequency data from Step 01). If so, that Task earns primary-level placement regardless of model &mdash; apply Frequency Overrides Hierarchy preemptively.</td></tr>
-  <tr><td>2&ndash;2</td><td>Genuine hybrid</td><td>Move to Step B.</td></tr>
+  <tr><td>2&ndash;2</td><td>Genuine hybrid</td><td>Expand the section below.</td></tr>
   <tr><td>2&ndash;1&ndash;1 or flatter</td><td>No clear model</td><td>Insufficient signal. Gather more user data before proceeding &mdash; five contextual interviews focused on "walk me through your last session" will typically resolve the ambiguity.</td></tr>
 </table>
 
-<p><strong>Step B: Resolve the 2/2 split.</strong> When two models tie, the split almost always falls into one of three patterns. Identify which one matches your product and apply the corresponding resolution.</p>
+<details class="hybrid-resolver">
+<summary>Resolving a 2/2 Split</summary>
+<div class="resolver-content">
+
+<p>When two models tie, the split almost always falls into one of three patterns. Identify which one matches your product and apply the corresponding resolution.</p>
 
 <div class="card">
   <div class="card-header"><div class="card-name">Pattern 1: Entity + Process Split</div></div>
@@ -1458,10 +1490,13 @@
 
 <div class="callout">
   <span class="callout-label">The 30% Rule for Hybrid Elevation</span>
-  <p>When resolving a hybrid, use this threshold: if the secondary model drives &ge;30% of sessions or &ge;30% of active session time, it earns co-equal primary placement rather than being subordinated to the secondary tier. Below 30%, the secondary model can be served through pinned shortcuts, filtered views, or &amp;#8984;K without needing its own primary-level anchor.</p>
+  <p>When resolving a hybrid, use this threshold: if the secondary model drives &ge;30% of sessions or &ge;30% of active session time, it earns co-equal primary placement rather than being subordinated to the secondary tier. Below 30%, the secondary model can be served through pinned shortcuts, filtered views, or &#8984;K without needing its own primary-level anchor.</p>
 </div>
 
 <p>For a quantitative scoring approach to the diagnostics, see the <a href="#appendix-scoring">Diagnostic Scoring Matrix</a> in the Appendix.</p>
+
+</div>
+</details>
 
 <h3 id="s2-principles">Mapping Principles (Apply to All Models)</h3>
 
@@ -1559,65 +1594,9 @@
   <div class="scope-range"><strong>Multi-platform:</strong> Two composition formulas sharing a JTBD hierarchy but using different paradigms per platform.</div>
 </div>
 
-<h3 id="s3-conflicts">Reading Your Profile: Conflict Rules</h3>
-
-<p>Your answers across the six dimensions act as a filter for Step 05. A single dimension rarely rules out a paradigm on its own &mdash; it's specific <em>combinations</em> that force decisions. Below are the most common dimension conflicts and how to resolve them.</p>
-
-<div class="card">
-  <div class="card-header"><div class="card-name">Many Jobs + Responsive Web</div></div>
-  <div class="card-def">5+ top-level Jobs on responsive web.</div>
-  <div class="card-meta">
-    <div><div class="card-meta-label">Conflict</div><div class="card-meta-value">Side navigation is the natural fit for 5+ Jobs, but a persistent sidebar consumes too much horizontal space on tablet and mobile viewports.</div></div>
-    <div><div class="card-meta-label">Rule</div><div class="card-meta-value">Side nav is viable only if you define an explicit collapse strategy before proceeding to Step 05. Specify: (a) the breakpoint at which the sidebar collapses, (b) the collapsed state (hamburger drawer, bottom tab subset, or off-canvas), and (c) which Jobs remain visible in the collapsed state (use frequency annotations from Step 01 &mdash; Daily/Blocking Tasks stay visible). If you can't define the collapsed state, Hub &amp; Spoke is the safer choice.</div></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-header"><div class="card-name">Deep Hierarchy + Low Learning Tolerance</div></div>
-  <div class="card-def">3+ Task tree levels with near-zero navigation learning tolerance.</div>
-  <div class="card-meta">
-    <div><div class="card-meta-label">Conflict</div><div class="card-meta-value">Deep hierarchies require breadcrumbs and drill-down, but users with low tolerance won't invest in learning a multi-level structure. Nested accordions are especially hostile in this profile.</div></div>
-    <div><div class="card-meta-label">Rule</div><div class="card-meta-value">Flatten the visible hierarchy to 2 levels maximum. Use breadcrumbs for depth beyond level 2, but ensure the primary and secondary tiers are visible and labeled at all times. Add &#8984;K or search as a mandatory escape hatch &mdash; users who can't find something structurally must have a text-based alternative.</div></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-header"><div class="card-name">Concentrated Usage + Evenly Distributed Jobs</div></div>
-  <div class="card-def">80% of sessions touch 2&ndash;3 Tasks, but the product supports 6+ equally important Jobs.</div>
-  <div class="card-meta">
-    <div><div class="card-meta-label">Conflict</div><div class="card-meta-value">The high-frequency Tasks want top-level placement, but the Job structure demands equal weight across many items. Pinning 3 Tasks to the top of a 10-item side nav makes the other 7 feel secondary even when they're architecturally equal.</div></div>
-    <div><div class="card-meta-label">Rule</div><div class="card-meta-value">Separate the shortcut layer from the structural layer. Use a "Quick Actions" or "Pinned" section at the top of the primary nav (or as a persistent dashboard widget) for the high-frequency Tasks, then show the full Job structure below or alongside. This preserves architectural equality while giving daily workflows a fast path.</div></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-header"><div class="card-name">Extreme Expertise Spread + Native Mobile</div></div>
-  <div class="card-def">Users range from first-day novices to decade-long experts, on mobile.</div>
-  <div class="card-meta">
-    <div><div class="card-meta-label">Conflict</div><div class="card-meta-value">Mobile has limited screen real estate for layered navigation strategies. You can't fit visible structural nav, shortcuts, and guided onboarding on a 375px-wide screen simultaneously.</div></div>
-    <div><div class="card-meta-label">Rule</div><div class="card-meta-value">Default to the novice experience (visible labels, standard tab bar, no hidden gestures). Serve experts through progressive shortcuts: long-press for quick actions, pull-down search, and customizable tab bar items. Avoid hamburger menus as primary nav for novice-heavy audiences &mdash; bottom tabs with 4&ndash;5 items plus a "More" overflow is the ceiling.</div></div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-header"><div class="card-name">Multi-Platform + Deep Hierarchy</div></div>
-  <div class="card-def">Desktop and mobile apps with 3+ levels of Task depth.</div>
-  <div class="card-meta">
-    <div><div class="card-meta-label">Conflict</div><div class="card-meta-value">The desktop composition formula (side nav + breadcrumbs + drill-down) doesn't translate to mobile. Breadcrumbs are effectively unusable on mobile viewports.</div></div>
-    <div><div class="card-meta-label">Rule</div><div class="card-meta-value">Write two composition formulas that share the same JTBD hierarchy and navigation anchor but use different paradigms. Desktop: side nav + breadcrumbs. Mobile: bottom tabs (top 2 levels) + stacked drill-down (depth). The shared anchor ensures conceptual consistency; the different paradigms respect platform constraints.</div></div>
-  </div>
-</div>
-
 <div class="callout">
-  <span class="callout-label">Worked example: Reading a full profile</span>
-  <p><strong>A B2B analytics platform.</strong></p>
-  <p style="margin-bottom: 6px; padding-left: 16px; border-left: 2px solid var(--mustard-200);">How many top-level Jobs? &rarr; <strong>8</strong><br>
-  How deep is your Task tree? &rarr; <strong>2 levels</strong><br>
-  How varied is your user expertise? &rarr; <strong>Extreme spread</strong><br>
-  How concentrated is usage? &rarr; <strong>3 Tasks dominate</strong><br>
-  How much learning tolerance? &rarr; <strong>Moderate</strong><br>
-  What platforms? &rarr; <strong>Responsive web</strong></p>
-  <p>Conflicts triggered: <strong>Many Jobs + Responsive Web</strong> and <strong>Concentrated Usage + Evenly Distributed Jobs</strong>. Resolution: side navigation with a defined collapse strategy (hamburger drawer below 768px, with the 3 high-frequency Tasks persisting as bottom-bar icons on mobile). Quick Actions section at the top of the sidebar for the 3 dominant Tasks, full Job structure below. &#8984;K as the mandatory power-user accelerator.</p>
+  <span class="callout-label">What to do with your answers</span>
+  <p>Your profile across these six dimensions acts as a filter for Step 05. You'll use it there to narrow which paradigms are viable and resolve conflicts between competing dimensions.</p>
 </div>
 
 </div>
@@ -1649,7 +1628,7 @@
 
 <h3 id="s4-role">Role-Based Navigation</h3>
 
-<p>In Step 01, you defined Job maps for each persona and calculated their overlap ratio. That ratio directly determines which approach to take here — use it as your guide when reading the table below.</p>
+<p>In Step 01, you defined Job maps for each persona and noted overlaps and divergences. Now you'll use that overlap data to choose a role-based navigation approach.</p>
 
 <table>
   <tr><th>Approach</th><th>How it works</th><th>When to use</th><th>Overlap</th><th>Risk</th></tr>
@@ -1658,66 +1637,21 @@
   <tr><td>Role-aware defaults</td><td>Same nav, different starting points by role.</td><td>Same Jobs, different frequency patterns.</td><td>&gt;70% shared Jobs</td><td>Lowest risk.</td></tr>
 </table>
 
-<div class="callout">
-  <span class="callout-label">Recommendation</span>
-  <p>Start with role-aware defaults. Only escalate to role-filtered when Jobs genuinely diverge. Only build separate apps when Job maps have less than 20% overlap. When roles share more than 70% of Jobs, treat them as one role with different defaults &mdash; a PM lands on a project dashboard; a team lead lands on the team view. Same nav, different starting points.</p>
-</div>
+<p>Start with role-aware defaults and only escalate when the data demands it. Build separate apps only when Job maps overlap less than 20%. To determine your overlap ratio, lay your persona Job maps side by side and count shared vs. exclusive Jobs &mdash; the percentage of shared Jobs tells you which row of the table above applies.</p>
 
 <h3 id="s4-adaptive">Adaptive / Contextual Navigation</h3>
 
 <table>
   <tr><th>Type</th><th>Level</th><th>How it works</th><th>Example</th><th>Risk</th></tr>
   <tr><td>Workflow-state</td><td>Activity</td><td>Nav changes based on workflow progress.</td><td>Editor toolbar shifts from editing to review tools.</td><td>"Where did my button go?"</td></tr>
-  <tr><td>Frequency-adaptive</td><td>Task</td><td>Frequently-used items gain prominence.</td><td>Slack reorders channels by recent activity.</td><td>Spatial memory breaks.</td></tr>
-  <tr><td>Data-state-driven</td><td>Task</td><td>System data changes navigation priority.</td><td>Overdue SLA ticket rises to queue top. Blocked issue surfaces a warning.</td><td>Loss of user control if overused.</td></tr>
+  <tr><td>Frequency-adaptive</td><td>Task</td><td>Items the <strong>user does often</strong> gain prominence. Driven by user behavior patterns.</td><td>Slack reorders channels by recent activity.</td><td>Spatial memory breaks.</td></tr>
+  <tr><td>Data-state-driven</td><td>Task</td><td>Items the <strong>system flags as urgent now</strong> gain prominence. Driven by data thresholds, not user behavior.</td><td>Overdue SLA ticket rises to queue top. Blocked issue surfaces a warning.</td><td>Loss of user control if overused.</td></tr>
   <tr><td>Mode-switching</td><td>Job</td><td>Entire nav restructures on mode change.</td><td>Figma: file browser &rarr; canvas.</td><td>Two mental models.</td></tr>
 </table>
 
 <div class="callout">
-  <span class="callout-label">Data-State-Driven Priority</span>
-  <p>Distinct from frequency-adaptive. Frequency responds to <strong>what the user does often</strong>. Data-state responds to <strong>what the system says is urgent now</strong> &mdash; SLA breaches, blocked dependencies, overdue tasks. Use sparingly: if everything is urgent, nothing is.</p>
-</div>
-
-<div class="callout callout-red">
   <span class="callout-label">The Cardinal Rule</span>
   <p>Never remove navigation options silently. If something will disappear, move, or change, the user needs to understand why. Adaptive navigation must be <em>transparently</em> adaptive.</p>
-</div>
-
-<h3 id="s4-contexts">User Contexts</h3>
-
-<p>The context a user brings to a Task &mdash; whether they're uncertain, expert, exploring, or under pressure &mdash; changes how navigation should <em>behave</em>, even when the structural mapping stays the same.</p>
-
-<div class="qa-card">
-  <h4>Anxiety / First-time uncertainty</h4>
-  <p><strong>What it feels like:</strong> Fear of making a mistake, uncertainty about consequences.</p>
-  <p><strong>Navigation implication:</strong> Narrow the navigation. Reduce choices. Guide with steppers and linear flows.</p>
-  <div class="example-block"><span class="callout-label">Example: Stripe's onboarding</span>Stripe collapses the full dashboard into a focused checklist &mdash; a guided stepper that isolates the user from complexity.</div>
-</div>
-
-<div class="qa-card">
-  <h4>Confidence / High-frequency flow</h4>
-  <p><strong>What it feels like:</strong> Mastery, impatience with unnecessary steps. "I know exactly what I need."</p>
-  <p><strong>Navigation implication:</strong> Minimize structural navigation. Provide keyboard shortcuts, &#8984;K, and direct-action buttons that bypass hierarchy.</p>
-  <div class="example-block"><span class="callout-label">Example: Salesforce Global Actions</span>The "+" button lets experienced reps create a record from anywhere, bypassing hierarchy entirely.</div>
-</div>
-
-<div class="qa-card">
-  <h4>Exploration / Discovery</h4>
-  <p><strong>What it feels like:</strong> Uncertainty about what questions to ask. "I don't know what I don't know."</p>
-  <p><strong>Navigation implication:</strong> Expose multiple entry points with enough context to help self-selection. Hub layouts, visible tab bars, and card-based overviews.</p>
-  <div class="example-block"><span class="callout-label">Example: Google Analytics 4 Home</span>GA4's home screen shows summary cards &mdash; each a window into a different dimension &mdash; helping users self-select.</div>
-</div>
-
-<div class="qa-card">
-  <h4>Urgency / Crisis response</h4>
-  <p><strong>What it feels like:</strong> Pressure, tunnel vision. "Something is broken and I need to fix it now."</p>
-  <p><strong>Navigation implication:</strong> Strip away non-essential options. Surface critical Tasks in one click from anywhere.</p>
-  <div class="example-block"><span class="callout-label">Example: PagerDuty's Incident View</span>PagerDuty narrows the entire UI to the active incident &mdash; timeline, responders, runbooks, status. Normal navigation recedes.</div>
-</div>
-
-<div class="callout-emphasis callout">
-  <span class="callout-label">Connecting Context to Structure</span>
-  <p>The JTBD hierarchy tells you <strong>what tier</strong> of navigation something belongs to. User context tells you <strong>how that tier should behave</strong>. When selecting paradigms in Step 05, test your choices against these four contexts: does this paradigm serve my anxious users? My confident users? My explorers? My urgent users?</p>
 </div>
 
 </div>
@@ -1876,7 +1810,7 @@
 
 <h3 id="s5-worked">Worked Compositions: Enterprise B2B</h3>
 
-<p>Consumer and light-SaaS examples are useful for illustrating paradigms, but enterprise B2B tools introduce complications the simpler examples don't surface: hybrid anchors, deep hierarchies, multi-role navigation, and cross-Job Task gravity. Here are two fully worked compositions.</p>
+<p>Consumer and light-SaaS examples illustrate paradigms, but enterprise B2B tools introduce complications the simpler examples don't surface: hybrid anchors, deep hierarchies, multi-role navigation, and cross-Job Task gravity. Here are two fully worked compositions.</p>
 
 <div class="card">
   <div class="card-header"><div class="card-name">IT Asset Management (Entity + Queue Hybrid)</div></div>
@@ -1923,6 +1857,55 @@ Mutually exclusive at the same level.</p>
 <h3 style="font-size: 17px; font-weight: 500; margin-top: 40px;">Accelerators <span style="font-weight: 300; color: var(--text-muted); font-size: 14px;">(additive)</span></h3>
 <p><strong>&#8984;K</strong> for users who know what they want. <strong>Contextual actions</strong> for Activity-level interactions. Both can coexist. Neither counts toward structural complexity.</p>
 
+<h3 id="s5-conflicts">Scope Conflicts: When Dimensions Collide</h3>
+
+<p>Your Step 03 scope profile acts as a filter here. A single dimension rarely rules out a paradigm on its own &mdash; it's specific <em>combinations</em> that force decisions. Below are the most common dimension conflicts and how to resolve them.</p>
+
+<div class="card">
+  <div class="card-header"><div class="card-name">Many Jobs + Responsive Web</div></div>
+  <div class="card-def">5+ top-level Jobs on responsive web.</div>
+  <div class="card-meta">
+    <div><div class="card-meta-label">Conflict</div><div class="card-meta-value">Side navigation is the natural fit for 5+ Jobs, but a persistent sidebar consumes too much horizontal space on tablet and mobile viewports.</div></div>
+    <div><div class="card-meta-label">Rule</div><div class="card-meta-value">Side nav is viable only if you define an explicit collapse strategy before finalizing your composition. Specify: (a) the breakpoint at which the sidebar collapses, (b) the collapsed state (hamburger drawer, bottom tab subset, or off-canvas), and (c) which Jobs remain visible in the collapsed state (use frequency annotations from Step 01 &mdash; Daily/Blocking Tasks stay visible). If you can't define the collapsed state, Hub &amp; Spoke is the safer choice.</div></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header"><div class="card-name">Deep Hierarchy + Low Learning Tolerance</div></div>
+  <div class="card-def">3+ Task tree levels with near-zero navigation learning tolerance.</div>
+  <div class="card-meta">
+    <div><div class="card-meta-label">Conflict</div><div class="card-meta-value">Deep hierarchies require breadcrumbs and drill-down, but users with low tolerance won't invest in learning a multi-level structure. Nested accordions are especially hostile in this profile.</div></div>
+    <div><div class="card-meta-label">Rule</div><div class="card-meta-value">Flatten the visible hierarchy to 2 levels maximum. Use breadcrumbs for depth beyond level 2, but ensure the primary and secondary tiers are visible and labeled at all times. Add &#8984;K or search as a mandatory escape hatch &mdash; users who can't find something structurally must have a text-based alternative.</div></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header"><div class="card-name">Concentrated Usage + Evenly Distributed Jobs</div></div>
+  <div class="card-def">80% of sessions touch 2&ndash;3 Tasks, but the product supports 6+ equally important Jobs.</div>
+  <div class="card-meta">
+    <div><div class="card-meta-label">Conflict</div><div class="card-meta-value">The high-frequency Tasks want top-level placement, but the Job structure demands equal weight across many items. Pinning 3 Tasks to the top of a 10-item side nav makes the other 7 feel secondary even when they're architecturally equal.</div></div>
+    <div><div class="card-meta-label">Rule</div><div class="card-meta-value">Separate the shortcut layer from the structural layer. Use a "Quick Actions" or "Pinned" section at the top of the primary nav (or as a persistent dashboard widget) for the high-frequency Tasks, then show the full Job structure below or alongside. This preserves architectural equality while giving daily workflows a fast path.</div></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header"><div class="card-name">Extreme Expertise Spread + Native Mobile</div></div>
+  <div class="card-def">Users range from first-day novices to decade-long experts, on mobile.</div>
+  <div class="card-meta">
+    <div><div class="card-meta-label">Conflict</div><div class="card-meta-value">Mobile has limited screen real estate for layered navigation strategies. You can't fit visible structural nav, shortcuts, and guided onboarding on a 375px-wide screen simultaneously.</div></div>
+    <div><div class="card-meta-label">Rule</div><div class="card-meta-value">Default to the novice experience (visible labels, standard tab bar, no hidden gestures). Serve experts through progressive shortcuts: long-press for quick actions, pull-down search, and customizable tab bar items. Avoid hamburger menus as primary nav for novice-heavy audiences &mdash; bottom tabs with 4&ndash;5 items plus a "More" overflow is the ceiling.</div></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header"><div class="card-name">Multi-Platform + Deep Hierarchy</div></div>
+  <div class="card-def">Desktop and mobile apps with 3+ levels of Task depth.</div>
+  <div class="card-meta">
+    <div><div class="card-meta-label">Conflict</div><div class="card-meta-value">The desktop composition formula (side nav + breadcrumbs + drill-down) doesn't translate to mobile. Breadcrumbs are effectively unusable on mobile viewports.</div></div>
+    <div><div class="card-meta-label">Rule</div><div class="card-meta-value">Write two composition formulas that share the same JTBD hierarchy and navigation anchor but use different paradigms. Desktop: side nav + breadcrumbs. Mobile: bottom tabs (top 2 levels) + stacked drill-down (depth). The shared anchor ensures conceptual consistency; the different paradigms respect platform constraints.</div></div>
+  </div>
+</div>
+
 <h3 id="s5-platforms">Adapting Composition Across Platforms</h3>
 
 <p>If your product is multi-platform, your JTBD hierarchy stays the same but paradigm selection diverges per platform:</p>
@@ -1938,38 +1921,58 @@ Mutually exclusive at the same level.</p>
   <tr><td>Contextual / floating</td><td>FAB, swipe gestures, long-press menus</td></tr>
 </table>
 
-<h3 id="s5-output">Your Navigation Outline: Required Output</h3>
+<h3 id="s5-context-check">Context Check</h3>
 
-<p>Step 05 ends when you've produced a <strong>Navigation Outline Document</strong> &mdash; the deliverable that feeds Step 06's audit and becomes the reference artifact for your team. Without this document, the audit has nothing concrete to evaluate. Use the structure below.</p>
+<p>Before finalizing your composition, test it against four user contexts. These represent distinct emotional and cognitive states your users will bring to the navigation &mdash; even when the structural mapping stays the same.</p>
 
-<div class="card" style="font-size: 15px;">
-  <div class="card-header"><div class="card-name">Navigation Outline Template</div></div>
+<table>
+  <tr><th>Context</th><th>What it feels like</th><th>Does your composition...</th></tr>
+  <tr><td><strong>Anxiety / First-time</strong></td><td>Fear of making a mistake, uncertainty about consequences.</td><td>Narrow choices and guide with steppers or linear flows? Can a new user reach their first Task without choosing from the full nav?</td></tr>
+  <tr><td><strong>Confidence / Expertise</strong></td><td>Mastery, impatience with unnecessary steps. "I know exactly what I need."</td><td>Provide shortcuts that bypass hierarchy? &#8984;K, direct-action buttons, keyboard navigation?</td></tr>
+  <tr><td><strong>Exploration / Discovery</strong></td><td>Uncertainty about what questions to ask. "I don't know what I don't know."</td><td>Expose multiple entry points with enough context to help self-selection? Hub layouts, visible tabs, summary cards?</td></tr>
+  <tr><td><strong>Urgency / Crisis</strong></td><td>Pressure, tunnel vision. "Something is broken and I need to fix it now."</td><td>Surface critical Tasks in one click from anywhere? Strip non-essential options when urgency is detected?</td></tr>
+</table>
 
-  <p style="margin: 16px 0 8px; font-weight: 500; color: var(--accent-dark);">1. JTBD Hierarchy</p>
-  <p>List every Job with its child Tasks. For each Task, include the frequency and criticality annotations from Step 01. Flag cross-Job Tasks and note their canonical home.</p>
+<p>If your composition fails any row &mdash; for a context that your users actually encounter &mdash; adjust before proceeding. Common fixes: add &#8984;K for confidence, add a guided flow entry point for anxiety, add a dashboard or hub landing for exploration, add a pinned crisis shortcut for urgency.</p>
 
-  <p style="margin: 16px 0 8px; font-weight: 500; color: var(--accent-dark);">2. Navigation Anchor</p>
-  <p>State the dominant model (or hybrid split). Include: which diagnostics pointed where, whether a tiebreaker or hybrid resolution was applied, and the rationale. If you used the scoring matrix, include the scores.</p>
+<h3 id="s5-output">Your Navigation Outline</h3>
 
-  <p style="margin: 16px 0 8px; font-weight: 500; color: var(--accent-dark);">3. Scope Profile Summary</p>
-  <p>Your answers to the six scope dimensions, plus any conflict rules triggered and how they were resolved.</p>
+<p>Step 05 ends when you've produced a <strong>Navigation Outline</strong> &mdash; the deliverable that feeds Step 06's audit and becomes the reference artifact for your team. Use the <a href="sightline-workbook-v8.html">Sightline Workbook</a> to fill this out interactively, or follow the structure below.</p>
 
-  <p style="margin: 16px 0 8px; font-weight: 500; color: var(--accent-dark);">4. Role and Context Decisions (from Step 04)</p>
-  <p>Role-based approach chosen (separate apps / role-filtered / role-aware defaults) with overlap ratio. Any adaptive navigation rules applied, with the specific trigger conditions and what changes.</p>
+<div class="example-block">
+  <span class="callout-label">Worked example: Agile PM Navigation Outline</span>
+  <p><strong>1. JTBD Hierarchy</strong></p>
+  <p style="padding-left: 16px; border-left: 2px solid var(--mustard-200);">Job 1: Advance sprint deliverables<br>
+  &emsp;Task 1.1: Prepare daily standup notes &mdash; <strong>Daily / Blocking</strong><br>
+  &emsp;Task 1.2: Implement &amp; commit work &mdash; <strong>Daily / Important</strong><br>
+  &emsp;Task 1.3: Review &amp; approve PRs &mdash; <strong>Daily / Important</strong><br>
+  Job 2: Coordinate with team<br>
+  &emsp;Task 2.1: Resolve blockers &mdash; <strong>Weekly / Blocking</strong><br>
+  Job 3: Monitor project health<br>
+  &emsp;Task 3.1: Check sprint progress &mdash; <strong>Daily / Important</strong><br>
+  Job 4: Contribute to process improvement<br>
+  &emsp;Task 4.1: Run retrospective &mdash; <strong>Quarterly / Supporting</strong></p>
 
-  <p style="margin: 16px 0 8px; font-weight: 500; color: var(--accent-dark);">5. Paradigm Composition</p>
-  <p>The formula: [Primary] + [Secondary] + [Depth] + [Accelerators]. For multi-platform products, one formula per platform. For each paradigm chosen, note why it was selected over alternatives.</p>
+  <p><strong>2. Navigation Anchor</strong></p>
+  <p style="padding-left: 16px; border-left: 2px solid var(--mustard-200);">Process-primary (scored 8.5) with entity as secondary (scored 5.5). Language + Blank Screen pointed to entity; Session Trigger + Session Shape pointed to process. Behavioral diagnostics weighted higher &rarr; process dominant. Daily standup prep elevated to primary via Frequency Overrides Hierarchy.</p>
 
-  <p style="margin: 16px 0 8px; font-weight: 500; color: var(--accent-dark);">6. Resulting Navigation Structure</p>
-  <p>The actual navigation hierarchy, written out as an indented outline. For each item, note: its tier (primary / secondary / in-page), the Job or Task it maps to, and whether it's a canonical home or a pointer.</p>
+  <p><strong>3. Scope Profile</strong></p>
+  <p style="padding-left: 16px; border-left: 2px solid var(--mustard-200);">4 Jobs &middot; 2-level depth &middot; Moderate expertise &middot; Concentrated usage &middot; Responsive web. Conflict triggered: Concentrated Usage + multiple Jobs &rarr; separated shortcut layer from structural layer.</p>
 
-  <p style="margin: 16px 0 8px; font-weight: 500; color: var(--accent-dark);">7. Known Risks and Open Questions</p>
-  <p>Any decisions that were close calls, dependencies on data you don't yet have, or areas where the audit is likely to flag issues. These become your Step 06 focus areas.</p>
-</div>
+  <p><strong>4. Role &amp; Context Decisions</strong></p>
+  <p style="padding-left: 16px; border-left: 2px solid var(--mustard-200);">Single persona (developer). Role-aware defaults. Data-state adaptive for blocked items only.</p>
 
-<div class="callout">
-  <span class="callout-label">Why a prescribed template matters</span>
-  <p>Three benefits: it forces you to document rationale (not just decisions), it gives stakeholders a readable artifact they can review without sitting through the full framework, and it creates a baseline that the Step 06 audit can evaluate systematically rather than impressionistically.</p>
+  <p><strong>5. Paradigm Composition</strong></p>
+  <p style="padding-left: 16px; border-left: 2px solid var(--mustard-200);">[Side nav] + [Tab bar] + [Breadcrumbs] + [&#8984;K]. Side nav chosen over top nav because responsive collapse is straightforward with 4 Jobs.</p>
+
+  <p><strong>6. Resulting Structure</strong></p>
+  <p style="padding-left: 16px; border-left: 2px solid var(--mustard-200);"><strong>Primary (persistent left rail):</strong> Standup (pinned) &middot; Board &middot; Backlog &middot; Reports &middot; Retrospectives<br>
+  <strong>Secondary (tabs within Board):</strong> Board | List | Timeline<br>
+  <strong>Depth:</strong> Active Sprint &rarr; Story-123 &rarr; Subtask<br>
+  <strong>Accelerator:</strong> &#8984;K for ticket lookup by ID</p>
+
+  <p><strong>7. Known Risks</strong></p>
+  <p style="padding-left: 16px; border-left: 2px solid var(--mustard-200);">Retrospectives may feel lost in primary rail given quarterly frequency &mdash; monitor whether users can find it. Standup pinning may confuse users who don't do daily standups (different team cadences).</p>
 </div>
 
 </div>
@@ -2048,12 +2051,6 @@ Mutually exclusive at the same level.</p>
 <div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>Optimistic UI for tab switches. Preload adjacent views on hover. Skeleton screens for deeper transitions. Linear and Notion pre-cache sidebar items so page switches feel instant.</p></div></div>
 <div class="aud-test"><span class="aud-tag">Test</span><div class="aud-content"><p><strong>Data needed:</strong> Prototype or production build with browser dev tools. <strong>Method:</strong> Measure perceived transition time for the 3 highest-frequency navigation actions (identified by Step 01 frequency annotations). Use Performance tab or stopwatch timing. <strong>Pass:</strong> Primary nav switches &lt;100ms. Secondary switches &lt;300ms. Depth transitions show a loading indicator within 100ms and complete within 500ms. <strong>Fail:</strong> Any of the 3 highest-frequency transitions exceeds its tier's threshold.</p></div></div>
 
-<div class="callout-emphasis callout">
-  <span class="callout-label">Final Heuristic</span>
-  <p>Map your Jobs and Tasks on paper first. Count the Jobs. Measure the Task depth. Note the frequency patterns. Identify your navigation anchor. Then pick paradigms and compose them. The hierarchy dictates the paradigm, never the reverse.</p>
-</div>
-
-<p><strong>Using this framework:</strong> Follow the six steps in order. Define (1), Map (2), Scope (3), Assess (4), Select (5), Audit (6). Resist jumping to paradigm selection &mdash; the steps before it are what make the selection defensible.</p>
 
 </div>
 </div>
@@ -2117,7 +2114,7 @@ Mutually exclusive at the same level.</p>
 
 <h3 id="appendix-scoring">Diagnostic Scoring Matrix</h3>
 
-<p>This is an optional quantitative supplement to the decision tree in <a href="#s2-resolve">Step 02</a>. Use it when the decision tree's qualitative patterns don't clearly match your situation, or when you need a defensible numerical rationale for stakeholders.</p>
+<p>This is an optional quantitative supplement to the decision tree in <a href="#s2-resolve">Step 02</a>. Use it when the qualitative patterns don't clearly match your situation, or when you need a defensible numerical rationale for stakeholders.</p>
 
 <p><strong>How to score:</strong> For each diagnostic, assign a confidence score from 0 to 3 for each of the four models. 0 = no signal, 1 = weak signal, 2 = moderate signal, 3 = strong signal. A single diagnostic can give partial scores to multiple models (e.g., Language might score Entity 2, Process 1 if users reference both entities and phases but lean toward entities).</p>
 
