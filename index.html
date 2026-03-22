@@ -56,6 +56,146 @@
     --content-max: 800px;
   }
 
+  /* ========== DARK MODE ========== */
+  [data-theme="dark"] {
+    --mustard-900: #F8F0D4;
+    --mustard-800: #E3C97A;
+    --mustard-700: #D4B04A;
+    --mustard-600: #C49A1D;
+    --mustard-500: #B8891A;
+    --mustard-400: #9B7312;
+    --mustard-300: #7A5B0D;
+    --mustard-200: #3D3018;
+    --mustard-100: #2A2517;
+    --mustard-50: #222018;
+
+    --terra-600: #E0825E;
+    --terra-100: #2E2220;
+    --terra-border: #5C3A2E;
+
+    --warm-50: #1A1A1E;
+    --warm-100: #222226;
+    --warm-200: #2E2E32;
+    --warm-300: #3A3A3E;
+    --warm-400: #5A5A5E;
+    --warm-500: #8A8A8E;
+    --warm-600: #A8A6A3;
+    --warm-700: #D0CEC9;
+    --warm-800: #E8E6E3;
+    --warm-900: #F2F0ED;
+
+    --bg: #1A1A1E;
+    --surface: #222226;
+    --text: #E8E6E3;
+    --text-secondary: #C0BEB9;
+    --text-muted: #8A8A8E;
+    --border: #2E2E32;
+    --border-strong: #3A3A3E;
+    --accent: #D4B04A;
+    --accent-light: #2A2517;
+    --accent-dark: #F8F0D4;
+
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
+    --shadow-md: 0 2px 8px rgba(0,0,0,0.3);
+  }
+
+  /* Dark mode specific overrides */
+  [data-theme="dark"] .hero {
+    background: #2A2517;
+  }
+  [data-theme="dark"] .hero h1 {
+    color: #F8F0D4;
+  }
+  [data-theme="dark"] .hero .subtitle {
+    color: #D4B04A;
+  }
+  [data-theme="dark"] .hero .lead {
+    color: #C0BEB9;
+  }
+  [data-theme="dark"] .hero .lead strong {
+    color: #E3C97A;
+  }
+  [data-theme="dark"] .diagram {
+    background: #18170F;
+    color: #E3C97A;
+  }
+  [data-theme="dark"] .diagram .highlight { color: #D4B04A; }
+  [data-theme="dark"] .diagram .warm { color: #E0825E; }
+  [data-theme="dark"] .diagram .cool { color: #E3C97A; }
+  [data-theme="dark"] .diagram .dim { color: #7A5B0D; }
+  [data-theme="dark"] .diagram-light {
+    background: #222018;
+    color: #C0BEB9;
+    border-top-color: #3D3018;
+  }
+  [data-theme="dark"] .diagram-light .highlight { color: #D4B04A; }
+  [data-theme="dark"] .diagram-light .warm { color: #A8A6A3; }
+  [data-theme="dark"] .diagram-light .cool { color: #C49A1D; }
+  [data-theme="dark"] .diagram-light .dim { color: #8A8A8E; }
+  [data-theme="dark"] strong { color: #D4B04A; }
+  [data-theme="dark"] .scope-range strong { color: #E3C97A; }
+  [data-theme="dark"] a { color: #D4B04A; border-bottom-color: #3D3018; }
+  [data-theme="dark"] a:hover { border-bottom-color: #D4B04A; }
+  [data-theme="dark"] .watermark-bg::before { opacity: 0.025; }
+  [data-theme="dark"] .step-header { background: #1A1A1E; }
+  [data-theme="dark"] table { background: #222226; border-color: #2E2E32; }
+  [data-theme="dark"] th { background: #1A1A1E; color: #8A8A8E; border-bottom-color: #2E2E32; }
+  [data-theme="dark"] td { border-bottom-color: #2E2E32; color: #C0BEB9; }
+  [data-theme="dark"] td:first-child { color: #E8E6E3; }
+  [data-theme="dark"] .stepper-pulse-dark {
+    animation-name: stepper-pulse-dark;
+  }
+  @keyframes stepper-pulse-dark {
+    0%, 100% { box-shadow: 0 0 0 3px #2A2517; }
+    50% { box-shadow: 0 0 0 6px #2A2517, 0 0 12px #3D3018; }
+  }
+  [data-theme="dark"] .stepper-step.current .stepper-dot {
+    animation-name: stepper-pulse-dark;
+    box-shadow: 0 0 0 3px #2A2517;
+  }
+
+  /* ========== THEME TOGGLE ========== */
+  .theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: 24px;
+    padding: 4px;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .theme-toggle:hover {
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+  }
+  .toggle-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    transition: background 0.25s ease, color 0.25s ease;
+    color: var(--text-muted);
+  }
+  .toggle-option.active {
+    background: var(--accent);
+    color: #FFFFFF;
+  }
+  [data-theme="dark"] .toggle-option.active {
+    background: #D4B04A;
+    color: #1A1A1E;
+  }
+  .toggle-option svg {
+    width: 16px;
+    height: 16px;
+  }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
@@ -66,6 +206,14 @@
     color: var(--text);
     background: var(--bg);
     -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .hero, .sidebar, .callout, .callout-warm, .callout-emphasis, .callout-red,
+  .card, .paradigm, .scope-card, .qa-card, .toc, .exec-summary, .legend,
+  .example-block, .anti-pattern, .aud-concept, .aud-decide, .aud-implement, .aud-test,
+  table, th, td, .step-header, .theme-toggle, .toggle-option,
+  .diagram, .diagram-light {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   }
 
   /* ========== LAYOUT ========== */
@@ -664,6 +812,13 @@
   .aud-concept .aud-tag { color: var(--mustard-700); }
   .aud-decide .aud-tag { color: var(--warm-600); }
   .aud-implement .aud-tag { color: var(--warm-500); }
+  .aud-test {
+    background: var(--terra-100);
+    border: 1px solid var(--terra-border);
+    padding: 18px 22px;
+    margin: 12px 0;
+  }
+  .aud-test .aud-tag { color: var(--terra-600); }
   .aud-content { font-size: 14px; line-height: 1.72; color: var(--text-secondary); font-weight: 300; }
   .aud-content p:last-child { margin-bottom: 0; }
 
@@ -796,6 +951,17 @@
 </style>
 </head>
 <body>
+
+<!-- THEME TOGGLE -->
+<button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+  <span class="toggle-option active" id="lightToggle">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  </span>
+  <span class="toggle-option" id="darkToggle">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </span>
+</button>
+
 <!-- ============================================================ -->
 <!-- HERO BANNER -->
 <!-- ============================================================ -->
@@ -826,6 +992,7 @@
 
   <div class="sidebar-section-label">Overview</div>
   <a href="#problem" data-section="problem" class="nav-link"><span class="nav-num"></span> Why It Breaks</a>
+  <a href="#using" data-section="using" class="nav-link"><span class="nav-num"></span> Using This Framework</a>
 
   <div class="sidebar-section-label">The Process</div>
 
@@ -856,6 +1023,39 @@
   <p>Over time, patterns emerge. <strong>Users struggle to find features that exist</strong> because labels reflect internal team structures rather than user goals. <strong>Navigation changes with each release cycle</strong> because it's anchored to the feature roadmap rather than stable user outcomes. <strong>Onboarding takes longer than it should</strong> because new users have to reverse-engineer the product's internal logic. <strong>Support tickets accumulate</strong> around "how do I..." questions that the navigation should have answered on its own.</p>
   <p>The underlying challenge isn't a lack of effort &mdash; it's a lack of shared structure. The work of connecting user intent to navigation decisions tends to happen informally: in someone's head, on a whiteboard that gets erased, in a design file that diverges from implementation. The thinking happens, but it doesn't persist across the team or survive the pressures of a shipping schedule.</p>
   <p>Sightline gives that thinking a structured, repeatable home. It provides a shared language for connecting what users are trying to accomplish to how they navigate your product &mdash; so the architecture stays grounded in intent as the product evolves.</p>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- USING THIS FRAMEWORK -->
+<!-- ============================================================ -->
+<div class="section" id="using">
+<div class="content">
+  <span class="step-label">Context</span>
+  <h2>Using This Framework</h2>
+
+  <p>Sightline answers one question: <strong>given what your users are trying to accomplish, how should you structure the navigation?</strong> It takes you from user intent to a defensible navigation architecture. That's its scope &mdash; and knowing where it starts and stops will help you get the most out of it.</p>
+
+  <h3>When to Reach for Sightline</h3>
+
+  <p>Sightline works best after you've done foundational user research &mdash; you know who your users are, what they're trying to accomplish, and where current navigation is failing them &mdash; and before you start wireframing screens. It sits in the gap between <em>"we understand our users"</em> and <em>"we're designing the interface."</em> If you're working on a new product, it gives you your first navigation architecture. If you're working on an existing product, it gives you a structured way to evaluate and restructure what's already there.</p>
+
+  <h3>What to Pair It With</h3>
+
+  <p>Sightline focuses on the <em>orientation layer</em> &mdash; keeping users grounded in where they are, where they can go, and how to get back. Other aspects of information architecture benefit from purpose-built methods. Here's how to connect them.</p>
+
+  <p><strong>For identifying Jobs, Tasks, and Activities (feeds Step 01):</strong> Use JTBD interview techniques to gather the raw material that Step 01 structures. Bob Moesta's Switch Interview uncovers the emotional and situational forces behind user behavior. Tony Ulwick's Outcome-Driven Innovation provides quantitative job mapping. Jim Kalbach's <em>JTBD Playbook</em> has the most hands-on worksheets. The quality of your Step 01 output depends directly on the quality of this upstream research.</p>
+
+  <p><strong>For modeling entities and their relationships (runs alongside Steps 01&ndash;02):</strong> If your product manages persistent objects &mdash; accounts, projects, documents, devices &mdash; run an Object-Oriented UX (OOUX) mapping in parallel with Sightline's first two steps. OOUX will give you the entity model that Sightline's Entity-First anchor builds on. Sightline tells you how to structure navigation around those entities; OOUX tells you what the entities are and how they relate to each other.</p>
+
+  <p><strong>For cataloging navigation system types (extends Step 05):</strong> Rosenfeld &amp; Morville's IA taxonomy &mdash; global, local, contextual, and supplemental navigation &mdash; provides a finer-grained classification system than Sightline's eight paradigms. After Step 05 gives you a paradigm composition, use their taxonomy to specify exactly which navigation components appear on each screen and how they interrelate.</p>
+
+  <p><strong>For validating the result (extends Step 06):</strong> Sightline's seven audit principles test whether the navigation achieves its structural intent. They don't replace usability testing. Once you've built (or prototyped) the navigation, run standard usability evaluation &mdash; tree tests, first-click tests, task-based walkthroughs &mdash; to verify that real users can navigate the structure you've designed. The audit catches architectural problems; usability testing catches interaction-level problems.</p>
+
+  <h3>What Sightline Does Not Cover</h3>
+
+  <p>A few things are explicitly out of scope. Sightline does not prescribe visual design, interaction patterns, or frontend implementation &mdash; those depend on your design system, platform constraints, and engineering stack. It does not address content strategy, search design, or accessibility requirements, each of which has its own established methodology. And it does not replace the user research that feeds it; if the upstream Jobs and Tasks are wrong, the navigation architecture will be wrong regardless of how rigorously you follow the steps.</p>
+
 </div>
 </div>
 
@@ -930,6 +1130,55 @@
 <div class="callout-warm callout" id="s1-cross-job">
   <span class="callout-label">A Note on Cross-Job Tasks</span>
   <p>Some Tasks serve multiple Jobs. "Generate a financial report" might advance both "Keep stakeholders informed" and "Ensure regulatory compliance." Don't force these into a single Job &mdash; acknowledge them and move on. We'll address cross-Job Tasks in the <a href="#s2">Map step</a>.</p>
+</div>
+
+<h3 id="s1-disambiguate">When Something Could Be a Job or a Task</h3>
+
+<p>The litmus tests above resolve most classifications, but borderline cases are common &mdash; especially for periodic, high-level activities like "Run quarterly compliance audit" or "Conduct monthly pipeline review." These pass the to-do list test (plannable, delegable) <em>and</em> feel outcome-oriented enough to be a Job. When you hit this ambiguity, apply these two tiebreakers in order.</p>
+
+<div class="card">
+  <div class="card-header"><div class="card-name">Tiebreaker 1: Scope and Delegation</div></div>
+  <div class="card-def">Can this be delegated <strong>as a whole</strong> to a different person or role, with the expectation that they'll figure out the sub-steps? If yes, it behaves like a Job &mdash; it has enough scope to contain its own Tasks. If it would need to be broken down before someone else could take it on, it's a Task within a larger Job.</div>
+  <div class="card-meta">
+    <div><div class="card-meta-label">Example: Job</div><div class="card-meta-value">"Run quarterly compliance audit" &mdash; you'd assign this to a compliance lead and they'd determine which checks to run, which reports to pull, and what to flag.</div></div>
+    <div><div class="card-meta-label">Example: Task</div><div class="card-meta-value">"Scan license usage" &mdash; this is a specific action within a compliance audit or a reporting workflow. You'd give someone the instruction, not a mandate.</div></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header"><div class="card-name">Tiebreaker 2: Independence from Trigger Context</div></div>
+  <div class="card-def">Does this item mean the same thing regardless of what triggered it? Jobs are context-independent &mdash; "Ensure regulatory compliance" is the same Job whether triggered by an upcoming audit, a customer request, or a quarterly schedule. Tasks change meaning based on their parent Job &mdash; "Pull a usage report" means something different in a compliance context vs. a sales context.</div>
+  <div class="card-meta">
+    <div><div class="card-meta-label">If context-independent</div><div class="card-meta-value">Classify as a Job.</div></div>
+    <div><div class="card-meta-label">If meaning shifts with context</div><div class="card-meta-value">Classify as a Task, and note each Job it can belong to. These become cross-Job Tasks handled in <a href="#s2-gravity">Step 02's Job Gravity</a>.</div></div>
+  </div>
+</div>
+
+<div class="callout">
+  <span class="callout-label">Exit Criterion</span>
+  <p>You're done with disambiguation when every item in your hierarchy has exactly one classification (Job, Task, or Activity) that you can defend with a specific tiebreaker. If you've spent more than 15 minutes on a single item, it's almost certainly a Task that <em>feels</em> important enough to be a Job &mdash; classify it as a Task under the Job it most frequently serves, and move on. Its importance will be captured by frequency annotation below, not by its hierarchical level.</p>
+</div>
+
+<h3 id="s1-frequency">Annotating Frequency and Criticality</h3>
+
+<p>After defining your Job &rarr; Task &rarr; Activity hierarchy, annotate each <strong>Task</strong> with two dimensions. This data feeds directly into Step 02 (as a diagnostic tiebreaker), Step 05 (as a paradigm constraint), and Step 06 (as audit input for Frequency Overrides Hierarchy).</p>
+
+<table>
+  <tr><th>Dimension</th><th>Values</th><th>How to determine</th></tr>
+  <tr><td><strong>Frequency</strong></td><td>Daily &middot; Weekly &middot; Monthly &middot; Quarterly</td><td>How often does a typical user perform this Task? Use session logs if available. If not, ask: "If we removed this Task from the product for a week, how many users would notice and when?"</td></tr>
+  <tr><td><strong>Criticality</strong></td><td>Blocking &middot; Important &middot; Supporting</td><td><strong>Blocking</strong> = failure to complete stops other work or causes business harm. <strong>Important</strong> = needed for the Job to succeed, but delay is tolerable. <strong>Supporting</strong> = useful but not required for Job completion.</td></tr>
+</table>
+
+<div class="example-block"><span class="callout-label">Example annotations</span>
+  <p><strong>Job: Advance sprint deliverables</strong></p>
+  <p>Task: "Prepare daily standup notes" &mdash; Frequency: <strong>Daily</strong>, Criticality: <strong>Blocking</strong> (missed standup = misaligned team)</p>
+  <p>Task: "Review and approve pull requests" &mdash; Frequency: <strong>Daily</strong>, Criticality: <strong>Important</strong></p>
+  <p>Task: "Run retrospective" &mdash; Frequency: <strong>Quarterly</strong> (per sprint cycle), Criticality: <strong>Supporting</strong></p>
+</div>
+
+<div class="callout-emphasis callout">
+  <span class="callout-label">Why This Matters Downstream</span>
+  <p>A Task that is both <strong>Daily</strong> and <strong>Blocking</strong> must be reachable in one interaction from the product's landing state &mdash; regardless of where it sits in the Job hierarchy. This is the data that makes Step 06's Frequency Overrides Hierarchy principle actionable rather than subjective. Without frequency annotations, that audit principle has no input and the practitioner has to guess.</p>
 </div>
 
 <h3 id="s1-multi">Defining for Multiple User Types</h3>
@@ -1150,10 +1399,69 @@
   </div>
 </div>
 
-<div class="callout">
-  <span class="callout-label">Breaking a Tie</span>
-  <p>If two models feel equally strong after running the diagnostics, apply these tiebreakers in order: <strong>1.</strong> Default to whichever model reduces the most navigation steps for the user's single most frequent task. <strong>2.</strong> Lean toward the model that new users grasp faster &mdash; a faster mental model means shorter onboarding. <strong>3.</strong> If the tie persists, that's a signal: you may need a hybrid with co-equal primary anchors (e.g., a sidebar with both "Queue" and "Accounts" as peer items) rather than forcing one model to dominate.</p>
+<h3 id="s2-resolve">When Diagnostics Split: Resolving Ties and Hybrids</h3>
+
+<p>A clean 3-of-4 or 4-of-4 result is ideal, but many products &mdash; especially enterprise tools, agile workflows, and multi-role platforms &mdash; will produce a 2/2 split or a 3/1 with a strong dissenting signal. This is not an error in your analysis. It means the product genuinely serves multiple mental models, and the navigation needs to account for that explicitly rather than forcing a single anchor.</p>
+
+<div class="callout-emphasis callout">
+  <span class="callout-label">Do Not Force a Dominant Model</span>
+  <p>The most common failure mode here is picking one anchor and burying the other. If your diagnostics split, forcing a single model will surface as a Step 06 audit failure &mdash; typically Frequency Overrides Hierarchy or Stability Matches Persistence. Resolve the split now rather than discovering the conflict downstream.</p>
 </div>
+
+<p><strong>Step A: Score the diagnostics.</strong> Assign each of the four diagnostics (Language, Session Trigger, Session Shape, Blank Screen) to the model it most clearly supports. If a diagnostic genuinely could go either way, mark it as split rather than forcing it into one column. Count the results:</p>
+
+<table>
+  <tr><th>Result</th><th>Interpretation</th><th>Action</th></tr>
+  <tr><td>4&ndash;0 or 3&ndash;0 (with 1 split)</td><td>Clear dominant model</td><td>Proceed with that model as your primary anchor. No hybrid needed.</td></tr>
+  <tr><td>3&ndash;1</td><td>Dominant model with a secondary signal</td><td>Primary anchor is the 3-count model. Check whether the dissenting diagnostic points to a high-frequency Task (use frequency data from Step 01). If so, that Task earns primary-level placement regardless of model &mdash; apply Frequency Overrides Hierarchy preemptively.</td></tr>
+  <tr><td>2&ndash;2</td><td>Genuine hybrid</td><td>Move to Step B.</td></tr>
+  <tr><td>2&ndash;1&ndash;1 or flatter</td><td>No clear model</td><td>Insufficient signal. Gather more user data before proceeding &mdash; five contextual interviews focused on "walk me through your last session" will typically resolve the ambiguity.</td></tr>
+</table>
+
+<p><strong>Step B: Resolve the 2/2 split.</strong> When two models tie, the split almost always falls into one of three patterns. Identify which one matches your product and apply the corresponding resolution.</p>
+
+<div class="card">
+  <div class="card-header"><div class="card-name">Pattern 1: Entity + Process Split</div></div>
+  <div class="card-def">Users track persistent objects <em>and</em> work in distinct phases. Common in: project management, CRM, product development tools.</div>
+  <div class="card-meta">
+    <div><div class="card-meta-label">Diagnostic signature</div><div class="card-meta-value">Language and Blank Screen point to entities ("Show me Project Alpha"). Session Trigger and Session Shape point to process ("I'm doing sprint planning").</div></div>
+    <div><div class="card-meta-label">Resolution</div><div class="card-meta-value">Entity-primary with process as secondary tier. Entities persist in the primary rail; process phases appear as tabs or views within each entity. The exception: if session-initiating process Tasks (daily standup, weekly review) account for &gt;30% of sessions, elevate those Tasks to the primary rail as pinned shortcuts alongside entity items.</div></div>
+  </div>
+  <div class="example-block"><span class="callout-label">Worked example</span>
+    <p>An agile PM tool where diagnostics split: users reference "tickets" and "stories" (entity) but sessions follow sprint phases (process). Resolution: primary rail lists entities (Backlog, Active Sprint, Issues) but pins the daily-frequency Task "Standup Prep" as a top-level shortcut, preventing it from being buried two clicks deep inside Active Sprint.</p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header"><div class="card-name">Pattern 2: Entity + Queue Split</div></div>
+  <div class="card-def">Users manage persistent objects <em>and</em> process incoming streams. Common in: IT service management, customer support platforms, asset management.</div>
+  <div class="card-meta">
+    <div><div class="card-meta-label">Diagnostic signature</div><div class="card-meta-value">Language and Blank Screen reference named entities ("Check asset SN-4421"). Session Trigger and Session Shape show queue behavior (notifications arrive, user processes items sequentially).</div></div>
+    <div><div class="card-meta-label">Resolution</div><div class="card-meta-value">Determine which model drives the <em>majority of session time</em> (not session count). If users spend most of their time processing queued items with brief entity lookups, queue-primary with entity as secondary. If users spend most time deep in entity detail with periodic queue checks, entity-primary with a persistent queue widget or pinned queue view in the primary rail.</div></div>
+  </div>
+  <div class="example-block"><span class="callout-label">Worked example</span>
+    <p>An ITAM tool where assets are the core entity but maintenance requests arrive as a queue. Maintenance technicians spend 60% of session time processing the request queue. Resolution: primary rail includes both entity navigation (Assets, Contracts, Vendors) and a co-equal "Maintenance Queue" filtered-list view. The queue is not subordinated under an entity &mdash; it earns its own primary slot because it drives the majority of active work time.</p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header"><div class="card-name">Pattern 3: Process + Queue Split</div></div>
+  <div class="card-def">Users follow structured workflows <em>and</em> respond to incoming items. Common in: healthcare workflows, editorial/publishing, incident response.</div>
+  <div class="card-meta">
+    <div><div class="card-meta-label">Diagnostic signature</div><div class="card-meta-value">Session Shape shows linear phases. Session Trigger shows reactive (notification-driven) starts.</div></div>
+    <div><div class="card-meta-label">Resolution</div><div class="card-meta-value">Process-primary with queue as an entry point. The queue acts as the session-start surface (what needs attention now?), and selecting an item routes into the appropriate process phase. The primary rail organizes by process; the landing page or home view shows the queue.</div></div>
+  </div>
+  <div class="example-block"><span class="callout-label">Worked example</span>
+    <p>An editorial platform where articles arrive as submissions (queue) but follow a review pipeline (process: Triage &rarr; Edit &rarr; Fact-check &rarr; Publish). Resolution: primary rail shows process phases. Dashboard/home shows the incoming queue. Selecting a queued item opens it in the appropriate phase context.</p>
+  </div>
+</div>
+
+<div class="callout">
+  <span class="callout-label">The 30% Rule for Hybrid Elevation</span>
+  <p>When resolving a hybrid, use this threshold: if the secondary model drives &ge;30% of sessions or &ge;30% of active session time, it earns co-equal primary placement rather than being subordinated to the secondary tier. Below 30%, the secondary model can be served through pinned shortcuts, filtered views, or &amp;#8984;K without needing its own primary-level anchor.</p>
+</div>
+
+<p>For a quantitative scoring approach to the diagnostics, see the <a href="#appendix-scoring">Diagnostic Scoring Matrix</a> in the Appendix.</p>
 
 <h3 id="s2-principles">Mapping Principles (Apply to All Models)</h3>
 
@@ -1251,18 +1559,65 @@
   <div class="scope-range"><strong>Multi-platform:</strong> Two composition formulas sharing a JTBD hierarchy but using different paradigms per platform.</div>
 </div>
 
+<h3 id="s3-conflicts">Reading Your Profile: Conflict Rules</h3>
+
+<p>Your answers across the six dimensions act as a filter for Step 05. A single dimension rarely rules out a paradigm on its own &mdash; it's specific <em>combinations</em> that force decisions. Below are the most common dimension conflicts and how to resolve them.</p>
+
+<div class="card">
+  <div class="card-header"><div class="card-name">Many Jobs + Responsive Web</div></div>
+  <div class="card-def">5+ top-level Jobs on responsive web.</div>
+  <div class="card-meta">
+    <div><div class="card-meta-label">Conflict</div><div class="card-meta-value">Side navigation is the natural fit for 5+ Jobs, but a persistent sidebar consumes too much horizontal space on tablet and mobile viewports.</div></div>
+    <div><div class="card-meta-label">Rule</div><div class="card-meta-value">Side nav is viable only if you define an explicit collapse strategy before proceeding to Step 05. Specify: (a) the breakpoint at which the sidebar collapses, (b) the collapsed state (hamburger drawer, bottom tab subset, or off-canvas), and (c) which Jobs remain visible in the collapsed state (use frequency annotations from Step 01 &mdash; Daily/Blocking Tasks stay visible). If you can't define the collapsed state, Hub &amp; Spoke is the safer choice.</div></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header"><div class="card-name">Deep Hierarchy + Low Learning Tolerance</div></div>
+  <div class="card-def">3+ Task tree levels with near-zero navigation learning tolerance.</div>
+  <div class="card-meta">
+    <div><div class="card-meta-label">Conflict</div><div class="card-meta-value">Deep hierarchies require breadcrumbs and drill-down, but users with low tolerance won't invest in learning a multi-level structure. Nested accordions are especially hostile in this profile.</div></div>
+    <div><div class="card-meta-label">Rule</div><div class="card-meta-value">Flatten the visible hierarchy to 2 levels maximum. Use breadcrumbs for depth beyond level 2, but ensure the primary and secondary tiers are visible and labeled at all times. Add &#8984;K or search as a mandatory escape hatch &mdash; users who can't find something structurally must have a text-based alternative.</div></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header"><div class="card-name">Concentrated Usage + Evenly Distributed Jobs</div></div>
+  <div class="card-def">80% of sessions touch 2&ndash;3 Tasks, but the product supports 6+ equally important Jobs.</div>
+  <div class="card-meta">
+    <div><div class="card-meta-label">Conflict</div><div class="card-meta-value">The high-frequency Tasks want top-level placement, but the Job structure demands equal weight across many items. Pinning 3 Tasks to the top of a 10-item side nav makes the other 7 feel secondary even when they're architecturally equal.</div></div>
+    <div><div class="card-meta-label">Rule</div><div class="card-meta-value">Separate the shortcut layer from the structural layer. Use a "Quick Actions" or "Pinned" section at the top of the primary nav (or as a persistent dashboard widget) for the high-frequency Tasks, then show the full Job structure below or alongside. This preserves architectural equality while giving daily workflows a fast path.</div></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header"><div class="card-name">Extreme Expertise Spread + Native Mobile</div></div>
+  <div class="card-def">Users range from first-day novices to decade-long experts, on mobile.</div>
+  <div class="card-meta">
+    <div><div class="card-meta-label">Conflict</div><div class="card-meta-value">Mobile has limited screen real estate for layered navigation strategies. You can't fit visible structural nav, shortcuts, and guided onboarding on a 375px-wide screen simultaneously.</div></div>
+    <div><div class="card-meta-label">Rule</div><div class="card-meta-value">Default to the novice experience (visible labels, standard tab bar, no hidden gestures). Serve experts through progressive shortcuts: long-press for quick actions, pull-down search, and customizable tab bar items. Avoid hamburger menus as primary nav for novice-heavy audiences &mdash; bottom tabs with 4&ndash;5 items plus a "More" overflow is the ceiling.</div></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header"><div class="card-name">Multi-Platform + Deep Hierarchy</div></div>
+  <div class="card-def">Desktop and mobile apps with 3+ levels of Task depth.</div>
+  <div class="card-meta">
+    <div><div class="card-meta-label">Conflict</div><div class="card-meta-value">The desktop composition formula (side nav + breadcrumbs + drill-down) doesn't translate to mobile. Breadcrumbs are effectively unusable on mobile viewports.</div></div>
+    <div><div class="card-meta-label">Rule</div><div class="card-meta-value">Write two composition formulas that share the same JTBD hierarchy and navigation anchor but use different paradigms. Desktop: side nav + breadcrumbs. Mobile: bottom tabs (top 2 levels) + stacked drill-down (depth). The shared anchor ensures conceptual consistency; the different paradigms respect platform constraints.</div></div>
+  </div>
+</div>
+
 <div class="callout">
-  <span class="callout-label">What to do with your answers</span>
-  <p>Your profile across these six dimensions acts as a filter for Step 05. Each answer narrows which paradigms are viable. Here's how they combine in practice:</p>
-  <p><strong>Example: A B2B analytics platform.</strong></p>
+  <span class="callout-label">Worked example: Reading a full profile</span>
+  <p><strong>A B2B analytics platform.</strong></p>
   <p style="margin-bottom: 6px; padding-left: 16px; border-left: 2px solid var(--mustard-200);">How many top-level Jobs? &rarr; <strong>8</strong><br>
   How deep is your Task tree? &rarr; <strong>2 levels</strong><br>
   How varied is your user expertise? &rarr; <strong>Extreme spread</strong><br>
   How concentrated is usage? &rarr; <strong>3 Tasks dominate</strong><br>
   How much learning tolerance? &rarr; <strong>Moderate</strong><br>
   What platforms? &rarr; <strong>Responsive web</strong></p>
-  <p>Reading across: side navigation handles the 8 Jobs (too many for top nav), collapsible sections handle the 2-level depth, &#8984;K serves power users while visible labels serve new ones, the 3 high-frequency Tasks earn pinned shortcuts, and the responsive constraint means you'll need a collapse strategy for the sidebar on smaller screens.</p>
-  <p>The key is to read your answers together, not in isolation. A single dimension rarely rules out a pattern on its own &mdash; it's the combination that narrows the field.</p>
+  <p>Conflicts triggered: <strong>Many Jobs + Responsive Web</strong> and <strong>Concentrated Usage + Evenly Distributed Jobs</strong>. Resolution: side navigation with a defined collapse strategy (hamburger drawer below 768px, with the 3 high-frequency Tasks persisting as bottom-bar icons on mobile). Quick Actions section at the top of the sidebar for the 3 dominant Tasks, full Job structure below. &#8984;K as the mandatory power-user accelerator.</p>
 </div>
 
 </div>
@@ -1519,6 +1874,38 @@
   <p><strong>Zendesk</strong> (queue-first): Work queue + Tabs + None + Macros + Keyboard shortcuts</p>
 </div>
 
+<h3 id="s5-worked">Worked Compositions: Enterprise B2B</h3>
+
+<p>Consumer and light-SaaS examples are useful for illustrating paradigms, but enterprise B2B tools introduce complications the simpler examples don't surface: hybrid anchors, deep hierarchies, multi-role navigation, and cross-Job Task gravity. Here are two fully worked compositions.</p>
+
+<div class="card">
+  <div class="card-header"><div class="card-name">IT Asset Management (Entity + Queue Hybrid)</div></div>
+  <div class="card-meta">
+    <div><div class="card-meta-label">Anchor</div><div class="card-meta-value">Entity-primary / Queue co-primary (30% rule: maintenance queue drives &gt;30% of session time)</div></div>
+    <div><div class="card-meta-label">Scope</div><div class="card-meta-value">6&ndash;8 Jobs, 2&ndash;3 level depth, moderate expertise, mixed usage, desktop + responsive</div></div>
+  </div>
+  <div class="card-meta" style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
+    <div style="grid-column: 1 / -1;"><div class="card-meta-label">Composition</div><div class="card-meta-value"><strong>Primary:</strong> Side navigation with two sections &mdash; entity items (Assets, Contracts, Vendors, Licenses) and a co-equal "Maintenance Queue" filtered-list view. <strong>Secondary:</strong> Tab bar within entity detail (Overview, History, Related Items, Compliance). <strong>Depth:</strong> Breadcrumbs (Assets &rarr; Asset SN-4421 &rarr; Maintenance History). <strong>Accelerators:</strong> &#8984;K for cross-entity search, pinned shortcut for "New Request" (Daily + Blocking).</div></div>
+  </div>
+  <div class="card-meta" style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
+    <div style="grid-column: 1 / -1;"><div class="card-meta-label">Why this works</div><div class="card-meta-value">The queue earns primary placement because maintenance technicians spend the majority of session time there. Entity nav persists alongside it rather than containing it. Cross-Job Tasks ("Run compliance audit") get a pinned shortcut in the primary rail rather than being buried under an entity. The secondary tab bar within entities mirrors the process phases (lifecycle stages) without forcing a process-primary structure.</div></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header"><div class="card-name">Agile Project Management (Entity + Process Hybrid)</div></div>
+  <div class="card-meta">
+    <div><div class="card-meta-label">Anchor</div><div class="card-meta-value">Process-primary with entity as secondary (scoring: Process 8.5, Entity 5.5). Daily standup prep elevated to primary via Frequency Overrides Hierarchy.</div></div>
+    <div><div class="card-meta-label">Scope</div><div class="card-meta-value">4 Jobs, 2-level depth, moderate expertise, concentrated usage (standup + board dominate), responsive web</div></div>
+  </div>
+  <div class="card-meta" style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
+    <div style="grid-column: 1 / -1;"><div class="card-meta-label">Composition</div><div class="card-meta-value"><strong>Primary:</strong> Side navigation organized by process phase &mdash; "Standup" (pinned, Daily + Blocking), Board, Backlog, Reports, Retrospectives. <strong>Secondary:</strong> Tab bar within each phase (Board view: Board | List | Timeline). <strong>Depth:</strong> Breadcrumbs (Active Sprint &rarr; Story-123 &rarr; Subtask). <strong>Accelerators:</strong> &#8984;K for ticket lookup by ID, contextual actions on cards.</div></div>
+  </div>
+  <div class="card-meta" style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
+    <div style="grid-column: 1 / -1;"><div class="card-meta-label">Why this works</div><div class="card-meta-value">Process-primary because session shape follows sprint phases. Standup earns a dedicated primary slot despite being a Task, not a Job &mdash; its Daily + Blocking frequency annotation overrides hierarchy. Retrospectives stays in the primary rail despite 10x lower frequency because it maps to a distinct Job (process improvement), not because of frequency. The entity layer (individual tickets) lives in secondary tabs and depth navigation, which matches how users interact with entities: within the context of whatever sprint phase they're in.</div></div>
+  </div>
+</div>
+
 <h3 style="font-size: 17px; font-weight: 500; margin-top: 40px;">Primary Structure</h3>
 <p style="margin-bottom: 6px; padding-left: 16px; border-left: 2px solid var(--mustard-200);"><strong>Process-first:</strong> &le;5 Jobs &rarr; top nav. 5&ndash;15 &rarr; side nav. 15+ &rarr; hub &amp; spoke.<br>
 <strong>Entity-first:</strong> Side nav or list view.<br>
@@ -1551,6 +1938,40 @@ Mutually exclusive at the same level.</p>
   <tr><td>Contextual / floating</td><td>FAB, swipe gestures, long-press menus</td></tr>
 </table>
 
+<h3 id="s5-output">Your Navigation Outline: Required Output</h3>
+
+<p>Step 05 ends when you've produced a <strong>Navigation Outline Document</strong> &mdash; the deliverable that feeds Step 06's audit and becomes the reference artifact for your team. Without this document, the audit has nothing concrete to evaluate. Use the structure below.</p>
+
+<div class="card" style="font-size: 15px;">
+  <div class="card-header"><div class="card-name">Navigation Outline Template</div></div>
+
+  <p style="margin: 16px 0 8px; font-weight: 500; color: var(--accent-dark);">1. JTBD Hierarchy</p>
+  <p>List every Job with its child Tasks. For each Task, include the frequency and criticality annotations from Step 01. Flag cross-Job Tasks and note their canonical home.</p>
+
+  <p style="margin: 16px 0 8px; font-weight: 500; color: var(--accent-dark);">2. Navigation Anchor</p>
+  <p>State the dominant model (or hybrid split). Include: which diagnostics pointed where, whether a tiebreaker or hybrid resolution was applied, and the rationale. If you used the scoring matrix, include the scores.</p>
+
+  <p style="margin: 16px 0 8px; font-weight: 500; color: var(--accent-dark);">3. Scope Profile Summary</p>
+  <p>Your answers to the six scope dimensions, plus any conflict rules triggered and how they were resolved.</p>
+
+  <p style="margin: 16px 0 8px; font-weight: 500; color: var(--accent-dark);">4. Role and Context Decisions (from Step 04)</p>
+  <p>Role-based approach chosen (separate apps / role-filtered / role-aware defaults) with overlap ratio. Any adaptive navigation rules applied, with the specific trigger conditions and what changes.</p>
+
+  <p style="margin: 16px 0 8px; font-weight: 500; color: var(--accent-dark);">5. Paradigm Composition</p>
+  <p>The formula: [Primary] + [Secondary] + [Depth] + [Accelerators]. For multi-platform products, one formula per platform. For each paradigm chosen, note why it was selected over alternatives.</p>
+
+  <p style="margin: 16px 0 8px; font-weight: 500; color: var(--accent-dark);">6. Resulting Navigation Structure</p>
+  <p>The actual navigation hierarchy, written out as an indented outline. For each item, note: its tier (primary / secondary / in-page), the Job or Task it maps to, and whether it's a canonical home or a pointer.</p>
+
+  <p style="margin: 16px 0 8px; font-weight: 500; color: var(--accent-dark);">7. Known Risks and Open Questions</p>
+  <p>Any decisions that were close calls, dependencies on data you don't yet have, or areas where the audit is likely to flag issues. These become your Step 06 focus areas.</p>
+</div>
+
+<div class="callout">
+  <span class="callout-label">Why a prescribed template matters</span>
+  <p>Three benefits: it forces you to document rationale (not just decisions), it gives stakeholders a readable artifact they can review without sitting through the full framework, and it creates a baseline that the Step 06 audit can evaluate systematically rather than impressionistically.</p>
+</div>
+
 </div>
 </div>
 
@@ -1576,48 +1997,56 @@ Mutually exclusive at the same level.</p>
 <span class="step-question">How do I know my navigation works?</span>
 </div>
 
-<p style="margin-top: 20px;" id="s6-principles">Seven principles for auditing your navigation system. Each includes conceptual framing, a decision question, and an implementation example.</p>
+<p style="margin-top: 20px;" id="s6-principles">Seven principles for auditing your navigation system. Each includes conceptual framing, a decision question, an implementation example, and a <strong>testable pass/fail criterion</strong> &mdash; the specific measurement that determines whether your navigation outline satisfies the principle.</p>
 
 <div class="legend">
   <div class="legend-item"><div class="legend-dot" style="background: var(--mustard-600);"></div> Conceptual (Designers, PMs)</div>
   <div class="legend-item"><div class="legend-dot" style="background: var(--warm-500);"></div> Decision (Practitioners)</div>
   <div class="legend-item"><div class="legend-dot" style="background: var(--warm-400);"></div> Implementation (Developers)</div>
+  <div class="legend-item"><div class="legend-dot" style="background: var(--terra-600);"></div> Test (Pass/Fail Criterion)</div>
 </div>
 
 <h3>Principle 1: Frequency Overrides Hierarchy</h3>
 <div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>If 80% of sessions involve the same Task, that Task earns Job-level prominence &mdash; regardless of logical position.</p></div></div>
 <div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content"><p><strong>Question:</strong> Are your 3 highest-frequency Tasks reachable in &le;1 click?</p><p><strong>Heuristic:</strong> &gt;40% of sessions = persistent shortcut.</p></div></div>
 <div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>"Create Invoice" lives under Finance &rarr; Billing &rarr; Invoices, but it's the most-used Task. Give it a "+" button in the header, a &#8984;K shortcut, and a pinned sidebar entry.</p></div></div>
+<div class="aud-test"><span class="aud-tag">Test</span><div class="aud-content"><p><strong>Data needed:</strong> Step 01 frequency annotations. <strong>Method:</strong> List every Task annotated as Daily frequency. For each, count clicks from the product's landing state to that Task. <strong>Pass:</strong> Every Daily + Blocking Task is reachable in &le;1 click. Every Daily + Important Task is reachable in &le;2 clicks. <strong>Fail:</strong> Any Daily + Blocking Task requires &ge;2 clicks.</p></div></div>
 
 <h3>Principle 2: Stability Matches Persistence</h3>
 <div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>Top nav should change as rarely as your Jobs &mdash; almost never. In-page controls can change every release.</p></div></div>
 <div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content"><p><strong>Question:</strong> Has top-level nav changed in 6 months?</p><p><strong>Heuristic:</strong> Primary nav &le;1x/year. Secondary quarterly. In-page every sprint.</p></div></div>
 <div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>GitHub's top nav (Code, Issues, PRs, Actions, Projects) has been stable for years. New features add within sections, not alongside them.</p></div></div>
+<div class="aud-test"><span class="aud-tag">Test</span><div class="aud-content"><p><strong>Data needed:</strong> Git history or release notes for the past 12 months (existing product) or the navigation outline's tier assignments (new product). <strong>Method:</strong> For existing products, count how many times primary nav items were added, removed, or renamed. For new products, check whether any item in the primary tier maps to something that changes with feature releases (Activities, specific Task workflows) rather than stable Jobs. <strong>Pass:</strong> Primary nav changed &le;1x in 12 months; all primary items map to Jobs. <strong>Fail:</strong> Primary nav changed &ge;2x or contains Task/Activity-level items.</p></div></div>
 
 <h3>Principle 3: Context Must Be Preserved</h3>
 <div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>Switching Tasks within a Job should preserve state. It should feel like switching tabs, not closing one app and opening another.</p></div></div>
 <div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content"><p><strong>Question:</strong> Task A &rarr; Task B &rarr; Task A &mdash; is state preserved?</p><p><strong>Heuristic:</strong> If switching causes data loss or scroll reset, it's broken.</p></div></div>
 <div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>Notion: switching database views preserves filters, sort order, and scroll position. The lens changes; the context persists.</p></div></div>
+<div class="aud-test"><span class="aud-tag">Test</span><div class="aud-content"><p><strong>Data needed:</strong> Navigation outline from Step 05. <strong>Method:</strong> For every pair of sibling Tasks within a Job, trace the transition: Task A &rarr; Task B &rarr; Task A. Identify what state is at risk (form inputs, scroll position, filter selections, unsaved work). <strong>Pass:</strong> All sibling-Task transitions preserve user-created state or prompt before discarding it. <strong>Fail:</strong> Any sibling transition silently resets state (scroll position, filters, form data).</p></div></div>
 
 <h3>Principle 4: Progressive Disclosure, Not Confusion</h3>
 <div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>Don't expose Activity-level nav until the user commits to a Task. Each tier reveals the next. But the user must always see which Job and Task they're inside.</p></div></div>
 <div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content"><p><strong>Question:</strong> At the deepest point, can the user tell which Job and Task they're inside?</p><p><strong>Heuristic:</strong> If only a page title is visible &mdash; add breadcrumbs.</p></div></div>
 <div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>Stripe: sidebar shows Job section, header shows Task entity, breadcrumbs show depth. All three tiers visible simultaneously.</p></div></div>
+<div class="aud-test"><span class="aud-tag">Test</span><div class="aud-content"><p><strong>Data needed:</strong> Navigation outline. <strong>Method:</strong> Navigate to the deepest point in the hierarchy. Check: (1) Can you identify the current Job without scrolling? (2) Can you identify the current Task? (3) Are the adjacent options (sibling Tasks, parent Job) visible or one click away? <strong>Pass:</strong> All three tiers are identifiable from the deepest point. <strong>Fail:</strong> Only page title is visible with no breadcrumb, sidebar highlight, or other tier indicator.</p></div></div>
 
 <h3>Principle 5: Escape Velocity</h3>
 <div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>From any point, a user should reach any higher level in &le;2 interactions.</p></div></div>
 <div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content"><p><strong>Question:</strong> How many clicks from deepest point to Job level?</p><p><strong>Heuristic:</strong> &le;2 = good. 3 = okay with breadcrumbs. 4+ = broken.</p></div></div>
 <div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>Three escape mechanisms: persistent sidebar, un-truncated breadcrumbs, command palette. Most complex products need at least two.</p></div></div>
+<div class="aud-test"><span class="aud-tag">Test</span><div class="aud-content"><p><strong>Data needed:</strong> Navigation outline with depth measurements. <strong>Method:</strong> From the deepest point in each Job's hierarchy, count interactions required to reach the Job level (primary nav). An interaction = one click, one keyboard shortcut, or one gesture. <strong>Pass:</strong> &le;2 interactions for every path. <strong>Fail:</strong> Any path requires &ge;4 interactions. Borderline (3 interactions) passes only if breadcrumbs are present.</p></div></div>
 
 <h3>Principle 6: Navigation as Wayfinding</h3>
 <div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>At every moment, navigation must answer three questions. If any is unanswerable, the system is broken.</p></div></div>
 <div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content"><p><strong>Three questions your navigation must answer at every moment:</strong></p><p><strong>1. Where am I?</strong> &rarr; Active states, breadcrumbs, page titles.</p><p><strong>2. Where can I go?</strong> &rarr; Visible nav options, available actions.</p><p><strong>3. How do I get back?</strong> &rarr; Back buttons, breadcrumbs, persistent nav.</p><p>If any answer is unclear at any point, the navigation system is broken.</p></div></div>
 <div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>"Where am I?" &mdash; Active sidebar highlighted. "Where can I go?" &mdash; Sibling Tasks as tabs. "How do I get back?" &mdash; Clickable breadcrumb, persistent sidebar, working browser back.</p></div></div>
+<div class="aud-test"><span class="aud-tag">Test</span><div class="aud-content"><p><strong>Data needed:</strong> Navigation outline or prototype. <strong>Method:</strong> Pick 5 random screens. For each, answer the three wayfinding questions without interacting with the page (visual inspection only). <strong>Pass:</strong> All three questions answerable on all 5 screens. <strong>Fail:</strong> Any question unanswerable on any screen. Common failure: "How do I get back?" unanswerable when breadcrumbs are absent and sidebar doesn't show active state.</p></div></div>
 
 <h3>Principle 7: Navigation Must Feel Instant</h3>
 <div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>Structural correctness means nothing if navigation feels slow. Every transition should feel like it happens in response to the user's action, not after it.</p></div></div>
 <div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content"><p><strong>Question:</strong> Do your three highest-frequency transitions complete in under 200ms perceived time?</p><p><strong>Heuristic:</strong> Primary switches &lt;100ms. Secondary &lt;300ms. Depth transitions &lt;500ms with a loading indicator within 100ms.</p></div></div>
 <div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>Optimistic UI for tab switches. Preload adjacent views on hover. Skeleton screens for deeper transitions. Linear and Notion pre-cache sidebar items so page switches feel instant.</p></div></div>
+<div class="aud-test"><span class="aud-tag">Test</span><div class="aud-content"><p><strong>Data needed:</strong> Prototype or production build with browser dev tools. <strong>Method:</strong> Measure perceived transition time for the 3 highest-frequency navigation actions (identified by Step 01 frequency annotations). Use Performance tab or stopwatch timing. <strong>Pass:</strong> Primary nav switches &lt;100ms. Secondary switches &lt;300ms. Depth transitions show a loading indicator within 100ms and complete within 500ms. <strong>Fail:</strong> Any of the 3 highest-frequency transitions exceeds its tier's threshold.</p></div></div>
 
 <div class="callout-emphasis callout">
   <span class="callout-label">Final Heuristic</span>
@@ -1686,6 +2115,35 @@ Mutually exclusive at the same level.</p>
   <div class="ref-item">Activity Theory &mdash; Kaptelinin &amp; Nardi, <em>Acting with Technology</em> (MIT Press, 2006)</div>
 </div>
 
+<h3 id="appendix-scoring">Diagnostic Scoring Matrix</h3>
+
+<p>This is an optional quantitative supplement to the decision tree in <a href="#s2-resolve">Step 02</a>. Use it when the decision tree's qualitative patterns don't clearly match your situation, or when you need a defensible numerical rationale for stakeholders.</p>
+
+<p><strong>How to score:</strong> For each diagnostic, assign a confidence score from 0 to 3 for each of the four models. 0 = no signal, 1 = weak signal, 2 = moderate signal, 3 = strong signal. A single diagnostic can give partial scores to multiple models (e.g., Language might score Entity 2, Process 1 if users reference both entities and phases but lean toward entities).</p>
+
+<table>
+  <tr><th>Diagnostic</th><th>Weight</th><th>Process</th><th>Entity</th><th>Queue</th><th>Activity</th></tr>
+  <tr><td>Language</td><td>&times;1.0</td><td>0&ndash;3</td><td>0&ndash;3</td><td>0&ndash;3</td><td>0&ndash;3</td></tr>
+  <tr><td>Session Trigger</td><td>&times;1.5</td><td>0&ndash;3</td><td>0&ndash;3</td><td>0&ndash;3</td><td>0&ndash;3</td></tr>
+  <tr><td>Session Shape</td><td>&times;1.5</td><td>0&ndash;3</td><td>0&ndash;3</td><td>0&ndash;3</td><td>0&ndash;3</td></tr>
+  <tr><td>Blank Screen</td><td>&times;1.0</td><td>0&ndash;3</td><td>0&ndash;3</td><td>0&ndash;3</td><td>0&ndash;3</td></tr>
+</table>
+
+<p><strong>Why Session Trigger and Session Shape are weighted higher:</strong> They reflect observable behavior rather than self-reported framing. Language and Blank Screen capture how users <em>talk about</em> their work; Trigger and Shape capture how they <em>actually behave</em>. When the two diverge, behavior is the more reliable navigation signal.</p>
+
+<p><strong>Reading the results:</strong></p>
+
+<p><strong>Clear dominant (highest score &ge;1.5&times; the runner-up):</strong> Use that model as your sole primary anchor.</p>
+
+<p><strong>Strong lean (highest score is 1.2&ndash;1.5&times; the runner-up):</strong> Primary anchor is the leader. Check whether the runner-up model drives any Task with daily-or-higher frequency. If so, apply Frequency Overrides Hierarchy: that Task earns primary-level placement even though its model isn't dominant.</p>
+
+<p><strong>Near-tie (highest score is &lt;1.2&times; the runner-up):</strong> Genuine hybrid. Identify which of the three hybrid patterns in Step 02 matches, and apply the corresponding resolution. If none match, use the 30% Rule: whichever secondary model drives &ge;30% of sessions or session time earns co-equal primary placement.</p>
+
+<div class="example-block"><span class="callout-label">Worked example: Agile PM tool</span>
+  <p>Language: Entity 2, Process 1 (users say "ticket" more than "sprint planning," but both appear). Session Trigger: Process 3 (sessions start with "time for standup" or "sprint review day"). Session Shape: Process 2, Entity 1 (sessions follow sprint-phase patterns but include deep entity dives). Blank Screen: Entity 2 (users would say "show me PROJ-142").</p>
+  <p>Weighted scores &mdash; Process: (1&times;1) + (3&times;1.5) + (2&times;1.5) + (0&times;1) = <strong>8.5</strong>. Entity: (2&times;1) + (0&times;1.5) + (1&times;1.5) + (2&times;1) = <strong>5.5</strong>. Ratio: 8.5/5.5 = 1.55 &mdash; clear dominant. Process-primary, with entity detail as secondary tier. High-frequency entity Tasks (daily standup prep around specific tickets) earn primary shortcuts via Frequency Overrides Hierarchy.</p>
+</div>
+
 <h3>Templates &amp; Resources</h3>
 
 <p>Defining Jobs, Tasks, and Activities is the hardest part of the framework. These practical tools can help you do the upstream work.</p>
@@ -1730,6 +2188,31 @@ Mutually exclusive at the same level.</p>
 <!-- ============================================================ -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+
+  // ===== DARK MODE TOGGLE =====
+  var themeToggle = document.getElementById('themeToggle');
+  var lightToggle = document.getElementById('lightToggle');
+  var darkToggle = document.getElementById('darkToggle');
+  var htmlEl = document.documentElement;
+
+  function setTheme(theme) {
+    if (theme === 'dark') {
+      htmlEl.setAttribute('data-theme', 'dark');
+      lightToggle.classList.remove('active');
+      darkToggle.classList.add('active');
+    } else {
+      htmlEl.removeAttribute('data-theme');
+      lightToggle.classList.add('active');
+      darkToggle.classList.remove('active');
+    }
+  }
+
+  themeToggle.addEventListener('click', function() {
+    var isDark = htmlEl.getAttribute('data-theme') === 'dark';
+    setTheme(isDark ? 'light' : 'dark');
+  });
+
+  // ===== SIDEBAR + SECTION TRACKING =====
   var sections = document.querySelectorAll('.section[id]');
   var navLinks = document.querySelectorAll('.sidebar a.nav-link[data-section]');
   var sidebar = document.getElementById('sidebar');
