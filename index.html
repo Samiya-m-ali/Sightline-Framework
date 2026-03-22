@@ -311,6 +311,14 @@
   a { color: var(--green-700); text-decoration: none; border-bottom: 1px solid var(--green-200); transition: border-color 0.2s; }
   a:hover { border-color: var(--green-700); }
 
+  /* Author byline */
+  .author-byline {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+
   /* ========== CALLOUTS ========== */
   .callout {
     padding: 20px 24px;
@@ -599,6 +607,41 @@
   }
   .qa-card h4 { margin-top: 0; }
 
+  /* ========== ANCHOR TABS ========== */
+  .anchor-tabs {
+    display: flex;
+    gap: 0;
+    margin: 24px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .anchor-tab {
+    padding: 12px 20px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .anchor-tab:hover {
+    color: var(--text-secondary);
+  }
+  .anchor-tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .anchor-panel {
+    display: none;
+  }
+  .anchor-panel.active {
+    display: block;
+  }
+
   /* ========== TOC ========== */
   .toc {
     background: var(--surface);
@@ -685,7 +728,8 @@
   <a href="#s1" data-section="s1" class="nav-link"><span class="nav-num">01</span> Define</a>
   <div class="sub-links" data-parent="s1">
     <a href="#s1-levels" data-sub="s1-levels" class="sub-link">The Three Levels</a>
-    <a href="#s1-litmus" data-sub="s1-litmus" class="sub-link">The Litmus Tests</a>
+    <a href="#s1-key-insight" data-sub="s1-key-insight" class="sub-link">Key Insight</a>
+    <a href="#s1-cross-job" data-sub="s1-cross-job" class="sub-link">Cross-Job Tasks</a>
     <a href="#s1-multi" data-sub="s1-multi" class="sub-link">Defining for Multiple Users</a>
   </div>
 
@@ -736,6 +780,7 @@
 <div class="content">
   <h1 style="font-size: 54px; font-weight: 300; letter-spacing: -1px; margin-bottom: 8px;">Sightline</h1>
   <p style="font-size: 19px; font-weight: 400; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5;">A Framework for Intent-Driven Navigation Design</p>
+  <p class="author-byline">by Samiya Ali</p>
   <p class="lead">A structured method for translating user intent &mdash; Jobs, Tasks, and Activities &mdash; into navigation architecture. Built for product designers, developers, and product managers who need to design, build, and defend navigation decisions.</p>
 </div>
 </div>
@@ -800,6 +845,9 @@
     <div><div class="card-meta-label">Changes when...</div><div class="card-meta-value">The user's role, goals, or life circumstances change. A promotion, a career shift, a new business model &mdash; these are the forces that redefine a Job.</div></div>
     <div><div class="card-meta-label">Example</div><div class="card-meta-value">"Keep my team's financial health strong so we can grow sustainably" &mdash; true whether the user has your software, a spreadsheet, or a paper ledger.</div></div>
   </div>
+  <div class="card-meta" style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border);">
+    <div style="grid-column: 1 / -1;"><div class="card-meta-label">Litmus Test</div><div class="card-meta-value">Ask: <strong>"Would this still be true if the product didn't exist?"</strong> Jobs are product-independent. If the statement only makes sense inside your product, it's probably a Task.</div></div>
+  </div>
 </div>
 
 <div class="card">
@@ -808,6 +856,9 @@
   <div class="card-meta">
     <div><div class="card-meta-label">Changes when...</div><div class="card-meta-value">Workflows, processes, or business needs evolve. New tools get adopted, teams restructure, compliance requirements shift.</div></div>
     <div><div class="card-meta-label">Example</div><div class="card-meta-value">"Create and send monthly budget reports" might become "Set up automated reporting dashboards" &mdash; same Job, different Task.</div></div>
+  </div>
+  <div class="card-meta" style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border);">
+    <div style="grid-column: 1 / -1;"><div class="card-meta-label">Litmus Test</div><div class="card-meta-value">Ask: <strong>"Would someone put this on a to-do list?"</strong> Tasks are plannable. If you can imagine delegating it to a colleague with a brief explanation, it's a Task. If you'd have to point at the screen, it's an Activity.</div></div>
   </div>
 </div>
 
@@ -818,22 +869,19 @@
     <div><div class="card-meta-label">Changes when...</div><div class="card-meta-value">The tool or interface is redesigned. A button becomes a drag target, a form becomes a wizard, a manual step gets automated.</div></div>
     <div><div class="card-meta-label">Example</div><div class="card-meta-value">"Select date range, pull data, choose template, export PDF" &mdash; each would change if the reporting tool was redesigned.</div></div>
   </div>
+  <div class="card-meta" style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border);">
+    <div style="grid-column: 1 / -1;"><div class="card-meta-label">Litmus Test</div><div class="card-meta-value">Ask: <strong>"Does this require a specific UI element to exist?"</strong> Activities are tool-dependent. If the action would change significantly with a redesigned interface, it's an Activity. <strong>Still not sure?</strong> Ask: <strong>"Would the user plan a session around doing this?"</strong> If they'd set aside time, it's a Task. The individual interactions within that session are Activities.</div></div>
+  </div>
 </div>
 
-<h3 id="s1-litmus">The Litmus Tests</h3>
-<p>In practice, the boundaries between levels blur. These tests help you classify correctly:</p>
-<h4>Is it a Job?</h4>
-<p>Ask: <strong>"Would this still be true if the product didn't exist?"</strong> Jobs are product-independent. If the statement only makes sense inside your product, it's probably a Task.</p>
-<h4>Is it a Task?</h4>
-<p>Ask: <strong>"Would someone put this on a to-do list?"</strong> Tasks are plannable. If you can imagine delegating it to a colleague with a brief explanation, it's a Task. If you'd have to point at the screen, it's an Activity.</p>
-<h4>Is it an Activity?</h4>
-<p>Ask: <strong>"Does this require a specific UI element to exist?"</strong> Activities are tool-dependent. If the action would change significantly with a redesigned interface, it's an Activity.</p>
-<h4>Still not sure if it's a Task or an Activity?</h4>
-<p>Ask: <strong>"Would the user plan a session around doing this?"</strong> If the user would set aside time &mdash; "I need to spend 20 minutes doing my updates" &mdash; that's a Task. The individual interactions within that session are Activities.</p>
-
-<div class="callout">
+<div class="callout" id="s1-key-insight">
   <span class="callout-label">Key Insight</span>
   <p><strong>Jobs rarely change</strong> &mdash; they're tied to the user's role and goals. <strong>Tasks change periodically</strong> as workflows evolve. <strong>Activities change frequently</strong>, every time the interface is updated. Your navigation at each level should match this rate of change. If your primary navigation shifts every time you redesign a feature, you've mapped Activities at the Job level.</p>
+</div>
+
+<div class="callout-warm callout" id="s1-cross-job">
+  <span class="callout-label">A Note on Cross-Job Tasks</span>
+  <p>Some Tasks serve multiple Jobs. "Generate a financial report" might advance both "Keep stakeholders informed" and "Ensure regulatory compliance." Don't force these into a single Job &mdash; acknowledge them and move on. We'll address cross-Job Tasks in the <a href="#s2">Map step</a>.</p>
 </div>
 
 <h3 id="s1-multi">Defining for Multiple User Types</h3>
@@ -844,12 +892,7 @@
 
 <p><strong>Then overlay the maps.</strong> Once you have 2&ndash;3 individual maps, lay them side by side. Look for: <strong>shared Jobs</strong>, <strong>shared Tasks under different Jobs</strong>, and <strong>persona-exclusive Jobs</strong>. Mark these overlaps and divergences &mdash; they feed the role-based decisions in <a href="#s4">Step 04</a>.</p>
 
-<p><strong>Calculate your overlap ratio.</strong> If two personas share more than 70% of their Jobs, you're likely building one navigation with different defaults. If they share less than 30%, you may be building two different products.</p>
-
-<div class="callout-warm callout">
-  <span class="callout-label">A Note on Cross-Job Tasks</span>
-  <p>Some Tasks serve multiple Jobs. "Generate a financial report" might advance both "Keep stakeholders informed" and "Ensure regulatory compliance." Don't force these into a single Job &mdash; acknowledge them and move on. We'll address cross-Job Tasks in the <a href="#s2">Map step</a>.</p>
-</div>
+<p><strong>Calculate your overlap ratio.</strong> If two personas share more than 70% of their Jobs, you're likely building one navigation with different defaults. If they share less than 30%, you may be building two different products. You'll use this overlap ratio to choose your role-based navigation approach in Step 04 &mdash; the ratio maps directly to three approaches ranging from shared navigation with different defaults to fully separate applications.</p>
 
 </div>
 </div>
@@ -882,7 +925,16 @@
 
 <p>Users organize their work in one of four dominant mental models. Most products are hybrids, but one model dominates &mdash; identify it and let it drive your primary navigation.</p>
 
-<!-- PROCESS-FIRST -->
+<!-- ANCHOR TABS -->
+<div class="anchor-tabs">
+  <button class="anchor-tab active" data-panel="process-first">Process-First</button>
+  <button class="anchor-tab" data-panel="entity-first">Entity-First</button>
+  <button class="anchor-tab" data-panel="queue-first">Queue/Inbox-First</button>
+  <button class="anchor-tab" data-panel="activity-first">Activity/Mode-First</button>
+</div>
+
+<!-- PROCESS-FIRST PANEL -->
+<div class="anchor-panel active" id="process-first">
 <div class="card">
   <div class="card-header"><div class="card-name">Process-first</div><div class="card-badge">Jobs = Primary nav</div></div>
   <div class="card-def">The user thinks in distinct phases or workspaces, each with its own tools and mindset. They say: "I'm in research mode" or "I'm doing my weekly review."</div>
@@ -907,8 +959,10 @@
 <span class="cool">ACTIVITY</span>                 &mdash;&mdash;&rarr;  <span class="cool">In-Page Navigation</span>              Contextual / transient
 <span class="dim">"Schedule interview call"      Buttons, forms, inline actions</span></div>
 </div>
+</div>
 
-<!-- ENTITY-FIRST -->
+<!-- ENTITY-FIRST PANEL -->
+<div class="anchor-panel" id="entity-first">
 <div class="card">
   <div class="card-header"><div class="card-name">Entity-first</div><div class="card-badge">Entities = Primary nav</div></div>
   <div class="card-def">The user tracks specific things &mdash; features, accounts, projects, cases &mdash; that persist over time. They say: "How's the Johnson account doing?" The entity is the anchor; Jobs become lenses on that entity.</div>
@@ -933,8 +987,10 @@
 <span class="cool">TASK &rarr; ACTIVITY</span>          &mdash;&mdash;&rarr;  <span class="cool">In-Page Navigation</span>              Contextual / transient
 <span class="dim">"Write requirements"           Forms, editors, inline actions</span></div>
 </div>
+</div>
 
-<!-- QUEUE/INBOX-FIRST -->
+<!-- QUEUE/INBOX-FIRST PANEL -->
+<div class="anchor-panel" id="queue-first">
 <div class="card">
   <div class="card-header"><div class="card-name">Queue/Inbox-first</div><div class="card-badge">Incoming stream = Primary nav</div></div>
   <div class="card-def">The user's work arrives as a stream of items that need processing. The user doesn't go find work; <strong>work comes to them</strong>. Their first question is <strong>"what should I work on next?"</strong></div>
@@ -959,13 +1015,10 @@
 <span class="cool">ACTIVITY</span>                 &mdash;&mdash;&rarr;  <span class="cool">In-Page Navigation</span>              Contextual / transient
 <span class="dim">"Reply" / "Escalate"           Buttons, quick actions, shortcuts</span></div>
 </div>
-
-<div class="callout">
-  <span class="callout-label">Reactive vs. Proactive Work</span>
-  <p>Queue/Inbox-first is the model for <strong>reactive workflows</strong> &mdash; the system surfaces what needs attention. The other three assume <strong>proactive workflows</strong> &mdash; the user initiates navigation toward their goals. Reactive navigation needs to <em>bring work to the user</em>; proactive navigation needs to <em>let the user find work</em>. Many products blend both.</p>
 </div>
 
-<!-- ACTIVITY/MODE-FIRST -->
+<!-- ACTIVITY/MODE-FIRST PANEL -->
+<div class="anchor-panel" id="activity-first">
 <div class="card">
   <div class="card-header"><div class="card-name">Activity/Mode-first</div><div class="card-badge">Dominant activity = Separate mode</div></div>
   <div class="card-def">The user's core work requires deep, immersive focus. The product has two worlds: an immersive creation mode and a management/browse mode, connected by an explicit mode-switch.</div>
@@ -985,10 +1038,20 @@
 <span class="dim">"Write the article,            Full-screen focus, contextual
  design the interface"          toolbars only, nav recedes</span></div>
 </div>
+</div>
+
+<div class="callout">
+  <span class="callout-label">Reactive vs. Proactive Work</span>
+  <p>Queue/Inbox-first is the model for <strong>reactive workflows</strong> &mdash; the system surfaces what needs attention. The other three assume <strong>proactive workflows</strong> &mdash; the user initiates navigation toward their goals. Reactive navigation needs to <em>bring work to the user</em>; proactive navigation needs to <em>let the user find work</em>. Many products blend both.</p>
+</div>
 
 <div class="callout-emphasis callout">
   <span class="callout-label">Most products are hybrids</span>
-  <p>Pure instances of any single model are rare. Salesforce is entity-dominant with process elements. A support tool might be queue-first for agents but entity-first for managers. Identify your <strong>dominant</strong> model, let it drive primary navigation, then layer secondary models into lower tiers.</p>
+  <p>Pure instances of any single model are rare. Salesforce is entity-dominant with process elements. A support tool might be queue-first for agents but entity-first for managers. The goal isn't to pick one model exclusively &mdash; it's to identify which model <strong>dominates</strong> and let it drive your primary navigation, then layer secondary models into lower tiers.</p>
+
+  <p style="margin-top: 16px;"><strong>How to identify your dominant model.</strong> Look at where users spend the majority of their time and ask: <em>"When a user opens the product, what are they looking for first?"</em> The model that answers that question most naturally is your dominant one. If you're unsure, try this prioritization exercise: for each of the four models, estimate what percentage of your users' core workflow it covers. The model that captures the most volume &mdash; not the most features, but the most <em>time and intent</em> &mdash; is your primary anchor.</p>
+
+  <p><strong>Breaking a tie.</strong> If two models feel equally strong, apply these tiebreakers in order: <strong>1.</strong> Default to whichever model reduces the most navigation steps for the user's single most frequent task. <strong>2.</strong> Lean toward the model that new users grasp faster &mdash; a faster mental model means shorter onboarding. <strong>3.</strong> If the tie persists, that's a signal: you may need a hybrid with co-equal primary anchors (e.g., a sidebar with both "Queue" and "Accounts" as peer items) rather than forcing one model to dominate.</p>
 </div>
 
 <h3 id="s2-principles">Mapping Principles (Apply to All Models)</h3>
@@ -1087,7 +1150,9 @@
 
 <div class="callout">
   <span class="callout-label">What to do with your answers</span>
-  <p>Your scoping profile feeds the next two steps. High Job count + deep Task tree + extreme expertise + multi-platform = enterprise-grade layered navigation. Low Job count + shallow Tasks + near-zero tolerance + mobile-only = consumer-style flat navigation. Your specific combination tells you which paradigms to prioritize in Step 05.</p>
+  <p>Your profile across these six dimensions acts as a filter for Step 05. Each answer narrows which paradigms are viable. Here's how dimensions combine in practice:</p>
+  <p><strong>Example: A B2B analytics platform.</strong> You answer: 8 Jobs (dimension 1), 2-level Task depth (dimension 2), extreme expertise spread (dimension 3), concentrated usage on 3 Tasks (dimension 4), moderate learning tolerance (dimension 5), responsive web (dimension 6). Reading across: side navigation handles the 8 Jobs (too many for top nav), collapsible sections handle the 2-level depth, &#8984;K serves power users while visible labels serve new ones, the 3 high-frequency Tasks earn pinned shortcuts, and the responsive constraint means you'll need a collapse strategy for the sidebar on smaller screens.</p>
+  <p>The key is to read your answers together, not in isolation. A single dimension rarely rules out a pattern on its own &mdash; it's the combination that narrows the field.</p>
 </div>
 
 </div>
@@ -1117,11 +1182,13 @@
 
 <h3 id="s4-role">Role-Based Navigation</h3>
 
+<p>In Step 01, you defined Job maps for each persona and calculated their overlap ratio. That ratio directly determines which approach to take here — use it as your guide when reading the table below.</p>
+
 <table>
-  <tr><th>Approach</th><th>How it works</th><th>When to use</th><th>Risk</th></tr>
-  <tr><td>Separate apps</td><td>Each role gets its own application.</td><td>Roles share &lt;20% of Jobs.</td><td>Maintenance doubles.</td></tr>
-  <tr><td>Role-filtered</td><td>One nav, items shown/hidden by role.</td><td>Roles share core Jobs but differ in access.</td><td>Ghost nav &mdash; users sense hidden items.</td></tr>
-  <tr><td>Role-aware defaults</td><td>Same nav, different starting points by role.</td><td>Same Jobs, different frequency patterns.</td><td>Lowest risk.</td></tr>
+  <tr><th>Approach</th><th>How it works</th><th>When to use</th><th>Overlap</th><th>Risk</th></tr>
+  <tr><td>Separate apps</td><td>Each role gets its own application.</td><td>Roles share &lt;20% of Jobs.</td><td>&lt;30% shared Jobs</td><td>Maintenance doubles.</td></tr>
+  <tr><td>Role-filtered</td><td>One nav, items shown/hidden by role.</td><td>Roles share core Jobs but differ in access.</td><td>30–70% shared Jobs</td><td>Ghost nav &mdash; users sense hidden items.</td></tr>
+  <tr><td>Role-aware defaults</td><td>Same nav, different starting points by role.</td><td>Same Jobs, different frequency patterns.</td><td>&gt;70% shared Jobs</td><td>Lowest risk.</td></tr>
 </table>
 
 <div class="callout">
@@ -1322,19 +1389,7 @@
 
 <h3 id="s5-compose">Composing Your Navigation System</h3>
 
-<p>Individual paradigms are building blocks. A well-composed system has up to four layers. Tension arises when two paradigms compete for the same layer.</p>
-
-<h4>Layer 1: Primary Structure</h4>
-<p><strong>Process-first</strong> &le;5: top nav. 5&ndash;15: side nav. 15+: hub &amp; spoke. <strong>Entity-first:</strong> side nav or list view. <strong>Queue-first:</strong> work queue with thin sidebar for view switching. <strong>Activity-first:</strong> the mode-switch mechanism itself.</p>
-
-<h4>Layer 2: Secondary Structure</h4>
-<p><strong>Tab bar</strong> for 3&ndash;5 parallel options within the primary anchor. <strong>Collapsible sub-sections</strong> for 5+ items. Mutually exclusive at the same level.</p>
-
-<h4>Layer 3: Depth Handling (conditional)</h4>
-<p>Only needed beyond 2 levels. <strong>Breadcrumb + drill-down</strong> is the standard depth handler. Skip this for shallow products.</p>
-
-<h4>Layer 4: Accelerators (additive)</h4>
-<p><strong>&#8984;K</strong> for users who know what they want. <strong>Contextual actions</strong> for Activity-level interactions. Both can coexist. Neither counts toward structural complexity.</p>
+<p>Individual paradigms are building blocks. A well-composed system combines them across four slots. Tension arises when two paradigms compete for the same slot.</p>
 
 <div class="callout-emphasis callout">
   <span class="callout-label">The Composition Formula</span>
@@ -1349,6 +1404,18 @@
   <p><strong>Figma</strong> (activity-first): Mode-switch + Side panel + None + &#8984;K + Contextual toolbar</p>
   <p><strong>Zendesk</strong> (queue-first): Work queue + Tabs + None + Macros + Keyboard shortcuts</p>
 </div>
+
+<h3 style="font-size: 17px; font-weight: 500; margin-top: 40px;">Primary Structure</h3>
+<p><strong>Process-first</strong> &le;5: top nav. 5&ndash;15: side nav. 15+: hub &amp; spoke. <strong>Entity-first:</strong> side nav or list view. <strong>Queue-first:</strong> work queue with thin sidebar for view switching. <strong>Activity-first:</strong> the mode-switch mechanism itself.</p>
+
+<h3 style="font-size: 17px; font-weight: 500; margin-top: 40px;">Secondary Structure</h3>
+<p><strong>Tab bar</strong> for 3&ndash;5 parallel options within the primary anchor. <strong>Collapsible sub-sections</strong> for 5+ items. Mutually exclusive at the same level.</p>
+
+<h3 style="font-size: 17px; font-weight: 500; margin-top: 40px;">Depth Handling <span style="font-weight: 300; color: var(--text-muted); font-size: 14px;">(conditional)</span></h3>
+<p>Only needed beyond 2 levels. <strong>Breadcrumb + drill-down</strong> is the standard depth handler. Skip this for shallow products.</p>
+
+<h3 style="font-size: 17px; font-weight: 500; margin-top: 40px;">Accelerators <span style="font-weight: 300; color: var(--text-muted); font-size: 14px;">(additive)</span></h3>
+<p><strong>&#8984;K</strong> for users who know what they want. <strong>Contextual actions</strong> for Activity-level interactions. Both can coexist. Neither counts toward structural complexity.</p>
 
 <h3 id="s5-platforms">Adapting Composition Across Platforms</h3>
 
@@ -1504,6 +1571,18 @@
   <div class="ref-item">Activity Theory &mdash; Kaptelinin &amp; Nardi, <em>Acting with Technology</em> (MIT Press, 2006)</div>
 </div>
 
+<h3>Templates &amp; Resources</h3>
+
+<p>Defining Jobs, Tasks, and Activities is the hardest part of the framework. These practical tools can help you do the upstream work.</p>
+
+<div class="ref-list">
+  <div class="ref-item"><a href="https://rosenfeldmedia.com/books/jobs-to-be-done-book/">Jim Kalbach, <em>The Jobs To Be Done Playbook</em></a> &mdash; The most hands-on JTBD book available. Includes worksheets for job mapping, job stories, and outcome statements. Companion toolkit at <a href="https://www.jtbdtoolkit.com/">jtbdtoolkit.com</a>.</div>
+  <div class="ref-item"><a href="https://jobs-to-be-done.com/mapping-the-job-to-be-done-45336427b3bc">Tony Ulwick's Job Map</a> &mdash; The canonical 8-step template for breaking a Job into process stages (define, locate, prepare, confirm, execute, monitor, modify, conclude). Free walkthrough on <a href="https://strategyn.com/jobs-to-be-done/customer-centered-innovation-map/">strategyn.com</a>.</div>
+  <div class="ref-item"><a href="https://learn.jobstobedone.org/">Bob Moesta's Switch Interview</a> &mdash; A structured interview method for uncovering Jobs through the story of how someone decided to switch to a new solution. Focuses on the emotional and situational forces behind the decision. See also <a href="https://jobstobedone.org/">jobstobedone.org</a>.</div>
+  <div class="ref-item"><a href="https://miro.com/templates/jobs-to-be-done/">Miro JTBD Canvas</a> &mdash; A free collaborative template for running JTBD workshops. Good starting point for teams doing their first job mapping session together. Also available on <a href="https://www.figma.com/templates/jobs-to-be-done-examples/">FigJam</a> and <a href="https://www.mural.co/templates/jobs-to-be-done">Mural</a>.</div>
+  <div class="ref-item"><a href="https://www.viima.com/jobs-to-be-done-toolkit">Viima JTBD Toolkit</a> &mdash; A comprehensive free toolkit including the JTBD Canvas, Job Map template, interview scripts, and Forces of Progress Canvas. Useful for teams applying the full methodology end-to-end.</div>
+</div>
+
 </div>
 </div>
 
@@ -1616,6 +1695,25 @@ document.addEventListener('DOMContentLoaded', function() {
       if (target) {
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
+    });
+  });
+
+  // Anchor tab switching
+  var anchorTabs = document.querySelectorAll('.anchor-tab');
+  var anchorPanels = document.querySelectorAll('.anchor-panel');
+
+  anchorTabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      var panelId = this.getAttribute('data-panel');
+
+      // Deactivate all tabs and panels
+      anchorTabs.forEach(function(t) { t.classList.remove('active'); });
+      anchorPanels.forEach(function(p) { p.classList.remove('active'); });
+
+      // Activate selected tab and panel
+      tab.classList.add('active');
+      var panel = document.getElementById(panelId);
+      if (panel) panel.classList.add('active');
     });
   });
 });
