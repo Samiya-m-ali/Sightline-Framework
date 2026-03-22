@@ -5,20 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sightline — A Framework for Intent-Driven Navigation Design</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap');
 
   :root {
-    /* Green monochrome palette */
-    --green-900: #0D3B2E;
-    --green-800: #145C42;
-    --green-700: #1A7A56;
-    --green-600: #22966A;
-    --green-500: #2DB37F;
-    --green-400: #4FD4A0;
-    --green-300: #7EE4BC;
-    --green-200: #B2F0D6;
-    --green-100: #DCF8EC;
-    --green-50: #F0FBF6;
+    /* Mustard palette */
+    --mustard-900: #5C4409;
+    --mustard-800: #7A5B0D;
+    --mustard-700: #9B7312;
+    --mustard-600: #B8891A;
+    --mustard-500: #C49A1D;
+    --mustard-400: #D4B04A;
+    --mustard-300: #E3C97A;
+    --mustard-200: #F0DFA8;
+    --mustard-100: #F8F0D4;
+    --mustard-50: #FDF8EC;
+
+    /* Terracotta */
+    --terra-600: #B85C38;
+    --terra-100: #FCF0EB;
+    --terra-border: #E8C4B4;
 
     /* Warm neutrals */
     --warm-50: #FAFAF8;
@@ -32,11 +37,6 @@
     --warm-800: #2D2B26;
     --warm-900: #1A1917;
 
-    /* Anti-pattern red (warm, muted — terracotta) */
-    --red-600: #B84233;
-    --red-100: #FCEAE7;
-    --red-border: #E8C4BD;
-
     /* Functional */
     --bg: var(--warm-50);
     --surface: #FFFFFF;
@@ -45,21 +45,21 @@
     --text-muted: var(--warm-500);
     --border: var(--warm-200);
     --border-strong: var(--warm-300);
-    --accent: var(--green-600);
-    --accent-light: var(--green-100);
-    --accent-dark: var(--green-900);
+    --accent: var(--mustard-600);
+    --accent-light: var(--mustard-100);
+    --accent-dark: var(--mustard-900);
 
     --shadow-sm: 0 1px 3px rgba(26,25,23,0.06);
     --shadow-md: 0 2px 8px rgba(26,25,23,0.08);
 
-    --sidebar-width: 280px;
+    --sidebar-width: 320px;
     --content-max: 800px;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: 'Roboto', -apple-system, sans-serif;
+    font-family: 'Century Gothic', 'AppleGothic', 'Futura', sans-serif;
     font-weight: 300;
     font-size: 16.5px;
     line-height: 1.78;
@@ -86,9 +86,18 @@
     padding: 32px 0;
     overflow-y: auto;
     z-index: 100;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    pointer-events: none;
+  }
+  .sidebar.visible {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
   }
   .sidebar-logo {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Century Gothic', 'AppleGothic', 'Futura', sans-serif;
     font-weight: 500;
     font-size: 15px;
     color: var(--accent-dark);
@@ -96,12 +105,13 @@
     border-bottom: 1px solid var(--border);
     margin-bottom: 16px;
     letter-spacing: 0.5px;
+    opacity: 1;
   }
   .sidebar-logo span {
     color: var(--accent);
   }
   .sidebar-section-label {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Century Gothic', 'AppleGothic', 'Futura', sans-serif;
     font-weight: 500;
     font-size: 10px;
     letter-spacing: 2px;
@@ -114,7 +124,7 @@
     align-items: center;
     gap: 10px;
     padding: 8px 24px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Century Gothic', 'AppleGothic', 'Futura', sans-serif;
     font-weight: 400;
     font-size: 13.5px;
     color: var(--text-secondary);
@@ -128,9 +138,23 @@
   }
   .sidebar a.nav-link.active {
     color: var(--accent-dark);
-    background: var(--green-50);
+    background: var(--mustard-50);
     border-left-color: var(--accent);
     font-weight: 500;
+  }
+  .nav-label {
+    display: flex;
+    flex-direction: column;
+  }
+  .nav-question {
+    font-size: 10.5px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.4;
+    margin-top: 2px;
+  }
+  .sidebar a.nav-link.active .nav-question {
+    color: var(--mustard-700);
   }
   .sidebar .nav-num {
     font-family: 'Roboto Mono', monospace;
@@ -145,9 +169,13 @@
 
   /* Main content area */
   .main {
-    margin-left: var(--sidebar-width);
+    margin-left: 0;
     flex: 1;
     min-width: 0;
+    transition: margin-left 0.35s ease;
+  }
+  .main.sidebar-active {
+    margin-left: var(--sidebar-width);
   }
   .content {
     max-width: var(--content-max);
@@ -175,7 +203,7 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Century Gothic', 'AppleGothic', 'Futura', sans-serif;
     font-weight: 400;
     font-size: 12px;
     color: var(--text-muted);
@@ -185,7 +213,7 @@
     font-weight: 500;
   }
   .stepper-step.completed {
-    color: var(--green-500);
+    color: var(--mustard-500);
   }
   .stepper-dot {
     width: 8px;
@@ -194,12 +222,22 @@
     background: var(--warm-300);
     flex-shrink: 0;
   }
+  @keyframes stepper-pulse {
+    0%, 100% {
+      box-shadow: 0 0 0 3px var(--mustard-100);
+    }
+    50% {
+      box-shadow: 0 0 0 6px var(--mustard-100), 0 0 12px var(--mustard-300);
+    }
+  }
+
   .stepper-step.current .stepper-dot {
     background: var(--accent);
-    box-shadow: 0 0 0 3px var(--green-100);
+    box-shadow: 0 0 0 3px var(--mustard-100);
+    animation: stepper-pulse 2.5s ease-in-out infinite;
   }
   .stepper-step.completed .stepper-dot {
-    background: var(--green-400);
+    background: var(--mustard-400);
   }
   .stepper-line {
     width: 24px;
@@ -212,7 +250,7 @@
   /* ========== TYPOGRAPHY ========== */
   /* Level 1: Page title */
   h1 {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Century Gothic', 'AppleGothic', 'Futura', sans-serif;
     font-size: 42px;
     font-weight: 300;
     line-height: 1.15;
@@ -226,7 +264,7 @@
 
   /* Level 2: Section heading */
   h2 {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Century Gothic', 'AppleGothic', 'Futura', sans-serif;
     font-size: 28px;
     font-weight: 400;
     line-height: 1.25;
@@ -244,7 +282,7 @@
     margin-bottom: 6px;
   }
   .step-question {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Century Gothic', 'AppleGothic', 'Futura', sans-serif;
     font-size: 16px;
     font-weight: 300;
     color: var(--text-muted);
@@ -253,9 +291,27 @@
     line-height: 1.5;
   }
 
+  .step-header {
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 50;
+    padding-top: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+    margin-top: -24px;
+  }
+  .step-header h2 {
+    margin-bottom: 4px;
+  }
+  .step-header .stepper {
+    margin-bottom: 16px;
+  }
+
   /* Level 3: Subsection heading */
   h3 {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Century Gothic', 'AppleGothic', 'Futura', sans-serif;
     font-size: 20px;
     font-weight: 500;
     line-height: 1.35;
@@ -266,7 +322,7 @@
 
   /* Level 4: Label / meta heading */
   h4 {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Century Gothic', 'AppleGothic', 'Futura', sans-serif;
     font-size: 12px;
     font-weight: 500;
     letter-spacing: 1.5px;
@@ -280,8 +336,8 @@
   p.lead { font-size: 19px; line-height: 1.7; color: var(--text); font-weight: 300; }
   strong { color: var(--text); font-weight: 500; }
   em { font-style: italic; }
-  a { color: var(--green-700); text-decoration: none; border-bottom: 1px solid var(--green-200); transition: border-color 0.2s; }
-  a:hover { border-color: var(--green-700); }
+  a { color: var(--mustard-700); text-decoration: none; border-bottom: 1px solid var(--mustard-200); transition: border-color 0.2s; }
+  a:hover { border-color: var(--mustard-700); }
 
 
 
@@ -291,51 +347,51 @@
     margin: 24px 0;
     border-top: 2px solid var(--accent);
     border-left: none;
-    background: var(--green-50);
-    border-bottom: 1px solid var(--green-200);
-    border-right: 1px solid var(--green-200);
+    background: var(--mustard-50);
+    border-bottom: 1px solid var(--mustard-200);
+    border-right: 1px solid var(--mustard-200);
   }
   .callout p:last-child { margin-bottom: 0; }
   .callout-label {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Century Gothic', 'AppleGothic', 'Futura', sans-serif;
     font-size: 11px;
     font-weight: 500;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     margin-bottom: 8px;
     display: block;
-    color: var(--green-700);
+    color: var(--mustard-700);
   }
   .callout-warm {
-    background: var(--green-100);
-    border-top-color: var(--green-500);
+    background: var(--mustard-100);
+    border-top-color: var(--mustard-500);
   }
   .callout-emphasis {
     background: var(--surface);
-    border-top-color: var(--green-800);
+    border-top-color: var(--mustard-800);
     border-bottom: 1px solid var(--border);
     border-right: 1px solid var(--border);
   }
-  .callout-emphasis .callout-label { color: var(--green-800); }
+  .callout-emphasis .callout-label { color: var(--mustard-800); }
   .callout-red {
-    background: var(--red-100);
-    border-top-color: var(--red-600);
-    border-bottom: 1px solid var(--red-border);
-    border-right: 1px solid var(--red-border);
+    background: var(--terra-100);
+    border-top-color: var(--terra-600);
+    border-bottom: 1px solid var(--terra-border);
+    border-right: 1px solid var(--terra-border);
   }
-  .callout-red .callout-label { color: var(--red-600); }
+  .callout-red .callout-label { color: var(--terra-600); }
 
   /* ========== TABLES ========== */
   table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 14px; background: var(--surface); overflow: hidden; border: 1px solid var(--border); }
-  th { font-family: 'Roboto', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--warm-50); }
+  th { font-family: 'Century Gothic', 'AppleGothic', 'Futura', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--warm-50); }
   td { padding: 12px 16px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text-secondary); line-height: 1.6; font-weight: 300; }
   tr:last-child td { border-bottom: none; }
   td:first-child { font-weight: 400; color: var(--text); }
 
   /* ========== DIAGRAMS ========== */
   .diagram {
-    background: var(--green-900);
-    color: var(--green-200);
+    background: var(--mustard-900);
+    color: var(--mustard-200);
     padding: 28px 32px;
     font-family: 'Roboto Mono', monospace;
     font-size: 13px;
@@ -344,14 +400,14 @@
     margin: 24px 0;
     white-space: pre;
   }
-  .diagram .highlight { color: var(--green-400); }
+  .diagram .highlight { color: var(--mustard-400); }
   .diagram .warm { color: #F5C09E; }
-  .diagram .cool { color: var(--green-300); }
-  .diagram .dim { color: #4A7A6A; }
+  .diagram .cool { color: var(--mustard-300); }
+  .diagram .dim { color: #7A5B0D; }
 
   /* Light diagram variant — embedded in cards */
   .diagram-light {
-    background: var(--green-50);
+    background: var(--mustard-50);
     color: var(--text-secondary);
     padding: 24px 28px;
     font-family: 'Roboto Mono', monospace;
@@ -359,13 +415,75 @@
     line-height: 1.65;
     overflow-x: auto;
     white-space: pre;
-    border-top: 1px solid var(--green-200);
+    border-top: 1px solid var(--mustard-200);
     margin: 20px -28px -24px -28px;
   }
-  .diagram-light .highlight { color: var(--green-700); }
+  .diagram-light .highlight { color: var(--mustard-700); }
   .diagram-light .warm { color: var(--warm-600); }
-  .diagram-light .cool { color: var(--green-600); }
+  .diagram-light .cool { color: var(--mustard-600); }
   .diagram-light .dim { color: var(--text-muted); }
+
+  /* ========== HERO BANNER ========== */
+  .hero {
+    background: var(--mustard-100);
+    color: var(--text);
+    padding: 80px 40px 64px 40px;
+    position: relative;
+    overflow: hidden;
+    z-index: 200;
+  }
+  .hero h1 {
+    font-size: 64px;
+    font-weight: 300;
+    letter-spacing: -1.5px;
+    margin-bottom: 8px;
+    color: var(--mustard-900);
+  }
+  .hero .subtitle {
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--mustard-700);
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+  .hero .lead {
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    max-width: 720px;
+    font-weight: 300;
+  }
+  .hero .lead strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+  .hero.watermark-bg::before {
+    opacity: 0.04;
+  }
+
+  /* Watermark background styling */
+  .watermark-bg {
+    position: relative;
+  }
+  .watermark-bg::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -40px;
+    transform: translateY(-50%);
+    width: 300px;
+    height: 200px;
+    background-image: url("data:image/svg+xml,%3Csvg width='300' height='200' viewBox='0 0 300 200' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='30' y1='100' x2='120' y2='100' stroke='currentColor' stroke-width='3'/%3E%3Cline x1='180' y1='100' x2='270' y2='100' stroke='currentColor' stroke-width='3'/%3E%3Crect x='135' y='80' width='30' height='30' transform='rotate(45 150 95)' fill='currentColor'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0.035;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .watermark-bg > * {
+    position: relative;
+    z-index: 1;
+  }
 
   /* ========== CARDS ========== */
   .card {
@@ -384,7 +502,7 @@
     gap: 8px;
   }
   .card-name {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Century Gothic', 'AppleGothic', 'Futura', sans-serif;
     font-size: 20px;
     font-weight: 500;
     color: var(--accent-dark);
@@ -396,9 +514,9 @@
     letter-spacing: 1.5px;
     text-transform: uppercase;
     padding: 3px 10px;
-    background: var(--green-50);
-    border: 1px solid var(--green-200);
-    color: var(--green-700);
+    background: var(--mustard-50);
+    border: 1px solid var(--mustard-200);
+    color: var(--mustard-700);
   }
   .card-def {
     font-size: 15px;
@@ -415,7 +533,7 @@
   }
   @media (max-width: 600px) { .card-meta { grid-template-columns: 1fr; } }
   .card-meta-label {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Century Gothic', 'AppleGothic', 'Futura', sans-serif;
     font-size: 10px;
     font-weight: 500;
     letter-spacing: 1.5px;
@@ -445,28 +563,28 @@
   }
   .paradigm-meta span {
     padding: 2px 10px;
-    background: var(--green-50);
-    border: 1px solid var(--green-200);
-    color: var(--green-700);
+    background: var(--mustard-50);
+    border: 1px solid var(--mustard-200);
+    color: var(--mustard-700);
   }
   .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
   @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
   .col-header {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Century Gothic', 'AppleGothic', 'Futura', sans-serif;
     font-size: 10px;
     font-weight: 500;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     margin-bottom: 8px;
   }
-  .strength .col-header { color: var(--green-700); }
-  .weakness .col-header { color: var(--red-600); }
+  .strength .col-header { color: var(--mustard-700); }
+  .weakness .col-header { color: var(--terra-600); }
   .col-item { font-size: 14px; font-weight: 300; line-height: 1.6; color: var(--text-secondary); padding: 6px 0; border-bottom: 1px solid var(--border); }
   .col-item:last-child { border-bottom: none; }
 
   .example-block {
-    background: var(--green-50);
-    border: 1px solid var(--green-200);
+    background: var(--mustard-50);
+    border: 1px solid var(--mustard-200);
     padding: 16px 20px;
     margin: 16px 0;
     font-size: 14px;
@@ -474,14 +592,14 @@
   }
   .example-block .callout-label { margin-bottom: 4px; }
   .anti-pattern {
-    background: var(--red-100);
-    border: 1px solid var(--red-border);
+    background: var(--terra-100);
+    border: 1px solid var(--terra-border);
     padding: 16px 20px;
     margin: 16px 0;
     font-size: 14px;
     font-weight: 300;
   }
-  .anti-pattern .callout-label { color: var(--red-600); }
+  .anti-pattern .callout-label { color: var(--terra-600); }
   .practitioner-note { font-style: italic; color: var(--text-muted); font-size: 13px; font-weight: 300; }
 
   /* ========== SCOPE CARDS ========== */
@@ -493,7 +611,7 @@
     margin: 20px 0;
   }
   .scope-card-question {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Century Gothic', 'AppleGothic', 'Futura', sans-serif;
     font-size: 17px;
     font-weight: 500;
     color: var(--text);
@@ -513,12 +631,12 @@
   .scope-range:last-child {
     border-bottom: none;
   }
-  .scope-range strong { color: var(--green-800); font-weight: 500; }
+  .scope-range strong { color: var(--mustard-800); font-weight: 500; }
 
   /* ========== AUDIT AUDIENCE BLOCKS ========== */
   .aud-concept {
-    background: var(--green-50);
-    border: 1px solid var(--green-200);
+    background: var(--mustard-50);
+    border: 1px solid var(--mustard-200);
     padding: 18px 22px;
     margin: 12px 0;
   }
@@ -535,7 +653,7 @@
     margin: 12px 0;
   }
   .aud-tag {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Century Gothic', 'AppleGothic', 'Futura', sans-serif;
     font-size: 10px;
     font-weight: 500;
     letter-spacing: 1.5px;
@@ -543,7 +661,7 @@
     margin-bottom: 8px;
     display: block;
   }
-  .aud-concept .aud-tag { color: var(--green-700); }
+  .aud-concept .aud-tag { color: var(--mustard-700); }
   .aud-decide .aud-tag { color: var(--warm-600); }
   .aud-implement .aud-tag { color: var(--warm-500); }
   .aud-content { font-size: 14px; line-height: 1.72; color: var(--text-secondary); font-weight: 300; }
@@ -617,7 +735,7 @@
     margin: 32px 0;
   }
   .toc-title {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Century Gothic', 'AppleGothic', 'Futura', sans-serif;
     font-size: 10px;
     font-weight: 500;
     letter-spacing: 2px;
@@ -653,8 +771,8 @@
   /* ========== EXEC SUMMARY ========== */
   .exec-summary {
     background: var(--surface);
-    border: 1px solid var(--green-200);
-    border-top: 2px solid var(--green-600);
+    border: 1px solid var(--mustard-200);
+    border-top: 2px solid var(--mustard-600);
     padding: 36px 40px;
     margin: 32px 0;
   }
@@ -671,32 +789,52 @@
   /* ========== RESPONSIVE ========== */
   @media (max-width: 1080px) {
     .sidebar { display: none; }
-    .main { margin-left: 0; }
+    .main { margin-left: 0 !important; }
     .content { padding: 0 24px; }
     .stepper { flex-wrap: wrap; }
   }
 </style>
 </head>
 <body>
+<!-- ============================================================ -->
+<!-- HERO BANNER -->
+<!-- ============================================================ -->
+<div class="hero watermark-bg" id="hero">
+<div class="content">
+  <svg width="28" height="20" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="color: var(--mustard-600); margin-bottom: 16px; display: block;">
+    <line x1="0" y1="7" x2="7" y2="7" stroke="currentColor" stroke-width="1.5"/>
+    <line x1="13" y1="7" x2="20" y2="7" stroke="currentColor" stroke-width="1.5"/>
+    <rect x="8.6" y="5.6" width="2.8" height="2.8" transform="rotate(45 10 7)" fill="currentColor"/>
+  </svg>
+  <h1>Sightline</h1>
+  <p class="subtitle">A Framework for Intent-Driven Navigation Design — by Samiya Ali</p>
+  <p class="lead">A structured method for translating user intent — Jobs, Tasks, and Activities — into navigation architecture. Built for product designers, developers, and product managers who need to design, build, and defend navigation decisions.</p>
+</div>
+</div>
+
 <div class="layout">
 
 <!-- ============================================================ -->
 <!-- SIDEBAR -->
 <!-- ============================================================ -->
 <nav class="sidebar" id="sidebar">
-  <div class="sidebar-logo">Sightline<span>.</span></div>
+  <div class="sidebar-logo"><svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="color: var(--accent); display: inline-block; margin-right: 8px; vertical-align: middle;">
+    <line x1="0" y1="7" x2="7" y2="7" stroke="currentColor" stroke-width="1.5"/>
+    <line x1="13" y1="7" x2="20" y2="7" stroke="currentColor" stroke-width="1.5"/>
+    <rect x="8" y="5" width="4" height="4" transform="rotate(45 10 7)" fill="currentColor"/>
+  </svg>Sightline<span>.</span></div>
 
   <div class="sidebar-section-label">Overview</div>
   <a href="#problem" data-section="problem" class="nav-link"><span class="nav-num"></span> Why It Breaks</a>
 
   <div class="sidebar-section-label">The Process</div>
 
-  <a href="#s1" data-section="s1" class="nav-link"><span class="nav-num">01</span> Define</a>
-  <a href="#s2" data-section="s2" class="nav-link"><span class="nav-num">02</span> Map</a>
-  <a href="#s3" data-section="s3" class="nav-link"><span class="nav-num">03</span> Scope</a>
-  <a href="#s4" data-section="s4" class="nav-link"><span class="nav-num">04</span> Assess</a>
-  <a href="#s5" data-section="s5" class="nav-link"><span class="nav-num">05</span> Select</a>
-  <a href="#s6" data-section="s6" class="nav-link"><span class="nav-num">06</span> Audit</a>
+  <a href="#s1" data-section="s1" class="nav-link"><span class="nav-num">01</span> <span class="nav-label">Define<span class="nav-question">What are my users' Jobs to Be Done?</span></span></a>
+  <a href="#s2" data-section="s2" class="nav-link"><span class="nav-num">02</span> <span class="nav-label">Map<span class="nav-question">How does intent translate to navigation tiers?</span></span></a>
+  <a href="#s3" data-section="s3" class="nav-link"><span class="nav-num">03</span> <span class="nav-label">Scope<span class="nav-question">What are my product's navigation constraints?</span></span></a>
+  <a href="#s4" data-section="s4" class="nav-link"><span class="nav-num">04</span> <span class="nav-label">Assess<span class="nav-question">How do roles and context shape the navigation?</span></span></a>
+  <a href="#s5" data-section="s5" class="nav-link"><span class="nav-num">05</span> <span class="nav-label">Select<span class="nav-question">Which navigation paradigms fit?</span></span></a>
+  <a href="#s6" data-section="s6" class="nav-link"><span class="nav-num">06</span> <span class="nav-label">Audit<span class="nav-question">How do I know my navigation works?</span></span></a>
 
   <div class="sidebar-section-label">Reference</div>
   <a href="#questions" data-section="questions" class="nav-link"><span class="nav-num"></span> Common Questions</a>
@@ -708,15 +846,6 @@
 <!-- MAIN CONTENT -->
 <!-- ============================================================ -->
 <div class="main">
-
-<!-- HEADER -->
-<div class="section" id="header">
-<div class="content">
-  <h1 style="font-size: 54px; font-weight: 300; letter-spacing: -1px; margin-bottom: 8px;">Sightline</h1>
-  <p style="font-size: 19px; font-weight: 400; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5;">A Framework for Intent-Driven Navigation Design &mdash; by Samiya Ali</p>
-  <p class="lead">A structured method for translating user intent &mdash; Jobs, Tasks, and Activities &mdash; into navigation architecture. Built for product designers, developers, and product managers who need to design, build, and defend navigation decisions.</p>
-</div>
-</div>
 
 <!-- THE PROBLEM -->
 <div class="section" id="problem">
@@ -730,28 +859,13 @@
 </div>
 </div>
 
-<!-- TABLE OF CONTENTS -->
-<div class="section" id="toc-section">
-<div class="content">
-  <div class="toc">
-    <div class="toc-title">The Process</div>
-    <a href="#s1"><span class="num">01</span> <span class="verb">Define</span> &mdash; What are my users' Jobs to Be Done?</a>
-    <a href="#s2"><span class="num">02</span> <span class="verb">Map</span> &mdash; How does intent translate to navigation tiers?</a>
-    <a href="#s3"><span class="num">03</span> <span class="verb">Scope</span> &mdash; What are my product's navigation constraints?</a>
-    <a href="#s4"><span class="num">04</span> <span class="verb">Assess</span> &mdash; How do roles and context shape the navigation?</a>
-    <a href="#s5"><span class="num">05</span> <span class="verb">Select</span> &mdash; Which navigation paradigms fit?</a>
-    <a href="#s6"><span class="num">06</span> <span class="verb">Audit</span> &mdash; How do I know my navigation works?</a>
-  </div>
-</div>
-</div>
-
-
 <!-- ============================================================ -->
 <!-- STEP 01: DEFINE -->
 <!-- ============================================================ -->
 <div class="section" id="s1">
 <div class="content">
 
+<div class="step-header">
 <div class="stepper">
   <div class="stepper-step current"><div class="stepper-dot"></div> 01</div><div class="stepper-line"></div>
   <div class="stepper-step"><div class="stepper-dot"></div> 02</div><div class="stepper-line"></div>
@@ -764,6 +878,7 @@
 <span class="step-label">Step 01</span>
 <h2>Define</h2>
 <span class="step-question">What are my users' Jobs to Be Done?</span>
+</div>
 
 <p style="margin-top: 20px;">Users don't think in pages, menus, or modules. They think in <strong>outcomes they're trying to achieve</strong>. A navigation system should mirror that intent hierarchy &mdash; not your org chart, not your database schema, and not whatever your backend team decided to name the API endpoints.</p>
 
@@ -837,6 +952,7 @@
 <div class="section" id="s2">
 <div class="content">
 
+<div class="step-header">
 <div class="stepper">
   <div class="stepper-step completed"><div class="stepper-dot"></div> 01</div><div class="stepper-line"></div>
   <div class="stepper-step current"><div class="stepper-dot"></div> 02</div><div class="stepper-line"></div>
@@ -849,6 +965,7 @@
 <span class="step-label">Step 02</span>
 <h2>Map</h2>
 <span class="step-question">How does intent translate to navigation tiers?</span>
+</div>
 
 <p style="margin-top: 20px;">You've defined your users' Jobs, Tasks, and Activities. Now you need to map them to navigation tiers. But first, answer a foundational question: <strong>what organizes your user's mental model?</strong></p>
 
@@ -1074,6 +1191,7 @@
 <div class="section" id="s3">
 <div class="content">
 
+<div class="step-header">
 <div class="stepper">
   <div class="stepper-step completed"><div class="stepper-dot"></div> 01</div><div class="stepper-line"></div>
   <div class="stepper-step completed"><div class="stepper-dot"></div> 02</div><div class="stepper-line"></div>
@@ -1086,6 +1204,7 @@
 <span class="step-label">Step 03</span>
 <h2>Scope</h2>
 <span class="step-question">What are my product's navigation constraints?</span>
+</div>
 
 <p style="margin-top: 20px;" id="s3-dimensions">Before assessing behavioral complexity or selecting paradigms, profile your product across six dimensions. Your answers directly constrain which patterns will work and which will break.</p>
 
@@ -1136,7 +1255,7 @@
   <span class="callout-label">What to do with your answers</span>
   <p>Your profile across these six dimensions acts as a filter for Step 05. Each answer narrows which paradigms are viable. Here's how they combine in practice:</p>
   <p><strong>Example: A B2B analytics platform.</strong></p>
-  <p style="margin-bottom: 6px; padding-left: 16px; border-left: 2px solid var(--green-200);">How many top-level Jobs? &rarr; <strong>8</strong><br>
+  <p style="margin-bottom: 6px; padding-left: 16px; border-left: 2px solid var(--mustard-200);">How many top-level Jobs? &rarr; <strong>8</strong><br>
   How deep is your Task tree? &rarr; <strong>2 levels</strong><br>
   How varied is your user expertise? &rarr; <strong>Extreme spread</strong><br>
   How concentrated is usage? &rarr; <strong>3 Tasks dominate</strong><br>
@@ -1156,6 +1275,7 @@
 <div class="section" id="s4">
 <div class="content">
 
+<div class="step-header">
 <div class="stepper">
   <div class="stepper-step completed"><div class="stepper-dot"></div> 01</div><div class="stepper-line"></div>
   <div class="stepper-step completed"><div class="stepper-dot"></div> 02</div><div class="stepper-line"></div>
@@ -1168,6 +1288,7 @@
 <span class="step-label">Step 04</span>
 <h2>Assess</h2>
 <span class="step-question">How do roles and context shape the navigation?</span>
+</div>
 
 <p style="margin-top: 20px;">Three behavioral dimensions constrain your paradigm options: role-based flexing at the Job level, adaptive flexing at the Task and Activity levels, and user context that shapes how every tier should <em>feel</em>.</p>
 
@@ -1254,6 +1375,7 @@
 <div class="section" id="s5">
 <div class="content">
 
+<div class="step-header">
 <div class="stepper">
   <div class="stepper-step completed"><div class="stepper-dot"></div> 01</div><div class="stepper-line"></div>
   <div class="stepper-step completed"><div class="stepper-dot"></div> 02</div><div class="stepper-line"></div>
@@ -1266,6 +1388,7 @@
 <span class="step-label">Step 05</span>
 <h2>Select</h2>
 <span class="step-question">Which navigation paradigms fit?</span>
+</div>
 
 <p style="margin-top: 20px;" id="s5-paradigms">Eight paradigms, each with a natural affinity for specific JTBD levels. Real products combine 2&ndash;3.</p>
 
@@ -1397,13 +1520,13 @@
 </div>
 
 <h3 style="font-size: 17px; font-weight: 500; margin-top: 40px;">Primary Structure</h3>
-<p style="margin-bottom: 6px; padding-left: 16px; border-left: 2px solid var(--green-200);"><strong>Process-first:</strong> &le;5 Jobs &rarr; top nav. 5&ndash;15 &rarr; side nav. 15+ &rarr; hub &amp; spoke.<br>
+<p style="margin-bottom: 6px; padding-left: 16px; border-left: 2px solid var(--mustard-200);"><strong>Process-first:</strong> &le;5 Jobs &rarr; top nav. 5&ndash;15 &rarr; side nav. 15+ &rarr; hub &amp; spoke.<br>
 <strong>Entity-first:</strong> Side nav or list view.<br>
 <strong>Queue-first:</strong> Work queue with thin sidebar for view switching.<br>
 <strong>Activity-first:</strong> The mode-switch mechanism itself.</p>
 
 <h3 style="font-size: 17px; font-weight: 500; margin-top: 40px;">Secondary Structure</h3>
-<p style="margin-bottom: 6px; padding-left: 16px; border-left: 2px solid var(--green-200);"><strong>Tab bar:</strong> 3&ndash;5 parallel options within the primary anchor.<br>
+<p style="margin-bottom: 6px; padding-left: 16px; border-left: 2px solid var(--mustard-200);"><strong>Tab bar:</strong> 3&ndash;5 parallel options within the primary anchor.<br>
 <strong>Collapsible sub-sections:</strong> 5+ items.<br>
 Mutually exclusive at the same level.</p>
 
@@ -1438,6 +1561,7 @@ Mutually exclusive at the same level.</p>
 <div class="section" id="s6">
 <div class="content">
 
+<div class="step-header">
 <div class="stepper">
   <div class="stepper-step completed"><div class="stepper-dot"></div> 01</div><div class="stepper-line"></div>
   <div class="stepper-step completed"><div class="stepper-dot"></div> 02</div><div class="stepper-line"></div>
@@ -1450,11 +1574,12 @@ Mutually exclusive at the same level.</p>
 <span class="step-label">Step 06</span>
 <h2>Audit</h2>
 <span class="step-question">How do I know my navigation works?</span>
+</div>
 
 <p style="margin-top: 20px;" id="s6-principles">Seven principles for auditing your navigation system. Each includes conceptual framing, a decision question, and an implementation example.</p>
 
 <div class="legend">
-  <div class="legend-item"><div class="legend-dot" style="background: var(--green-600);"></div> Conceptual (Designers, PMs)</div>
+  <div class="legend-item"><div class="legend-dot" style="background: var(--mustard-600);"></div> Conceptual (Designers, PMs)</div>
   <div class="legend-item"><div class="legend-dot" style="background: var(--warm-500);"></div> Decision (Practitioners)</div>
   <div class="legend-item"><div class="legend-dot" style="background: var(--warm-400);"></div> Implementation (Developers)</div>
 </div>
@@ -1580,7 +1705,7 @@ Mutually exclusive at the same level.</p>
 <!-- ============================================================ -->
 <!-- AT A GLANCE (TL;DR) -->
 <!-- ============================================================ -->
-<div class="section" id="tldr">
+<div class="section watermark-bg" id="tldr">
 <div class="content">
 
 <span class="step-label">TL;DR</span>
@@ -1607,6 +1732,26 @@ Mutually exclusive at the same level.</p>
 document.addEventListener('DOMContentLoaded', function() {
   var sections = document.querySelectorAll('.section[id]');
   var navLinks = document.querySelectorAll('.sidebar a.nav-link[data-section]');
+  var sidebar = document.getElementById('sidebar');
+  var hero = document.getElementById('hero');
+  var mainContent = document.querySelector('.main');
+
+  // Show/hide sidebar and shift content based on hero visibility
+  function updateSidebarVisibility() {
+    if (hero) {
+      var heroBottom = hero.offsetTop + hero.offsetHeight;
+      if (window.scrollY >= heroBottom) {
+        sidebar.classList.add('visible');
+        if (mainContent) mainContent.classList.add('sidebar-active');
+      } else {
+        sidebar.classList.remove('visible');
+        if (mainContent) mainContent.classList.remove('sidebar-active');
+      }
+    }
+  }
+
+  window.addEventListener('scroll', updateSidebarVisibility);
+  updateSidebarVisibility();
 
   function updateActiveSection() {
     var currentSection = '';
