@@ -819,6 +819,57 @@
     margin: 12px 0;
   }
   .aud-test .aud-tag { color: var(--terra-600); }
+
+  /* Workbook prompts — action card style */
+  .wb-prompt {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px;
+    margin: 28px 0;
+    background: var(--surface);
+    border: 2px dashed var(--mustard-400);
+    border-radius: 6px;
+    font-family: 'Century Gothic', 'AppleGothic', 'Futura', sans-serif;
+    font-size: 13.5px;
+    font-weight: 400;
+    color: var(--mustard-800);
+    box-shadow: var(--shadow-sm);
+  }
+  .wb-prompt a {
+    color: var(--mustard-700);
+    font-weight: 600;
+    border-bottom: 1px solid var(--mustard-300);
+  }
+  .wb-prompt a:hover {
+    border-bottom-color: var(--mustard-700);
+  }
+  .wb-prompt .wb-icon {
+    font-size: 18px;
+    line-height: 1;
+    flex-shrink: 0;
+    opacity: 0.85;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .wb-prompt.wb-animate .wb-icon {
+    animation: wb-pencil-nudge 0.6s ease-out;
+  }
+  @keyframes wb-pencil-nudge {
+    0% { transform: rotate(0deg) scale(1); opacity: 0.85; }
+    25% { transform: rotate(-12deg) scale(1.15); opacity: 1; }
+    50% { transform: rotate(8deg) scale(1.1); opacity: 1; }
+    75% { transform: rotate(-4deg) scale(1.05); opacity: 1; }
+    100% { transform: rotate(0deg) scale(1); opacity: 0.85; }
+  }
+  [data-theme="dark"] .wb-prompt {
+    background: var(--surface);
+    border-color: #7A5B0D;
+    color: #D4B04A;
+    box-shadow: var(--shadow-sm);
+  }
+  [data-theme="dark"] .wb-prompt a { color: #E3C97A; border-bottom-color: #3D3018; }
+  [data-theme="dark"] .wb-prompt a:hover { border-bottom-color: #E3C97A; }
+
   details.hybrid-resolver {
     margin: 24px 0;
     border: 1px solid var(--border);
@@ -1012,7 +1063,7 @@
   </svg>
   <h1>Sightline</h1>
   <p class="subtitle">A Framework for Intent-Driven Navigation Design — by Samiya Ali</p>
-  <p class="lead">A structured method for translating user intent — Jobs, Tasks, and Activities — into navigation architecture. Built for product designers, developers, and product managers who need to design, build, and defend navigation decisions.</p>
+  <p class="lead">A structured method for translating user intent — Jobs, Tasks, and Activities — into navigation architecture. Built for product designers, developers, and product managers who need to design, build, and communicate navigation decisions.</p>
 </div>
 </div>
 
@@ -1094,6 +1145,10 @@
 
   <p>A few things are explicitly out of scope. Sightline does not prescribe visual design, interaction patterns, or frontend implementation &mdash; those depend on your design system, platform constraints, and engineering stack. It does not address content strategy, search design, or accessibility requirements, each of which has its own established methodology. And it does not replace the user research that feeds it; if the upstream Jobs and Tasks are wrong, the navigation architecture will be wrong regardless of how rigorously you follow the steps.</p>
 
+  <h3>The Companion Workbook</h3>
+
+  <p>Each step in the framework produces decisions and artifacts that feed the next step. The <a href="sightline-workbook-v8.1.html"><strong>Sightline Workbook</strong></a> gives you a structured place to capture these as you go &mdash; your JTBD hierarchy, diagnostic scores, scope profile, role decisions, paradigm composition, and the resulting navigation outline. Open it alongside this document and fill in each section as the framework prompts you.</p>
+
 </div>
 </div>
 
@@ -1165,6 +1220,8 @@
   <p><strong>Jobs rarely change</strong> &mdash; they're tied to the user's role and goals. <strong>Tasks change periodically</strong> as workflows evolve. <strong>Activities change frequently</strong>, every time the interface is updated. Your navigation at each level should match this rate of change. If your primary navigation shifts every time you redesign a feature, you've mapped Activities at the Job level.</p>
 </div>
 
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.1.html">Workbook</a> &mdash; Record your Jobs, Tasks, and Activities in Section 1.</div>
+
 <div class="callout-warm callout" id="s1-cross-job">
   <span class="callout-label">A Note on Cross-Job Tasks</span>
   <p>Some Tasks serve multiple Jobs. "Generate a financial report" might advance both "Keep stakeholders informed" and "Ensure regulatory compliance." Don't force these into a single Job &mdash; acknowledge them and move on. We'll address cross-Job Tasks in the <a href="#s2">Map step</a>.</p>
@@ -1214,6 +1271,8 @@
   <p>Task: "Run retrospective" &mdash; Frequency: <strong>Quarterly</strong> (per sprint cycle), Criticality: <strong>Supporting</strong></p>
 </div>
 
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.1.html">Workbook</a> &mdash; Add frequency and criticality annotations to each Task in Section 1.</div>
+
 <h3 id="s1-multi">Defining for Multiple User Types</h3>
 
 <p>Most products serve more than one persona. A project management tool serves Project Managers, Developers, and Designers &mdash; each with overlapping but distinct Job maps. Don't try to define all personas simultaneously. Instead:</p>
@@ -1223,6 +1282,8 @@
 <p><strong>Then overlay the maps.</strong> Once you have 2&ndash;3 individual maps, lay them side by side. Look for: <strong>shared Jobs</strong>, <strong>shared Tasks under different Jobs</strong>, and <strong>persona-exclusive Jobs</strong>. Mark these overlaps and divergences &mdash; they feed the role-based decisions in <a href="#s4">Step 04</a>.</p>
 
 <p><strong>Note your overlaps and divergences</strong> &mdash; they feed directly into the role-based navigation decisions in <a href="#s4">Step 04</a>.</p>
+
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.1.html">Workbook</a> &mdash; If you have multiple personas, note overlaps and divergences in Section 1.</div>
 
 </div>
 </div>
@@ -1255,7 +1316,7 @@
 
 <h3 id="s2-anchor">Choosing Your Navigation Anchor</h3>
 
-<p>Users organize their work in one of four dominant mental models. Most products are hybrids, but one model dominates &mdash; identify it and let it drive your primary navigation.</p>
+<p>Users tend to organize their work around one of four dominant mental models. Most products are hybrids. Typically one model dominates &mdash; identify it and let it drive your primary navigation. When no clear dominant emerges, the hybrid resolver below will help you structure the split.</p>
 
 <!-- ANCHOR TABS -->
 <div class="anchor-tabs">
@@ -1384,9 +1445,7 @@
 
 <h3 id="s2-dominant">Identifying Your Dominant Model</h3>
 
-<p>The most common mistake teams make here is projecting the product's current structure onto the user's mental model. <strong>Your database might be entity-centric</strong>, <strong>your roadmap might be process-oriented</strong>, and <strong>your support queue might be the highest-traffic feature</strong> &mdash; but none of those tell you how <em>users</em> organize their work. To find the dominant model, you need to look past the product and into the user's world.</p>
-
-<p>Run these four diagnostic checks. If three or more point to the same model, that's your dominant anchor.</p>
+<p>Run these four diagnostic checks at the <strong>session level</strong> &mdash; scoped to how users begin, move through, and end a work session. If three or more point to the same model, you have a clear dominant anchor.</p>
 
 <div class="card">
   <div class="card-header"><div class="card-name">1. Listen to the Language</div></div>
@@ -1434,7 +1493,7 @@
 
 <h3 id="s2-resolve">When Diagnostics Split: Resolving Ties and Hybrids</h3>
 
-<p>A clean 3-of-4 or 4-of-4 result is ideal, but many products &mdash; especially enterprise tools, agile workflows, and multi-role platforms &mdash; will produce a 2/2 split or a 3/1 with a strong dissenting signal. This is not an error in your analysis. It means the product genuinely serves multiple mental models, and the navigation needs to account for that explicitly rather than forcing a single anchor.</p>
+<p>A clean 3-of-4 or 4-of-4 result is ideal, but many products &mdash; especially enterprise tools, agile workflows, and multi-role platforms &mdash; will produce a 2/2 split or a 3/1 with a strong dissenting signal. The product genuinely serves multiple mental models, and the navigation needs to account for that explicitly rather than forcing a single anchor.</p>
 
 <p><strong>Score the diagnostics.</strong> Assign each of the four diagnostics (Language, Session Trigger, Session Shape, Blank Screen) to the model it most clearly supports. If a diagnostic genuinely could go either way, mark it as split rather than forcing it into one column. Count the results:</p>
 
@@ -1498,6 +1557,8 @@
 </div>
 </details>
 
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.1.html">Workbook</a> &mdash; Record your navigation anchor and diagnostic rationale in Section 2.</div>
+
 <h3 id="s2-principles">Mapping Principles (Apply to All Models)</h3>
 
 <p><strong>Persistence mirrors stability.</strong> Whatever occupies your primary navigation should be the most stable element of the experience. It should rarely change between releases.</p>
@@ -1523,6 +1584,8 @@
 </table>
 
 <p>Job Gravity is the recommended default. The four pointer mechanisms: <strong>1.</strong> Cross-link in secondary nav. <strong>2.</strong> Contextual shortcut inline. <strong>3.</strong> Search / &#8984;K result. <strong>4.</strong> User-pinned favorite.</p>
+
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.1.html">Workbook</a> &mdash; Note any cross-Job Task placements and pointer mechanisms in Section 2.</div>
 
 </div>
 </div>
@@ -1599,6 +1662,8 @@
   <p>Your profile across these six dimensions acts as a filter for Step 05. You'll use it there to narrow which paradigms are viable and resolve conflicts between competing dimensions.</p>
 </div>
 
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.1.html">Workbook</a> &mdash; Record your scope profile answers in Section 3.</div>
+
 </div>
 </div>
 
@@ -1637,7 +1702,7 @@
   <tr><td>Role-aware defaults</td><td>Same nav, different starting points by role.</td><td>Same Jobs, different frequency patterns.</td><td>&gt;70% shared Jobs</td><td>Lowest risk.</td></tr>
 </table>
 
-<p>Start with role-aware defaults and only escalate when the data demands it. Build separate apps only when Job maps overlap less than 20%. To determine your overlap ratio, lay your persona Job maps side by side and count shared vs. exclusive Jobs &mdash; the percentage of shared Jobs tells you which row of the table above applies.</p>
+<p>Start with role-aware defaults and only escalate when the data demands it. Consider separate apps when Job maps overlap less than roughly 20% &mdash; below that point, a shared navigation structure creates more confusion than it solves. To determine your overlap ratio, lay your persona Job maps side by side and count shared vs. exclusive Jobs &mdash; the percentage of shared Jobs tells you which row of the table above applies.</p>
 
 <h3 id="s4-adaptive">Adaptive / Contextual Navigation</h3>
 
@@ -1653,6 +1718,8 @@
   <span class="callout-label">The Cardinal Rule</span>
   <p>Never remove navigation options silently. If something will disappear, move, or change, the user needs to understand why. Adaptive navigation must be <em>transparently</em> adaptive.</p>
 </div>
+
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.1.html">Workbook</a> &mdash; Record your role approach and adaptive navigation decisions in Section 4.</div>
 
 </div>
 </div>
@@ -1797,7 +1864,7 @@
 <div class="callout-emphasis callout">
   <span class="callout-label">The Composition Formula</span>
   <p><strong>[Primary] + [Secondary] + [Depth] + [Accelerators]</strong></p>
-  <p>One paradigm per structural slot. Two in the same slot = conflict. Empty primary or secondary = gap. Depth and accelerators are optional.</p>
+  <p>One paradigm per structural slot. Two in the same slot creates tension that needs explicit resolution (see hybrid patterns in Step 02 and the 30% Rule). Empty primary or secondary = gap. Depth and accelerators are optional.</p>
 </div>
 
 <div class="example-block">
@@ -1856,6 +1923,8 @@ Mutually exclusive at the same level.</p>
 
 <h3 style="font-size: 17px; font-weight: 500; margin-top: 40px;">Accelerators <span style="font-weight: 300; color: var(--text-muted); font-size: 14px;">(additive)</span></h3>
 <p><strong>&#8984;K</strong> for users who know what they want. <strong>Contextual actions</strong> for Activity-level interactions. Both can coexist. Neither counts toward structural complexity.</p>
+
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.1.html">Workbook</a> &mdash; Record your paradigm composition formula and rationale in Section 5.</div>
 
 <h3 id="s5-conflicts">Scope Conflicts: When Dimensions Collide</h3>
 
@@ -1937,7 +2006,7 @@ Mutually exclusive at the same level.</p>
 
 <h3 id="s5-output">Your Navigation Outline</h3>
 
-<p>Step 05 ends when you've produced a <strong>Navigation Outline</strong> &mdash; the deliverable that feeds Step 06's audit and becomes the reference artifact for your team. Use the <a href="sightline-workbook-v8.html">Sightline Workbook</a> to fill this out interactively, or follow the structure below.</p>
+<p>Step 05 ends when you've produced a <strong>Navigation Outline</strong> &mdash; the deliverable that feeds Step 06's audit and becomes the reference artifact for your team. Use the <a href="sightline-workbook-v8.1.html">Sightline Workbook</a> to fill this out interactively, or follow the structure below.</p>
 
 <div class="example-block">
   <span class="callout-label">Worked example: Agile PM Navigation Outline</span>
@@ -1974,6 +2043,8 @@ Mutually exclusive at the same level.</p>
   <p><strong>7. Known Risks</strong></p>
   <p style="padding-left: 16px; border-left: 2px solid var(--mustard-200);">Retrospectives may feel lost in primary rail given quarterly frequency &mdash; monitor whether users can find it. Standup pinning may confuse users who don't do daily standups (different team cadences).</p>
 </div>
+
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.1.html">Workbook</a> &mdash; Write out your resulting navigation structure in Section 6 and note any risks in Section 7.</div>
 
 </div>
 </div>
@@ -2019,7 +2090,7 @@ Mutually exclusive at the same level.</p>
 <div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>Top nav should change as rarely as your Jobs &mdash; almost never. In-page controls can change every release.</p></div></div>
 <div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content"><p><strong>Question:</strong> Has top-level nav changed in 6 months?</p><p><strong>Heuristic:</strong> Primary nav &le;1x/year. Secondary quarterly. In-page every sprint.</p></div></div>
 <div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>GitHub's top nav (Code, Issues, PRs, Actions, Projects) has been stable for years. New features add within sections, not alongside them.</p></div></div>
-<div class="aud-test"><span class="aud-tag">Test</span><div class="aud-content"><p><strong>Data needed:</strong> Git history or release notes for the past 12 months (existing product) or the navigation outline's tier assignments (new product). <strong>Method:</strong> For existing products, count how many times primary nav items were added, removed, or renamed. For new products, check whether any item in the primary tier maps to something that changes with feature releases (Activities, specific Task workflows) rather than stable Jobs. <strong>Pass:</strong> Primary nav changed &le;1x in 12 months; all primary items map to Jobs. <strong>Fail:</strong> Primary nav changed &ge;2x or contains Task/Activity-level items.</p></div></div>
+<div class="aud-test"><span class="aud-tag">Test</span><div class="aud-content"><p><strong>Data needed:</strong> Git history or release notes for the past 12 months (existing product) or the navigation outline's tier assignments (new product). <strong>Method:</strong> For existing products, count how many times primary nav items were added, removed, or renamed. For new products, check whether any item in the primary tier maps to something that changes with feature releases (Activities, specific Task workflows) rather than stable Jobs. <strong>Pass:</strong> Primary nav changed &le;1x in 12 months; all primary items map to Jobs or to Tasks that earned primary placement through Principle 1 (frequency override). <strong>Fail:</strong> Primary nav changed &ge;2x, or contains Task/Activity-level items that lack a frequency-based justification for their placement.</p></div></div>
 
 <h3>Principle 3: Context Must Be Preserved</h3>
 <div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>Switching Tasks within a Job should preserve state. It should feel like switching tabs, not closing one app and opening another.</p></div></div>
@@ -2078,6 +2149,8 @@ Mutually exclusive at the same level.</p>
   <p>Treat AI/automated items as a layer that sits <em>alongside</em> structural navigation, not within it. A "Suggested" section in a queue, an AI sidebar panel, or inline suggestions within a Task view are valid patterns.</p>
   <p>The key principle: AI-surfaced items should <strong>never replace or reorder structural navigation without user consent</strong>. They're accelerators &mdash; additive, not structural.</p>
 </div>
+
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.1.html">Workbook</a> &mdash; Record audit results and unresolved risks in Section 7.</div>
 
 </div>
 </div>
@@ -2167,11 +2240,11 @@ Mutually exclusive at the same level.</p>
 <h2>At a Glance</h2>
 
 <div class="exec-summary">
-  <p>Navigation is the single most persistent element of any software product. When it works, people get things done. When it doesn't, they get lost, call support, and lose trust. Most navigation problems trace back to one root cause: <strong>the structure was designed around the product's internals instead of the user's intent.</strong></p>
-  <p><strong>Sightline</strong> is a six-step framework that fixes this by starting with what users are trying to accomplish and working outward to navigation structure. The core model defines user intent at three levels:</p>
+  <p>Navigation is the single most persistent element of any software product. When it works, people get things done. When it doesn't, they get lost, call support, and lose trust.</p>
+  <p><strong>Sightline</strong> is a six-step framework that starts with what users are trying to accomplish and works outward to navigation structure. The core model defines user intent at three levels:</p>
   <p><strong>Jobs</strong> &mdash; the outcomes users care about (stable, role-tied). <strong>Tasks</strong> &mdash; the plannable units of work that advance a Job. <strong>Activities</strong> &mdash; the concrete UI interactions within a Task. Each level maps to a tier of navigation: primary, secondary, and in-page.</p>
   <p>The six steps: <strong>Define</strong> user Jobs, Tasks, and Activities. <strong>Map</strong> them to navigation tiers. <strong>Scope</strong> your product's constraints. <strong>Assess</strong> role and context dimensions. <strong>Select</strong> from eight navigation paradigms. <strong>Audit</strong> against seven principles.</p>
-  <p><strong>The outcome:</strong> navigation decisions that are defensible, user-centered, and durable &mdash; rather than arbitrary, org-chart-driven, or subject to redesign every quarter.</p>
+  <p><strong>The outcome:</strong> navigation decisions that are defensible, user-centered, and durable.</p>
 </div>
 
 </div>
@@ -2281,6 +2354,22 @@ document.addEventListener('DOMContentLoaded', function() {
       if (panel) panel.classList.add('active');
     });
   });
+
+  // ===== WORKBOOK PROMPT VIEWPORT ANIMATION =====
+  var wbPrompts = document.querySelectorAll('.wb-prompt');
+  if ('IntersectionObserver' in window) {
+    var wbObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('wb-animate');
+          wbObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    wbPrompts.forEach(function(prompt) {
+      wbObserver.observe(prompt);
+    });
+  }
 });
 </script>
 </body>
