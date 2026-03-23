@@ -2275,6 +2275,12 @@ document.addEventListener('DOMContentLoaded', function() {
       lightToggle.classList.add('active');
       darkToggle.classList.remove('active');
     }
+    // Update workbook links to carry theme
+    var wbLinks = document.querySelectorAll('.wb-prompt a, a[href*="sightline-workbook"]');
+    wbLinks.forEach(function(link) {
+      var href = link.getAttribute('href').split('?')[0];
+      link.setAttribute('href', theme === 'dark' ? href + '?theme=dark' : href);
+    });
   }
 
   themeToggle.addEventListener('click', function() {

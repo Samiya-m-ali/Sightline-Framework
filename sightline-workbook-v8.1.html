@@ -15,6 +15,27 @@
             --warm-neutral-100: #EAE7E2;
             --warm-neutral-50: #F7F5F2;
             --border-radius: 4px;
+            --bg: linear-gradient(135deg, var(--mustard-50) 0%, var(--warm-neutral-50) 100%);
+            --surface: #FFFFFF;
+            --input-bg: var(--mustard-50);
+            --input-focus-bg: #FFFFFF;
+            --header-gradient: linear-gradient(135deg, var(--mustard-600) 0%, #9F7A15 100%);
+        }
+
+        [data-theme="dark"] {
+            --mustard-600: #D4B04A;
+            --mustard-100: #2A2517;
+            --mustard-50: #222018;
+            --warm-neutral-900: #E8E6E3;
+            --warm-neutral-700: #C0BEB9;
+            --warm-neutral-300: #3A3A3E;
+            --warm-neutral-100: #2E2E32;
+            --warm-neutral-50: #222226;
+            --bg: linear-gradient(135deg, #1A1A1E 0%, #1A1A1E 100%);
+            --surface: #222226;
+            --input-bg: #2A2517;
+            --input-focus-bg: #2E2E32;
+            --header-gradient: linear-gradient(135deg, #3D3018 0%, #2A2517 100%);
         }
 
         * {
@@ -25,7 +46,8 @@
 
         html, body {
             height: 100%;
-            background: linear-gradient(135deg, var(--mustard-50) 0%, var(--warm-neutral-50) 100%);
+            background: var(--bg);
+            transition: background 0.3s ease;
         }
 
         body {
@@ -39,18 +61,28 @@
         .container {
             max-width: 800px;
             margin: 0 auto;
-            background: white;
+            background: var(--surface);
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             overflow: hidden;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        [data-theme="dark"] .container {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
         .header {
-            background: linear-gradient(135deg, var(--mustard-600) 0%, #9F7A15 100%);
+            background: var(--header-gradient);
             color: white;
             padding: 48px 40px;
             text-align: center;
+            transition: background 0.3s ease;
         }
+
+        [data-theme="dark"] .header h1 { color: #F8F0D4; }
+        [data-theme="dark"] .header h2 { color: #E3C97A; }
+        [data-theme="dark"] .header p { color: #C0BEB9; }
 
         .header h1 {
             font-size: 36px;
@@ -171,7 +203,7 @@
             font-family: "Century Gothic", AppleGothic, "Futura", sans-serif;
             font-size: 14px;
             color: var(--warm-neutral-900);
-            background: var(--mustard-50);
+            background: var(--input-bg);
             transition: all 0.2s ease;
         }
 
@@ -181,8 +213,13 @@
         select:focus {
             outline: none;
             border-color: var(--mustard-600);
-            background: white;
+            background: var(--input-focus-bg);
             box-shadow: 0 0 0 3px rgba(184, 137, 26, 0.1);
+        }
+
+        [data-theme="dark"] select option {
+            background: #2E2E32;
+            color: #E8E6E3;
         }
 
         textarea {
@@ -241,6 +278,7 @@
             padding: 20px;
             margin-bottom: 16px;
             border-left: 4px solid var(--mustard-600);
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
 
         .job-block-header {
@@ -277,13 +315,13 @@
         .task-row input[type="text"] {
             padding: 7px 10px;
             font-size: 13px;
-            background: white;
+            background: var(--surface);
         }
 
         .task-row select {
             padding: 7px 6px;
             font-size: 12px;
-            background: white;
+            background: var(--surface);
         }
 
         .task-row .checkbox-item {
@@ -310,7 +348,7 @@
         .task-canonical-row input[type="text"] {
             padding: 6px 10px;
             font-size: 12px;
-            background: white;
+            background: var(--surface);
             max-width: 400px;
         }
 
@@ -550,6 +588,118 @@
             gap: 16px;
         }
 
+        /* ========== THEME TOGGLE ========== */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 300;
+            display: flex;
+            align-items: center;
+            background: var(--surface);
+            border: 1px solid var(--warm-neutral-300);
+            border-radius: 24px;
+            padding: 4px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .toggle-option {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            transition: background 0.25s ease, color 0.25s ease;
+            color: var(--warm-neutral-700);
+        }
+
+        .toggle-option.active {
+            background: var(--mustard-600);
+            color: #FFFFFF;
+        }
+
+        [data-theme="dark"] .toggle-option.active {
+            background: #D4B04A;
+            color: #1A1A1E;
+        }
+
+        .toggle-option svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* ========== DARK MODE OVERRIDES ========== */
+        [data-theme="dark"] .section-example {
+            background: #2A2517;
+            border-color: #3A3A3E;
+        }
+
+        [data-theme="dark"] .section-example strong {
+            color: #D4B04A;
+        }
+
+        [data-theme="dark"] .scope-question {
+            background: #2A2517;
+            border-color: #3A3A3E;
+        }
+
+        [data-theme="dark"] .conditional-section {
+            background: #222226;
+            border-color: #3A3A3E;
+        }
+
+        [data-theme="dark"] footer {
+            background: #222226;
+            border-top-color: #2E2E32;
+        }
+
+        [data-theme="dark"] footer a {
+            color: #D4B04A;
+        }
+
+        [data-theme="dark"] button {
+            background: #D4B04A;
+            color: #1A1A1E;
+        }
+
+        [data-theme="dark"] button:hover {
+            background: #E3C97A;
+        }
+
+        [data-theme="dark"] button.secondary,
+        [data-theme="dark"] .remove-btn,
+        [data-theme="dark"] .add-task-btn {
+            background: #3A3A3E;
+            color: #C0BEB9;
+        }
+
+        [data-theme="dark"] button.secondary:hover,
+        [data-theme="dark"] .remove-btn:hover,
+        [data-theme="dark"] .add-task-btn:hover {
+            background: #5A5A5E;
+        }
+
+        [data-theme="dark"] .export-feedback {
+            background: #D4B04A;
+            color: #1A1A1E;
+        }
+
+        [data-theme="dark"] .section-backlink {
+            color: #D4B04A;
+            border-bottom-color: #3D3018;
+        }
+
+        [data-theme="dark"] .section-backlink:hover {
+            border-bottom-color: #D4B04A;
+        }
+
         @media (max-width: 700px) {
             .two-column {
                 grid-template-columns: 1fr;
@@ -602,6 +752,17 @@
     </style>
 </head>
 <body>
+
+<!-- THEME TOGGLE -->
+<button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+  <span class="toggle-option active" id="lightToggle">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  </span>
+  <span class="toggle-option" id="darkToggle">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </span>
+</button>
+
     <div class="container">
         <div class="header">
             <h1>Sightline Workbook</h1>
@@ -1305,6 +1466,35 @@ Accelerators:
             setTimeout(() => {
                 feedback.remove();
             }, 3000);
+        }
+
+        // ===== DARK MODE TOGGLE =====
+        var themeToggle = document.getElementById('themeToggle');
+        var lightToggle = document.getElementById('lightToggle');
+        var darkToggle = document.getElementById('darkToggle');
+        var htmlEl = document.documentElement;
+
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                htmlEl.setAttribute('data-theme', 'dark');
+                lightToggle.classList.remove('active');
+                darkToggle.classList.add('active');
+            } else {
+                htmlEl.removeAttribute('data-theme');
+                lightToggle.classList.add('active');
+                darkToggle.classList.remove('active');
+            }
+        }
+
+        themeToggle.addEventListener('click', function() {
+            var isDark = htmlEl.getAttribute('data-theme') === 'dark';
+            setTheme(isDark ? 'light' : 'dark');
+        });
+
+        // Read theme from URL parameter (carried from framework)
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('theme') === 'dark') {
+            setTheme('dark');
         }
 
         // Initialize
