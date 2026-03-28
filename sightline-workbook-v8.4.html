@@ -1,0 +1,2284 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sightline Workbook v8.4</title>
+    <style>
+        :root {
+            --mustard-600: #B8891A;
+            --mustard-100: #F8F0D4;
+            --mustard-50: #FDF8EC;
+            --warm-neutral-900: #3D3A38;
+            --warm-neutral-700: #6B6764;
+            --warm-neutral-300: #D4D0CC;
+            --warm-neutral-100: #EAE7E2;
+            --warm-neutral-50: #F7F5F2;
+            --border-radius: 4px;
+            --bg: linear-gradient(135deg, var(--mustard-50) 0%, var(--warm-neutral-50) 100%);
+            --surface: #FFFFFF;
+            --input-bg: var(--mustard-50);
+            --input-focus-bg: #FFFFFF;
+        }
+
+        [data-theme="dark"] {
+            --mustard-600: #D4B04A;
+            --mustard-100: #2A2517;
+            --mustard-50: #222018;
+            --warm-neutral-900: #E8E6E3;
+            --warm-neutral-700: #C0BEB9;
+            --warm-neutral-300: #3A3A3E;
+            --warm-neutral-100: #2E2E32;
+            --warm-neutral-50: #222226;
+            --bg: linear-gradient(135deg, #1A1A1E 0%, #1A1A1E 100%);
+            --surface: #222226;
+            --input-bg: #2A2517;
+            --input-focus-bg: #2E2E32;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            background: var(--bg);
+            transition: background 0.3s ease;
+        }
+
+        body {
+            font-family: "Century Gothic", AppleGothic, "Futura", sans-serif;
+            color: var(--warm-neutral-900);
+            line-height: 1.6;
+            font-size: 15px;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--surface);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        [data-theme="dark"] .container {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            background: var(--mustard-100);
+            padding: 64px 40px 48px 40px;
+            text-align: left;
+            transition: background 0.3s ease;
+        }
+
+        [data-theme="dark"] .header { background: #2A2517; }
+        [data-theme="dark"] .header h1 { color: #F8F0D4; }
+        [data-theme="dark"] .header .subtitle { color: #D4B04A; }
+
+        .header h1 {
+            font-size: 48px;
+            font-weight: 300;
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+            color: var(--warm-neutral-900);
+        }
+
+        .header .subtitle {
+            font-size: 17px;
+            font-weight: 400;
+            color: var(--mustard-600);
+            line-height: 1.5;
+        }
+
+        .header .hero-icon {
+            display: block;
+            margin-bottom: 16px;
+            color: var(--mustard-600);
+        }
+
+        [data-theme="dark"] .header .hero-icon { color: #D4B04A; }
+
+        .content {
+            padding: 40px;
+        }
+
+        section {
+            margin-bottom: 48px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid var(--warm-neutral-100);
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        section h2 {
+            font-size: 20px;
+            color: var(--mustard-600);
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+
+        .section-backlink {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--mustard-600);
+            text-decoration: none;
+            border-bottom: 1px solid var(--mustard-100);
+            transition: border-color 0.2s;
+            white-space: nowrap;
+        }
+
+        .section-backlink:hover {
+            border-bottom-color: var(--mustard-600);
+        }
+
+        .section-help {
+            font-size: 13px;
+            color: var(--warm-neutral-700);
+            margin-bottom: 20px;
+            line-height: 1.55;
+            font-weight: 400;
+        }
+
+        .section-example {
+            font-size: 12px;
+            color: var(--warm-neutral-700);
+            background: var(--warm-neutral-50);
+            border: 1px solid var(--warm-neutral-100);
+            border-radius: var(--border-radius);
+            padding: 10px 14px;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .section-example strong {
+            color: var(--warm-neutral-900);
+            font-weight: 600;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .field-group {
+            margin-bottom: 24px;
+        }
+
+        .field-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--warm-neutral-900);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--warm-neutral-300);
+            border-radius: var(--border-radius);
+            font-family: "Century Gothic", AppleGothic, "Futura", sans-serif;
+            font-size: 14px;
+            color: var(--warm-neutral-900);
+            background: var(--input-bg);
+            transition: all 0.2s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--mustard-600);
+            background: var(--input-focus-bg);
+            box-shadow: 0 0 0 3px rgba(184, 137, 26, 0.1);
+        }
+
+        [data-theme="dark"] select option {
+            background: #2E2E32;
+            color: #E8E6E3;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .checkbox-group,
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .checkbox-item,
+        .radio-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        input[type="checkbox"],
+        input[type="radio"] {
+            margin-top: 4px;
+            cursor: pointer;
+            accent-color: var(--mustard-600);
+            width: 16px;
+            height: 16px;
+        }
+
+        .checkbox-item label,
+        .radio-item label {
+            display: block;
+            cursor: pointer;
+            font-weight: 400;
+            text-transform: none;
+            letter-spacing: normal;
+            font-size: 14px;
+            text-align: left;
+        }
+
+        .checkbox-item input,
+        .radio-item input {
+            flex-shrink: 0;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Job blocks */
+        .job-block {
+            background: var(--mustard-50);
+            border: 1px solid var(--warm-neutral-300);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 16px;
+            border-left: 4px solid var(--mustard-600);
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+
+        .job-block-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .job-block-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--mustard-600);
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        /* Compact task rows */
+        .task-row {
+            display: grid;
+            grid-template-columns: 1fr 110px 110px auto auto;
+            gap: 8px;
+            align-items: center;
+            margin-left: 20px;
+            margin-bottom: 8px;
+            padding: 6px 0;
+            border-bottom: 1px solid var(--warm-neutral-100);
+        }
+
+        .task-row:last-of-type {
+            border-bottom: none;
+        }
+
+        .task-row input[type="text"] {
+            padding: 7px 10px;
+            font-size: 13px;
+            background: var(--surface);
+        }
+
+        .task-row select {
+            padding: 7px 6px;
+            font-size: 12px;
+            background: var(--surface);
+        }
+
+        .task-row .checkbox-item {
+            gap: 4px;
+            white-space: nowrap;
+        }
+
+        .task-row .checkbox-item label {
+            font-size: 11px;
+            color: var(--warm-neutral-700);
+        }
+
+        .task-row .checkbox-item input {
+            width: 14px;
+            height: 14px;
+            margin-top: 2px;
+        }
+
+        .task-canonical-row {
+            margin-left: 40px;
+            margin-bottom: 8px;
+        }
+
+        .task-canonical-row input[type="text"] {
+            padding: 6px 10px;
+            font-size: 12px;
+            background: var(--surface);
+            max-width: 400px;
+        }
+
+        .task-canonical-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--warm-neutral-700);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 4px;
+        }
+
+        .task-header-row {
+            display: grid;
+            grid-template-columns: 1fr 110px 110px auto auto;
+            gap: 8px;
+            margin-left: 20px;
+            margin-bottom: 4px;
+            padding-bottom: 4px;
+        }
+
+        .task-header-row span {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--warm-neutral-700);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 10px 16px;
+            background: var(--mustard-600);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-family: "Century Gothic", AppleGothic, "Futura", sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+        }
+
+        button:hover {
+            background: #9F7A15;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button.secondary {
+            background: var(--warm-neutral-700);
+            font-size: 12px;
+            padding: 8px 12px;
+        }
+
+        button.secondary:hover {
+            background: var(--warm-neutral-900);
+        }
+
+        .remove-btn {
+            background: var(--warm-neutral-700);
+            padding: 6px 10px;
+            font-size: 11px;
+        }
+
+        .remove-btn:hover {
+            background: var(--warm-neutral-900);
+        }
+
+        .remove-task-btn {
+            background: none;
+            border: none;
+            color: var(--warm-neutral-300);
+            cursor: pointer;
+            font-size: 16px;
+            padding: 2px 6px;
+            line-height: 1;
+            transition: color 0.15s;
+        }
+
+        .remove-task-btn:hover {
+            color: var(--warm-neutral-900);
+            background: none;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .add-task-btn {
+            background: var(--warm-neutral-700);
+            padding: 6px 12px;
+            font-size: 11px;
+            margin-top: 8px;
+            margin-left: 20px;
+        }
+
+        .add-task-btn:hover {
+            background: var(--warm-neutral-900);
+        }
+
+        .anchor-option-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .scope-questions {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .scope-question {
+            background: var(--mustard-50);
+            padding: 16px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--warm-neutral-300);
+        }
+
+        .scope-question-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--warm-neutral-900);
+            margin-bottom: 12px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .composition-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .composition-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .composition-field label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--warm-neutral-900);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .composition-field select {
+            padding: 8px 10px;
+            font-size: 13px;
+        }
+
+        .conditional-section {
+            background: var(--warm-neutral-50);
+            padding: 16px;
+            border-radius: var(--border-radius);
+            border: 1px dashed var(--warm-neutral-300);
+            margin-top: 16px;
+        }
+
+        .conditional-section h3 {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--mustard-600);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        footer {
+            background: var(--warm-neutral-50);
+            padding: 28px 40px;
+            border-top: 1px solid var(--warm-neutral-100);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        footer a {
+            color: var(--mustard-600);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: color 0.2s ease;
+            letter-spacing: 0.3px;
+        }
+
+        footer a:hover {
+            color: #9F7A15;
+            text-decoration: underline;
+        }
+
+        .export-feedback {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--mustard-600);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--border-radius);
+            font-size: 13px;
+            font-weight: 600;
+            animation: slideIn 0.3s ease;
+            z-index: 1000;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Collapsed scope question */
+        .scope-question.collapsed {
+            padding: 10px 16px;
+            cursor: pointer;
+            transition: padding 0.2s ease;
+        }
+
+        .scope-question.collapsed .radio-group {
+            display: none;
+        }
+
+        .scope-question.collapsed .scope-help {
+            display: none;
+        }
+
+        .scope-selected-value {
+            display: none;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--mustard-600);
+        }
+
+        .scope-question.collapsed .scope-selected-value {
+            display: inline;
+            margin-left: 12px;
+        }
+
+        .scope-question.collapsed .scope-question-label {
+            display: inline;
+            margin-bottom: 0;
+        }
+
+        .scope-edit-hint {
+            display: none;
+            font-size: 11px;
+            color: var(--warm-neutral-700);
+            font-weight: 400;
+            margin-left: 8px;
+        }
+
+        .scope-question.collapsed .scope-edit-hint {
+            display: inline;
+        }
+
+        .scope-help {
+            font-size: 12px;
+            color: var(--warm-neutral-700);
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .scope-summary {
+            padding: 14px 18px;
+            background: var(--mustard-50);
+            border: 1px solid var(--warm-neutral-300);
+            border-radius: var(--border-radius);
+            font-size: 13px;
+            line-height: 1.6;
+            margin-top: 16px;
+        }
+
+        .scope-summary strong {
+            color: var(--mustard-600);
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        /* ========== THEME TOGGLE ========== */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 300;
+            display: flex;
+            align-items: center;
+            background: var(--surface);
+            border: 1px solid var(--warm-neutral-300);
+            border-radius: 24px;
+            padding: 4px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .toggle-option {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            transition: background 0.25s ease, color 0.25s ease;
+            color: var(--warm-neutral-700);
+        }
+
+        .toggle-option.active {
+            background: var(--mustard-600);
+            color: #FFFFFF;
+        }
+
+        [data-theme="dark"] .toggle-option {
+            color: #C0BEB9;
+        }
+
+        [data-theme="dark"] .toggle-option.active {
+            background: #D4B04A;
+            color: #1A1A1E;
+        }
+
+        [data-theme="dark"] .theme-toggle {
+            background: #2E2E32;
+            border-color: #5A5A5E;
+        }
+
+        .toggle-option svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* ========== DARK MODE OVERRIDES ========== */
+        [data-theme="dark"] .section-example {
+            background: #2A2517;
+            border-color: #3A3A3E;
+        }
+
+        [data-theme="dark"] .section-example strong {
+            color: #D4B04A;
+        }
+
+        [data-theme="dark"] .scope-question {
+            background: #2A2517;
+            border-color: #3A3A3E;
+        }
+
+        [data-theme="dark"] .conditional-section {
+            background: #222226;
+            border-color: #3A3A3E;
+        }
+
+        [data-theme="dark"] footer {
+            background: #222226;
+            border-top-color: #2E2E32;
+        }
+
+        [data-theme="dark"] footer a {
+            color: #D4B04A;
+        }
+
+        [data-theme="dark"] button {
+            background: #D4B04A;
+            color: #1A1A1E;
+        }
+
+        [data-theme="dark"] button:hover {
+            background: #E3C97A;
+        }
+
+        [data-theme="dark"] button.secondary,
+        [data-theme="dark"] .remove-btn,
+        [data-theme="dark"] .add-task-btn {
+            background: #3A3A3E;
+            color: #C0BEB9;
+        }
+
+        [data-theme="dark"] button.secondary:hover,
+        [data-theme="dark"] .remove-btn:hover,
+        [data-theme="dark"] .add-task-btn:hover {
+            background: #5A5A5E;
+        }
+
+        [data-theme="dark"] .export-feedback {
+            background: #D4B04A;
+            color: #1A1A1E;
+        }
+
+        [data-theme="dark"] .section-backlink {
+            color: #D4B04A;
+            border-bottom-color: #3D3018;
+        }
+
+        [data-theme="dark"] .section-backlink:hover {
+            border-bottom-color: #D4B04A;
+        }
+
+        /* ========== SCORING GRID ========== */
+        .scoring-grid {
+            margin-top: 12px;
+        }
+
+        .scoring-grid-header {
+            display: grid;
+            grid-template-columns: 140px repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 6px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--warm-neutral-300);
+        }
+
+        .scoring-grid-col {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: var(--warm-neutral-700);
+            text-align: center;
+        }
+
+        .scoring-grid-row {
+            display: grid;
+            grid-template-columns: 140px repeat(4, 1fr);
+            gap: 8px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--warm-neutral-100);
+        }
+
+        .scoring-grid-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--warm-neutral-900);
+            display: flex;
+            align-items: flex-start;
+            padding-top: 2px;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .scoring-weight {
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--mustard-600);
+        }
+
+        .scoring-grid-cell {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .scoring-grid-cell input[type="range"] {
+            width: 100%;
+            accent-color: var(--mustard-600);
+            cursor: pointer;
+        }
+
+        .slider-label {
+            font-size: 11px;
+            color: var(--warm-neutral-700);
+            text-align: center;
+            line-height: 1.3;
+            min-height: 28px;
+        }
+
+        .scoring-grid-totals {
+            display: grid;
+            grid-template-columns: 140px repeat(4, 1fr);
+            gap: 8px;
+            padding: 12px 0 4px;
+            margin-top: 4px;
+            border-top: 2px solid var(--mustard-600);
+        }
+
+        .scoring-total-cell {
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--warm-neutral-900);
+        }
+
+        .scoring-total-cell.leader {
+            color: var(--mustard-600);
+        }
+
+        .scoring-total-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: var(--warm-neutral-700);
+        }
+
+        /* ========== INFERENCE PANELS ========== */
+        .inference-panel {
+            margin-top: 16px;
+            padding: 14px 18px;
+            background: var(--mustard-50);
+            border: 1px solid var(--warm-neutral-300);
+            border-radius: var(--border-radius);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .inference-panel strong {
+            color: var(--mustard-600);
+        }
+
+        .inference-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: var(--mustard-600);
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .inference-item {
+            margin-bottom: 8px;
+            padding-left: 12px;
+            border-left: 2px solid var(--mustard-600);
+        }
+
+        .inference-item:last-child {
+            margin-bottom: 0;
+        }
+
+        [data-theme="dark"] .inference-panel {
+            background: #2A2517;
+            border-color: #3A3A3E;
+        }
+
+        @media (max-width: 700px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                padding: 32px 24px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .header h2 {
+                font-size: 16px;
+            }
+
+            .content,
+            footer {
+                padding: 24px;
+            }
+
+            .anchor-option-group {
+                grid-template-columns: 1fr;
+            }
+
+            .composition-row {
+                grid-template-columns: 1fr;
+            }
+
+            .task-row {
+                grid-template-columns: 1fr;
+                margin-left: 12px;
+                padding: 10px 0;
+                gap: 6px;
+            }
+
+            .task-header-row {
+                display: none;
+            }
+
+            .task-canonical-row {
+                margin-left: 12px;
+            }
+
+            .add-task-btn {
+                margin-left: 12px;
+            }
+
+            .scoring-grid-header,
+            .scoring-grid-row,
+            .scoring-grid-totals {
+                grid-template-columns: 100px repeat(4, 1fr);
+                gap: 4px;
+            }
+
+            .scoring-grid-label {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- THEME TOGGLE -->
+<button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+  <span class="toggle-option" id="lightToggle">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  </span>
+  <span class="toggle-option active" id="darkToggle">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </span>
+</button>
+
+    <div class="container">
+        <div class="header">
+            <svg class="hero-icon" width="28" height="20" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="0" y1="7" x2="7" y2="7" stroke="currentColor" stroke-width="1.5"/>
+                <line x1="13" y1="7" x2="20" y2="7" stroke="currentColor" stroke-width="1.5"/>
+                <rect x="8.6" y="5.6" width="2.8" height="2.8" transform="rotate(45 10 7)" fill="currentColor"/>
+            </svg>
+            <h1>Sightline Workbook</h1>
+            <p class="subtitle">Companion to the Sightline Framework</p>
+        </div>
+
+        <div class="content">
+            <!-- Section 1: JTBD Hierarchy -->
+            <section id="section1">
+                <div class="section-header">
+                    <h2>1. JTBD Hierarchy</h2>
+                </div>
+                <p class="section-help">List every Job your users have, then break each into its constituent Tasks. Annotate each Task with how often it happens and how critical it is &mdash; these annotations drive navigation placement decisions in later steps.</p>
+                <div class="section-example">
+                    <strong>Example</strong><br>
+                    Job: Keep my team's financial health strong<br>
+                    &emsp;Task: Create monthly budget reports &mdash; Monthly / Blocking<br>
+                    &emsp;Task: Review expense approvals &mdash; Daily / Important
+                </div>
+                <div id="jobs-container"></div>
+                <button onclick="addJob()">+ Add Job</button>
+            </section>
+
+            <!-- Section 2: Navigation Anchor -->
+            <section id="section2">
+                <div class="section-header">
+                    <h2>2. Navigation Anchor</h2>
+                </div>
+                <p class="section-help">Based on your four diagnostic checks (Language, Session Trigger, Session Shape, Blank Screen), identify which mental model dominates how your users navigate their work.</p>
+                <div class="section-example">
+                    <strong>Example</strong><br>
+                    Primary: Process-First (3 of 4 diagnostics). Session Trigger and Session Shape both pointed to sprint phases. Language was split between entity and process.
+                </div>
+
+                <div class="field-group">
+                    <label>Primary Anchor</label>
+                    <div class="anchor-option-group">
+                        <div class="radio-item">
+                            <input type="radio" id="anchor-process" name="primary-anchor" value="Process-First" onchange="updateAnchor()">
+                            <label for="anchor-process">Process-First</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="anchor-entity" name="primary-anchor" value="Entity-First" onchange="updateAnchor()">
+                            <label for="anchor-entity">Entity-First</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="anchor-queue" name="primary-anchor" value="Queue-First" onchange="updateAnchor()">
+                            <label for="anchor-queue">Queue-First</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="anchor-activity" name="primary-anchor" value="Activity-First" onchange="updateAnchor()">
+                            <label for="anchor-activity">Activity-First</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checkbox-item">
+                    <input type="checkbox" id="hybrid-anchor" onchange="toggleHybridAnchor()">
+                    <label for="hybrid-anchor"><strong>Hybrid</strong> &mdash; apply secondary anchor</label>
+                </div>
+
+                <div id="secondary-anchor-section" class="conditional-section hidden">
+                    <h3>Secondary Anchor</h3>
+                    <div class="anchor-option-group">
+                        <div class="radio-item">
+                            <input type="radio" id="anchor-process-2" name="secondary-anchor" value="Process-First" onchange="updateAnchor()">
+                            <label for="anchor-process-2">Process-First</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="anchor-entity-2" name="secondary-anchor" value="Entity-First" onchange="updateAnchor()">
+                            <label for="anchor-entity-2">Entity-First</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="anchor-queue-2" name="secondary-anchor" value="Queue-First" onchange="updateAnchor()">
+                            <label for="anchor-queue-2">Queue-First</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="anchor-activity-2" name="secondary-anchor" value="Activity-First" onchange="updateAnchor()">
+                            <label for="anchor-activity-2">Activity-First</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field-group" style="margin-top: 20px;">
+                    <label for="diagnostic-rationale">Diagnostic Rationale</label>
+                    <textarea id="diagnostic-rationale" placeholder="Which diagnostics pointed where? Was a tiebreaker or hybrid resolution applied?"></textarea>
+                </div>
+
+                <div class="checkbox-item">
+                    <input type="checkbox" id="scoring-matrix-check" onchange="toggleScoringMatrix()">
+                    <label for="scoring-matrix-check">Scoring matrix used?</label>
+                </div>
+
+                <div id="scoring-section" class="conditional-section hidden">
+                    <h3>Diagnostic Scoring Matrix</h3>
+
+                    <div class="scoring-grid">
+                        <div class="scoring-grid-header">
+                            <div class="scoring-grid-label"></div>
+                            <div class="scoring-grid-col">Process</div>
+                            <div class="scoring-grid-col">Entity</div>
+                            <div class="scoring-grid-col">Queue</div>
+                            <div class="scoring-grid-col">Activity</div>
+                        </div>
+                        <div class="scoring-grid-row" data-weight="1.0">
+                            <div class="scoring-grid-label">Language <span class="scoring-weight">&times;1.0</span></div>
+                            <div class="scoring-grid-cell"><input type="range" min="0" max="3" value="0" id="diag-language-process" oninput="updateScoringGrid()"><span class="slider-label" id="label-language-process">0 &mdash; No signal</span></div>
+                            <div class="scoring-grid-cell"><input type="range" min="0" max="3" value="0" id="diag-language-entity" oninput="updateScoringGrid()"><span class="slider-label" id="label-language-entity">0 &mdash; No signal</span></div>
+                            <div class="scoring-grid-cell"><input type="range" min="0" max="3" value="0" id="diag-language-queue" oninput="updateScoringGrid()"><span class="slider-label" id="label-language-queue">0 &mdash; No signal</span></div>
+                            <div class="scoring-grid-cell"><input type="range" min="0" max="3" value="0" id="diag-language-activity" oninput="updateScoringGrid()"><span class="slider-label" id="label-language-activity">0 &mdash; No signal</span></div>
+                        </div>
+                        <div class="scoring-grid-row" data-weight="1.5">
+                            <div class="scoring-grid-label">Session Trigger <span class="scoring-weight">&times;1.5</span></div>
+                            <div class="scoring-grid-cell"><input type="range" min="0" max="3" value="0" id="diag-trigger-process" oninput="updateScoringGrid()"><span class="slider-label" id="label-trigger-process">0 &mdash; No signal</span></div>
+                            <div class="scoring-grid-cell"><input type="range" min="0" max="3" value="0" id="diag-trigger-entity" oninput="updateScoringGrid()"><span class="slider-label" id="label-trigger-entity">0 &mdash; No signal</span></div>
+                            <div class="scoring-grid-cell"><input type="range" min="0" max="3" value="0" id="diag-trigger-queue" oninput="updateScoringGrid()"><span class="slider-label" id="label-trigger-queue">0 &mdash; No signal</span></div>
+                            <div class="scoring-grid-cell"><input type="range" min="0" max="3" value="0" id="diag-trigger-activity" oninput="updateScoringGrid()"><span class="slider-label" id="label-trigger-activity">0 &mdash; No signal</span></div>
+                        </div>
+                        <div class="scoring-grid-row" data-weight="1.5">
+                            <div class="scoring-grid-label">Session Shape <span class="scoring-weight">&times;1.5</span></div>
+                            <div class="scoring-grid-cell"><input type="range" min="0" max="3" value="0" id="diag-shape-process" oninput="updateScoringGrid()"><span class="slider-label" id="label-shape-process">0 &mdash; No signal</span></div>
+                            <div class="scoring-grid-cell"><input type="range" min="0" max="3" value="0" id="diag-shape-entity" oninput="updateScoringGrid()"><span class="slider-label" id="label-shape-entity">0 &mdash; No signal</span></div>
+                            <div class="scoring-grid-cell"><input type="range" min="0" max="3" value="0" id="diag-shape-queue" oninput="updateScoringGrid()"><span class="slider-label" id="label-shape-queue">0 &mdash; No signal</span></div>
+                            <div class="scoring-grid-cell"><input type="range" min="0" max="3" value="0" id="diag-shape-activity" oninput="updateScoringGrid()"><span class="slider-label" id="label-shape-activity">0 &mdash; No signal</span></div>
+                        </div>
+                        <div class="scoring-grid-row" data-weight="1.0">
+                            <div class="scoring-grid-label">Blank Screen <span class="scoring-weight">&times;1.0</span></div>
+                            <div class="scoring-grid-cell"><input type="range" min="0" max="3" value="0" id="diag-blank-process" oninput="updateScoringGrid()"><span class="slider-label" id="label-blank-process">0 &mdash; No signal</span></div>
+                            <div class="scoring-grid-cell"><input type="range" min="0" max="3" value="0" id="diag-blank-entity" oninput="updateScoringGrid()"><span class="slider-label" id="label-blank-entity">0 &mdash; No signal</span></div>
+                            <div class="scoring-grid-cell"><input type="range" min="0" max="3" value="0" id="diag-blank-queue" oninput="updateScoringGrid()"><span class="slider-label" id="label-blank-queue">0 &mdash; No signal</span></div>
+                            <div class="scoring-grid-cell"><input type="range" min="0" max="3" value="0" id="diag-blank-activity" oninput="updateScoringGrid()"><span class="slider-label" id="label-blank-activity">0 &mdash; No signal</span></div>
+                        </div>
+                        <div class="scoring-grid-totals" id="scoring-totals"></div>
+                    </div>
+                    <div id="scoring-result" class="hidden" style="margin-top: 16px; padding: 14px 18px; background: var(--mustard-50); border: 1px solid var(--warm-neutral-300); border-radius: var(--border-radius); font-size: 13px; line-height: 1.6;"></div>
+                </div>
+            </section>
+
+            <!-- Section 3: Scope Profile -->
+            <section id="section3">
+                <div class="section-header">
+                    <h2>3. Scope Profile</h2>
+                </div>
+                <p class="section-help">Answer six constraint questions about your product. The combination of answers filters which navigation paradigms are viable and flags dimension conflicts to resolve in Step 05.</p>
+                <div class="section-example">
+                    <strong>Example</strong><br>
+                    4 Jobs &middot; 2-level depth &middot; Moderate expertise &middot; Concentrated usage &middot; Responsive web &middot; Moderate tolerance
+                </div>
+
+                <div class="scope-questions" id="scope-questions">
+                    <div class="scope-question" data-scope="top-level-jobs" onclick="expandScopeQuestion(this)">
+                        <label class="scope-question-label">Top-level Jobs</label>
+                        <span class="scope-selected-value"></span>
+                        <span class="scope-edit-hint">(click to edit)</span>
+                        <p class="scope-help">Count from your Step 01 hierarchy &mdash; this is the number of Jobs, not Tasks.</p>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" name="top-level-jobs" value="&le;5" onchange="collapseScopeQuestion(this)">
+                                <label>&le;5</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="top-level-jobs" value="5-15" onchange="collapseScopeQuestion(this)">
+                                <label>5-15</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="top-level-jobs" value="15+" onchange="collapseScopeQuestion(this)">
+                                <label>15+</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="scope-question" data-scope="task-depth" onclick="expandScopeQuestion(this)">
+                        <label class="scope-question-label">Task Tree Depth</label>
+                        <span class="scope-selected-value"></span>
+                        <span class="scope-edit-hint">(click to edit)</span>
+                        <p class="scope-help">How many levels deep does your Task hierarchy go within a single Job?</p>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" name="task-depth" value="1 level" onchange="collapseScopeQuestion(this)">
+                                <label>1 level</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="task-depth" value="2 levels" onchange="collapseScopeQuestion(this)">
+                                <label>2 levels</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="task-depth" value="3+ levels" onchange="collapseScopeQuestion(this)">
+                                <label>3+ levels</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="scope-question" data-scope="user-expertise" onclick="expandScopeQuestion(this)">
+                        <label class="scope-question-label">User Expertise</label>
+                        <span class="scope-selected-value"></span>
+                        <span class="scope-edit-hint">(click to edit)</span>
+                        <p class="scope-help">How wide is the expertise gap between your newest and most experienced users?</p>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" name="user-expertise" value="Uniform" onchange="collapseScopeQuestion(this)">
+                                <label>Uniform</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="user-expertise" value="Moderate spread" onchange="collapseScopeQuestion(this)">
+                                <label>Moderate spread</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="user-expertise" value="Extreme spread" onchange="collapseScopeQuestion(this)">
+                                <label>Extreme spread</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="scope-question" data-scope="usage-concentration" onclick="expandScopeQuestion(this)">
+                        <label class="scope-question-label">Usage Concentration</label>
+                        <span class="scope-selected-value"></span>
+                        <span class="scope-edit-hint">(click to edit)</span>
+                        <p class="scope-help">Do most sessions touch the same 2&ndash;3 Tasks, or is usage spread evenly across Jobs?</p>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" name="usage-concentration" value="Highly concentrated" onchange="collapseScopeQuestion(this)">
+                                <label>Highly concentrated</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="usage-concentration" value="Evenly distributed" onchange="collapseScopeQuestion(this)">
+                                <label>Evenly distributed</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="usage-concentration" value="Mixed" onchange="collapseScopeQuestion(this)">
+                                <label>Mixed</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="scope-question" data-scope="learning-tolerance" onclick="expandScopeQuestion(this)">
+                        <label class="scope-question-label">Navigation Learning Tolerance</label>
+                        <span class="scope-selected-value"></span>
+                        <span class="scope-edit-hint">(click to edit)</span>
+                        <p class="scope-help">How much time will users invest in learning your navigation structure?</p>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" name="learning-tolerance" value="Near-zero" onchange="collapseScopeQuestion(this)">
+                                <label>Near-zero</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="learning-tolerance" value="Moderate" onchange="collapseScopeQuestion(this)">
+                                <label>Moderate</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="learning-tolerance" value="High" onchange="collapseScopeQuestion(this)">
+                                <label>High</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="scope-question" data-scope="platform" onclick="expandScopeQuestion(this)">
+                        <label class="scope-question-label">Platform</label>
+                        <span class="scope-selected-value"></span>
+                        <span class="scope-edit-hint">(click to edit)</span>
+                        <p class="scope-help">What platform(s) does this navigation need to work on?</p>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" name="platform" value="Desktop-only" onchange="collapseScopeQuestion(this)">
+                                <label>Desktop-only</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="platform" value="Responsive web" onchange="collapseScopeQuestion(this)">
+                                <label>Responsive web</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="platform" value="Native mobile" onchange="collapseScopeQuestion(this)">
+                                <label>Native mobile</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="platform" value="Multi-platform" onchange="collapseScopeQuestion(this)">
+                                <label>Multi-platform</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="scope-summary" class="scope-summary hidden"></div>
+
+                <div class="field-group" style="margin-top: 24px;">
+                    <label for="conflicts-triggered">Conflicts Triggered</label>
+                    <textarea id="conflicts-triggered" placeholder="Auto-generated above — add any additional notes here"></textarea>
+                </div>
+            </section>
+
+            <!-- Section 4: Role & Context Decisions -->
+            <section id="section4">
+                <div class="section-header">
+                    <h2>4. Role &amp; Context Decisions</h2>
+                </div>
+                <p class="section-help">Record how you're handling multiple user roles (if applicable) and which adaptive navigation patterns you're applying. Use the overlap ratio to determine whether roles share a navigation structure or need separation.</p>
+                <div class="section-example">
+                    <strong>Example</strong><br>
+                    Role-aware defaults. 70% shared Jobs across Admin and Member. Data-state adaptive for blocked items only (empty states trigger guided flows).
+                </div>
+
+                <div class="two-column">
+                    <div class="field-group">
+                        <label for="role-approach">Role Approach</label>
+                        <select id="role-approach" onchange="generateRisksInference()">
+                            <option value="">— Select —</option>
+                            <option value="Separate apps">Separate apps</option>
+                            <option value="Role-filtered">Role-filtered</option>
+                            <option value="Role-aware defaults">Role-aware defaults</option>
+                        </select>
+                    </div>
+                    <div class="field-group">
+                        <label for="overlap-ratio">Overlap Ratio</label>
+                        <input type="text" id="overlap-ratio" placeholder="e.g., 70% shared Jobs">
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label for="adaptive-navigation">Adaptive Navigation Types Applied</label>
+                    <textarea id="adaptive-navigation" placeholder="Which types? Trigger conditions? What changes?"></textarea>
+                </div>
+            </section>
+
+            <!-- Section 5: Paradigm Composition -->
+            <section id="section5">
+                <div class="section-header">
+                    <h2>5. Paradigm Composition</h2>
+                </div>
+                <p class="section-help">Choose one paradigm for each structural slot: Primary, Secondary, Depth, and Accelerators. Record why each was chosen over alternatives &mdash; this rationale becomes the reference when stakeholders question the architecture.</p>
+                <div class="section-example">
+                    <strong>Example</strong><br>
+                    [Side nav] + [Tab bar] + [Breadcrumbs] + [&amp;#8984;K]. Side nav chosen over top nav because responsive collapse is straightforward with 4 Jobs.
+                </div>
+
+                <div class="field-group">
+                    <label style="text-transform: uppercase; font-weight: 600; font-size: 12px; margin-bottom: 16px; display: block; letter-spacing: 0.3px;">Desktop Composition Formula</label>
+                    <div class="composition-row">
+                        <div class="composition-field">
+                            <label for="paradigm-primary">Primary</label>
+                            <select id="paradigm-primary" onchange="generateParadigmInference()">
+                                <option value="">— Select —</option>
+                                <option value="Top nav bar">Top nav bar</option>
+                                <option value="Side navigation">Side navigation</option>
+                                <option value="Tab bar">Tab bar</option>
+                                <option value="Hub & spoke">Hub &amp; spoke</option>
+                                <option value="Work queue">Work queue</option>
+                                <option value="Mode-switch">Mode-switch</option>
+                            </select>
+                        </div>
+                        <div class="composition-field">
+                            <label for="paradigm-secondary">Secondary</label>
+                            <select id="paradigm-secondary" onchange="generateParadigmInference()">
+                                <option value="">— None —</option>
+                                <option value="Tab bar">Tab bar</option>
+                                <option value="Collapsible sub-sections">Collapsible sub-sections</option>
+                            </select>
+                        </div>
+                        <div class="composition-field">
+                            <label for="paradigm-depth">Depth</label>
+                            <select id="paradigm-depth" onchange="generateParadigmInference()">
+                                <option value="">— None —</option>
+                                <option value="Breadcrumb + drill-down">Breadcrumb + drill-down</option>
+                            </select>
+                        </div>
+                        <div class="composition-field">
+                            <label for="paradigm-accelerators">Accelerators</label>
+                            <select id="paradigm-accelerators" onchange="generateParadigmInference()">
+                                <option value="">— None —</option>
+                                <option value="Command palette">Command palette</option>
+                                <option value="Contextual actions">Contextual actions</option>
+                                <option value="AI-assisted">AI-assisted / conversational</option>
+                                <option value="Command palette + contextual">Command palette + Contextual</option>
+                                <option value="Command palette + AI">Command palette + AI-assisted</option>
+                                <option value="All">All (palette + contextual + AI)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="paradigm-inference" class="inference-panel hidden">
+                </div>
+
+                <div class="field-group" style="margin-top: 16px;">
+                    <label for="paradigm-rationale">Rationale</label>
+                    <textarea id="paradigm-rationale" placeholder="Why was each paradigm chosen over alternatives? If deviating from the recommendation above, explain why."></textarea>
+                </div>
+
+                <div class="checkbox-item" style="margin-top: 20px;">
+                    <input type="checkbox" id="multiplatform-check" onchange="toggleMultiplatform()">
+                    <label for="multiplatform-check"><strong>Multi-platform?</strong> &mdash; design mobile composition separately</label>
+                </div>
+
+                <div id="mobile-composition-section" class="conditional-section hidden">
+                    <h3>Mobile Composition Formula</h3>
+                    <div class="composition-row">
+                        <div class="composition-field">
+                            <label for="paradigm-primary-mobile">Primary</label>
+                            <select id="paradigm-primary-mobile">
+                                <option value="">— Select —</option>
+                                <option value="Top nav bar">Top nav bar</option>
+                                <option value="Side navigation">Side navigation</option>
+                                <option value="Tab bar">Tab bar</option>
+                                <option value="Hub & spoke">Hub &amp; spoke</option>
+                                <option value="Work queue">Work queue</option>
+                                <option value="Mode-switch">Mode-switch</option>
+                            </select>
+                        </div>
+                        <div class="composition-field">
+                            <label for="paradigm-secondary-mobile">Secondary</label>
+                            <select id="paradigm-secondary-mobile">
+                                <option value="">— None —</option>
+                                <option value="Tab bar">Tab bar</option>
+                                <option value="Collapsible sub-sections">Collapsible sub-sections</option>
+                            </select>
+                        </div>
+                        <div class="composition-field">
+                            <label for="paradigm-depth-mobile">Depth</label>
+                            <select id="paradigm-depth-mobile">
+                                <option value="">— None —</option>
+                                <option value="Breadcrumb + drill-down">Breadcrumb + drill-down</option>
+                            </select>
+                        </div>
+                        <div class="composition-field">
+                            <label for="paradigm-accelerators-mobile">Accelerators</label>
+                            <select id="paradigm-accelerators-mobile">
+                                <option value="">— None —</option>
+                                <option value="Command palette">Command palette</option>
+                                <option value="Contextual actions">Contextual actions</option>
+                                <option value="AI-assisted">AI-assisted / conversational</option>
+                                <option value="Command palette + contextual">Command palette + Contextual</option>
+                                <option value="Command palette + AI">Command palette + AI-assisted</option>
+                                <option value="All">All (palette + contextual + AI)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field-group" style="margin-top: 16px;">
+                        <label for="paradigm-rationale-mobile">Rationale</label>
+                        <textarea id="paradigm-rationale-mobile" placeholder="Why does mobile differ from desktop? Key constraints?"></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 6: Resulting Navigation Structure -->
+            <section id="section6">
+                <div class="section-header">
+                    <h2>6. Resulting Navigation Structure</h2>
+                </div>
+                <p class="section-help">Write out your navigation structure as an indented outline. The generated starter below pulls from your Jobs, anchor, and paradigm selections. Edit it or write your own.</p>
+
+                <div id="nav-structure-inference" class="inference-panel hidden">
+                </div>
+
+                <div class="field-group" style="margin-top: 16px;">
+                    <label for="nav-structure">Your Navigation Outline</label>
+                    <textarea id="nav-structure" style="min-height: 180px;" placeholder="Primary (persistent):
+  Item 1
+  Item 2
+  Item 3
+Secondary (within Item 1):
+  Sub-item A | Sub-item B
+Depth:
+  Parent → Child → Detail
+Accelerators:
+  ⌘K for search"></textarea>
+                </div>
+            </section>
+
+            <!-- Section 7: Known Risks & Open Questions -->
+            <section id="section7">
+                <div class="section-header">
+                    <h2>7. Known Risks &amp; Open Questions</h2>
+                </div>
+                <p class="section-help">The risks below are auto-generated from your prior inputs. Add any additional close-call decisions, audit failures, or missing data dependencies in the text box.</p>
+
+                <div id="risks-inference" class="inference-panel hidden">
+                </div>
+
+                <div class="field-group" style="margin-top: 16px;">
+                    <label for="risks-questions">Additional Risks &amp; Open Questions</label>
+                    <textarea id="risks-questions" placeholder="Audit failures, stakeholder concerns, missing data, political constraints, usability test focus areas"></textarea>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <button onclick="exportWorkbook()">Export to Clipboard</button>
+        </footer>
+    </div>
+
+    <script>
+        // State management (in-memory only)
+        let jobsState = [];
+        let nextJobId = 0;
+        let nextTaskId = 0;
+
+        function getNextJobId() {
+            return 'job-' + (nextJobId++);
+        }
+
+        function getNextTaskId() {
+            return 'task-' + (nextTaskId++);
+        }
+
+        function addJob() {
+            const jobId = getNextJobId();
+            const job = {
+                id: jobId,
+                name: '',
+                tasks: []
+            };
+            jobsState.push(job);
+            renderJobs();
+        }
+
+        function removeJob(jobId) {
+            jobsState = jobsState.filter(j => j.id !== jobId);
+            renderJobs();
+        }
+
+        function addTask(jobId) {
+            const job = jobsState.find(j => j.id === jobId);
+            if (job) {
+                const taskId = getNextTaskId();
+                job.tasks.push({
+                    id: taskId,
+                    name: '',
+                    frequency: '',
+                    criticality: '',
+                    isCrossJob: false,
+                    canonicalHome: ''
+                });
+                renderJobs();
+            }
+        }
+
+        function removeTask(jobId, taskId) {
+            const job = jobsState.find(j => j.id === jobId);
+            if (job) {
+                job.tasks = job.tasks.filter(t => t.id !== taskId);
+                renderJobs();
+            }
+        }
+
+        function updateJobName(jobId, value) {
+            const job = jobsState.find(j => j.id === jobId);
+            if (job) job.name = value;
+        }
+
+        function updateTaskField(jobId, taskId, field, value) {
+            const job = jobsState.find(j => j.id === jobId);
+            if (job) {
+                const task = job.tasks.find(t => t.id === taskId);
+                if (task) {
+                    task[field] = value;
+                    if (field === 'isCrossJob') renderJobs();
+                }
+            }
+        }
+
+        function renderJobs() {
+            const container = document.getElementById('jobs-container');
+            container.innerHTML = jobsState.map(job => `
+                <div class="job-block">
+                    <div class="job-block-header">
+                        <span class="job-block-title">Job</span>
+                        <button class="remove-btn" onclick="removeJob('${job.id}')">Remove</button>
+                    </div>
+                    <div class="field-group" style="margin-bottom: 12px;">
+                        <label>Job Name</label>
+                        <input type="text" value="${escapeHtml(job.name)}" placeholder="e.g., 'Keep my team's financial health strong'" onchange="updateJobName('${job.id}', this.value)">
+                    </div>
+                    ${job.tasks.length > 0 ? `
+                        <div class="task-header-row">
+                            <span>Task Name</span>
+                            <span>Frequency</span>
+                            <span>Criticality</span>
+                            <span>Cross-Job</span>
+                            <span></span>
+                        </div>
+                    ` : ''}
+                    ${job.tasks.map(task => `
+                        <div class="task-row">
+                            <input type="text" value="${escapeHtml(task.name)}" placeholder="Task name" onchange="updateTaskField('${job.id}', '${task.id}', 'name', this.value)">
+                            <select onchange="updateTaskField('${job.id}', '${task.id}', 'frequency', this.value)">
+                                <option value="">Freq.</option>
+                                <option value="Daily" ${task.frequency === 'Daily' ? 'selected' : ''}>Daily</option>
+                                <option value="Weekly" ${task.frequency === 'Weekly' ? 'selected' : ''}>Weekly</option>
+                                <option value="Monthly" ${task.frequency === 'Monthly' ? 'selected' : ''}>Monthly</option>
+                                <option value="Quarterly" ${task.frequency === 'Quarterly' ? 'selected' : ''}>Quarterly</option>
+                            </select>
+                            <select onchange="updateTaskField('${job.id}', '${task.id}', 'criticality', this.value)">
+                                <option value="">Crit.</option>
+                                <option value="Blocking" ${task.criticality === 'Blocking' ? 'selected' : ''}>Blocking</option>
+                                <option value="Important" ${task.criticality === 'Important' ? 'selected' : ''}>Important</option>
+                                <option value="Supporting" ${task.criticality === 'Supporting' ? 'selected' : ''}>Supporting</option>
+                            </select>
+                            <div class="checkbox-item">
+                                <input type="checkbox" ${task.isCrossJob ? 'checked' : ''} onchange="updateTaskField('${job.id}', '${task.id}', 'isCrossJob', this.checked)">
+                                <label>XJ</label>
+                            </div>
+                            <button class="remove-task-btn" onclick="removeTask('${job.id}', '${task.id}')" title="Remove task">&times;</button>
+                        </div>
+                        ${task.isCrossJob ? `
+                            <div class="task-canonical-row">
+                                <div class="task-canonical-label">Canonical Home</div>
+                                <input type="text" value="${escapeHtml(task.canonicalHome)}" placeholder="Which Job contains the primary entry?" onchange="updateTaskField('${job.id}', '${task.id}', 'canonicalHome', this.value)">
+                            </div>
+                        ` : ''}
+                    `).join('')}
+                    <button class="add-task-btn" onclick="addTask('${job.id}')">+ Add Task</button>
+                </div>
+            `).join('');
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        function toggleHybridAnchor() {
+            const isChecked = document.getElementById('hybrid-anchor').checked;
+            document.getElementById('secondary-anchor-section').classList.toggle('hidden', !isChecked);
+        }
+
+        function toggleScoringMatrix() {
+            const isChecked = document.getElementById('scoring-matrix-check').checked;
+            document.getElementById('scoring-section').classList.toggle('hidden', !isChecked);
+        }
+
+        var sliderLabels = ['No signal', 'Weak signal', 'Moderate signal', 'Strong signal'];
+        var diagnostics = ['language', 'trigger', 'shape', 'blank'];
+        var anchors = ['process', 'entity', 'queue', 'activity'];
+        var anchorNames = {'process': 'Process-First', 'entity': 'Entity-First', 'queue': 'Queue-First', 'activity': 'Activity-First'};
+        var diagnosticWeights = {'language': 1.0, 'trigger': 1.5, 'shape': 1.5, 'blank': 1.0};
+
+        function updateScoringGrid() {
+            // Update all slider labels
+            diagnostics.forEach(function(diag) {
+                anchors.forEach(function(anchor) {
+                    var slider = document.getElementById('diag-' + diag + '-' + anchor);
+                    var label = document.getElementById('label-' + diag + '-' + anchor);
+                    var val = parseInt(slider.value);
+                    label.textContent = val + ' \u2014 ' + sliderLabels[val];
+                });
+            });
+
+            // Calculate weighted totals per anchor
+            var totals = {};
+            anchors.forEach(function(anchor) { totals[anchor] = 0; });
+
+            diagnostics.forEach(function(diag) {
+                var weight = diagnosticWeights[diag];
+                anchors.forEach(function(anchor) {
+                    var raw = parseInt(document.getElementById('diag-' + diag + '-' + anchor).value);
+                    totals[anchor] += raw * weight;
+                });
+            });
+
+            // Render totals row
+            var totalsEl = document.getElementById('scoring-totals');
+            var maxScore = Math.max.apply(null, anchors.map(function(a) { return totals[a]; }));
+            var totalsHtml = '<div class="scoring-total-label">Weighted Total</div>';
+            anchors.forEach(function(anchor) {
+                var isLeader = totals[anchor] === maxScore && maxScore > 0;
+                totalsHtml += '<div class="scoring-total-cell' + (isLeader ? ' leader' : '') + '">' + totals[anchor].toFixed(1) + '</div>';
+            });
+            totalsEl.innerHTML = totalsHtml;
+
+            // Calculate result
+            calculateScoringResult(totals);
+        }
+
+        function calculateScoringResult(totals) {
+            var scores = {};
+            anchors.forEach(function(anchor) {
+                scores[anchorNames[anchor]] = totals[anchor];
+            });
+
+            var resultEl = document.getElementById('scoring-result');
+            var filled = Object.values(scores).filter(function(v) { return v > 0; });
+            if (filled.length < 2) {
+                if (filled.length === 1) {
+                    var only = Object.entries(scores).find(function(e) { return e[1] > 0; });
+                    resultEl.innerHTML = '<strong>' + only[0] + '</strong> is your dominant anchor (no competing signal).';
+                    resultEl.classList.remove('hidden');
+                } else {
+                    resultEl.classList.add('hidden');
+                }
+                return;
+            }
+            var sorted = Object.entries(scores).sort(function(a, b) { return b[1] - a[1]; });
+            var leader = sorted[0];
+            var runnerUp = sorted[1];
+            var leaderName = leader[0];
+            var leaderScore = leader[1];
+            var runnerUpName = runnerUp[0];
+            var runnerUpScore = runnerUp[1];
+
+            var html = '';
+            if (runnerUpScore === 0) {
+                html = '<strong>' + leaderName + '</strong> is your dominant anchor (no competing signal).';
+            } else {
+                var ratio = (leaderScore / runnerUpScore).toFixed(2);
+                html = '<strong>Leader:</strong> ' + leaderName + ' (' + leaderScore.toFixed(1) + ') &nbsp;&mdash;&nbsp; ';
+                html += '<strong>Runner-up:</strong> ' + runnerUpName + ' (' + runnerUpScore.toFixed(1) + ') &nbsp;&mdash;&nbsp; ';
+                html += '<strong>Ratio:</strong> ' + ratio + '&times;<br><br>';
+                if (parseFloat(ratio) >= 1.5) {
+                    html += '<strong style="color: var(--mustard-600);">Clear dominant.</strong> Use ' + leaderName + ' as your sole primary anchor. Check whether the runner-up drives any Daily-frequency Task &mdash; if so, that Task earns primary placement via Frequency Overrides Hierarchy.';
+                } else if (parseFloat(ratio) >= 1.2) {
+                    html += '<strong style="color: var(--mustard-600);">Strong lean.</strong> ' + leaderName + ' is your primary anchor. Check whether ' + runnerUpName + ' drives any Task with daily-or-higher frequency &mdash; if so, apply Frequency Overrides Hierarchy for that Task.';
+                } else {
+                    html += '<strong style="color: var(--mustard-600);">Near-tie &mdash; genuine hybrid.</strong> Identify which hybrid pattern matches (' + leaderName + ' + ' + runnerUpName + ') in Step 02\'s hybrid resolver (in the framework). If none match, apply the 30% Rule: whichever secondary model drives &ge;30% of sessions earns co-equal primary placement.';
+                }
+            }
+            resultEl.innerHTML = html;
+            resultEl.classList.remove('hidden');
+        }
+
+        function toggleMultiplatform() {
+            const isChecked = document.getElementById('multiplatform-check').checked;
+            document.getElementById('mobile-composition-section').classList.toggle('hidden', !isChecked);
+        }
+
+        function updateAnchor() {
+            generateParadigmInference();
+            generateNavStructureInference();
+            generateRisksInference();
+        }
+
+        function collapseScopeQuestion(radio) {
+            var question = radio.closest('.scope-question');
+            var valueSpan = question.querySelector('.scope-selected-value');
+            valueSpan.textContent = radio.value;
+            question.classList.add('collapsed');
+            generateScopeSummary();
+        }
+
+        function expandScopeQuestion(el) {
+            var question = el.closest ? el.closest('.scope-question') : el;
+            if (question.classList.contains('collapsed')) {
+                question.classList.remove('collapsed');
+            }
+        }
+
+        function generateScopeSummary() {
+            var jobs = getSelectedRadio('top-level-jobs');
+            var depth = getSelectedRadio('task-depth');
+            var expertise = getSelectedRadio('user-expertise');
+            var concentration = getSelectedRadio('usage-concentration');
+            var tolerance = getSelectedRadio('learning-tolerance');
+            var platform = getSelectedRadio('platform');
+
+            var filled = [jobs, depth, expertise, concentration, tolerance, platform].filter(function(v) { return v; });
+            var summaryEl = document.getElementById('scope-summary');
+
+            if (filled.length < 3) {
+                summaryEl.classList.add('hidden');
+                return;
+            }
+
+            var profile = filled.join(' &middot; ');
+            var conflicts = [];
+
+            // Detect conflict patterns from framework Step 05
+            if ((jobs === '5-15' || jobs === '15+') && (platform === 'Responsive web' || platform === 'Multi-platform')) {
+                conflicts.push('<strong>Many Jobs + Responsive Web:</strong> Side nav needs an explicit collapse strategy. Define breakpoint, collapsed state, and which Jobs stay visible.');
+            }
+            if (depth === '3+ levels' && tolerance === 'Near-zero') {
+                conflicts.push('<strong>Deep Hierarchy + Low Learning Tolerance:</strong> Flatten visible hierarchy to 2 levels max. Add search/&#8984;K as mandatory escape hatch.');
+            }
+            if ((concentration === 'Highly concentrated') && (jobs === '5-15' || jobs === '15+')) {
+                conflicts.push('<strong>Concentrated Usage + Many Jobs:</strong> Separate shortcut layer from structural layer. Use a "Quick Actions" section for high-frequency Tasks.');
+            }
+            if (expertise === 'Extreme spread' && (platform === 'Native mobile')) {
+                conflicts.push('<strong>Extreme Expertise + Native Mobile:</strong> Default to novice experience. Serve experts through progressive shortcuts (long-press, pull-down search).');
+            }
+            if ((platform === 'Multi-platform') && depth === '3+ levels') {
+                conflicts.push('<strong>Multi-Platform + Deep Hierarchy:</strong> Write two composition formulas sharing the same JTBD hierarchy but using platform-appropriate paradigms.');
+            }
+
+            var html = '<strong>Profile:</strong> ' + profile;
+            if (conflicts.length > 0) {
+                html += '<br><br><strong>Conflicts detected:</strong><br>' + conflicts.join('<br><br>');
+            } else if (filled.length === 6) {
+                html += '<br><br>No dimension conflicts detected.';
+            }
+
+            summaryEl.innerHTML = html;
+            summaryEl.classList.remove('hidden');
+
+            // Update downstream inference panels
+            generateParadigmInference();
+            generateNavStructureInference();
+            generateRisksInference();
+        }
+
+        function getSelectedRadio(name) {
+            const radio = document.querySelector(`input[name="${name}"]:checked`);
+            return radio ? radio.value : '';
+        }
+
+        // ===== HELPER: get anchor data =====
+        function getAnchorData() {
+            var primary = getSelectedRadio('primary-anchor');
+            var isHybrid = document.getElementById('hybrid-anchor').checked;
+            var secondary = isHybrid ? getSelectedRadio('secondary-anchor') : '';
+            return { primary: primary, secondary: secondary, isHybrid: isHybrid };
+        }
+
+        // ===== HELPER: get scope data =====
+        function getScopeData() {
+            return {
+                jobs: getSelectedRadio('top-level-jobs'),
+                depth: getSelectedRadio('task-depth'),
+                expertise: getSelectedRadio('user-expertise'),
+                concentration: getSelectedRadio('usage-concentration'),
+                tolerance: getSelectedRadio('learning-tolerance'),
+                platform: getSelectedRadio('platform')
+            };
+        }
+
+        // ===== HELPER: get paradigm data =====
+        function getParadigmData() {
+            return {
+                primary: document.getElementById('paradigm-primary').value,
+                secondary: document.getElementById('paradigm-secondary').value,
+                depth: document.getElementById('paradigm-depth').value,
+                accelerators: document.getElementById('paradigm-accelerators').value
+            };
+        }
+
+        // ===== HELPER: recommended primary paradigm from anchor + scope =====
+        function getRecommendedPrimary(anchor, scope) {
+            if (!anchor) return '';
+            if (anchor === 'Process-First') {
+                if (scope.jobs === '≤5' || scope.jobs === '\u22645') return 'Top nav bar';
+                if (scope.jobs === '5-15') return 'Side navigation';
+                if (scope.jobs === '15+') return 'Hub & spoke';
+                return 'Top nav bar or Side navigation';
+            }
+            if (anchor === 'Entity-First') return 'Side navigation';
+            if (anchor === 'Queue-First') return 'Work queue';
+            if (anchor === 'Activity-First') return 'Mode-switch';
+            return '';
+        }
+
+        // ===== STEP 5 INFERENCE =====
+        function generateParadigmInference() {
+            var anchor = getAnchorData();
+            var scope = getScopeData();
+            var paradigm = getParadigmData();
+            var panel = document.getElementById('paradigm-inference');
+
+            if (!paradigm.primary && !anchor.primary) {
+                panel.classList.add('hidden');
+                return;
+            }
+
+            var items = [];
+
+            // Recommendation based on anchor + scope
+            if (anchor.primary) {
+                var rec = getRecommendedPrimary(anchor.primary, scope);
+                if (rec) {
+                    var recHtml = '<strong>Recommended primary:</strong> ' + rec + ' (based on ' + anchor.primary + ' anchor';
+                    if (scope.jobs) recHtml += ', ' + scope.jobs + ' Jobs';
+                    recHtml += ').';
+                    if (paradigm.primary && paradigm.primary !== rec && rec.indexOf(paradigm.primary) === -1) {
+                        recHtml += ' <em>You selected ' + paradigm.primary + ' instead &mdash; document your reasoning in the rationale box below.</em>';
+                    }
+                    items.push(recHtml);
+                }
+            }
+
+            // What primary nav contains
+            if (paradigm.primary && anchor.primary) {
+                var contentHtml = '<strong>Primary nav content:</strong> Your ' + paradigm.primary.toLowerCase() + ' items map to your ';
+                if (anchor.primary === 'Process-First') contentHtml += 'process phases/Jobs from Step 01.';
+                else if (anchor.primary === 'Entity-First') contentHtml += 'core entities/Jobs from Step 01.';
+                else if (anchor.primary === 'Queue-First') contentHtml += 'work queues with filter-based views.';
+                else if (anchor.primary === 'Activity-First') contentHtml += 'creation/management modes.';
+                if (anchor.isHybrid && anchor.secondary) {
+                    contentHtml += ' The secondary anchor (' + anchor.secondary + ') earns co-primary placement if it drives &ge;30% of sessions (30% Rule).';
+                }
+                items.push(contentHtml);
+            }
+
+            // Cross-job Tasks
+            var crossJobTasks = [];
+            jobsState.forEach(function(job) {
+                job.tasks.forEach(function(task) {
+                    if (task.isCrossJob && task.name) crossJobTasks.push(task.name);
+                });
+            });
+            if (crossJobTasks.length > 0) {
+                items.push('<strong>Cross-job Tasks:</strong> ' + crossJobTasks.map(function(t) { return '&ldquo;' + escapeHtml(t) + '&rdquo;'; }).join(', ') + ' &mdash; consider pinned shortcuts or dedicated primary slots for these.');
+            }
+
+            // High-frequency Tasks
+            var dailyBlockingTasks = [];
+            jobsState.forEach(function(job) {
+                job.tasks.forEach(function(task) {
+                    if (task.frequency === 'Daily' && task.criticality === 'Blocking' && task.name) {
+                        dailyBlockingTasks.push(task.name);
+                    }
+                });
+            });
+            if (dailyBlockingTasks.length > 0) {
+                items.push('<strong>Frequency override candidates:</strong> ' + dailyBlockingTasks.map(function(t) { return '&ldquo;' + escapeHtml(t) + '&rdquo;'; }).join(', ') + ' (Daily + Blocking) &mdash; these Tasks may earn primary placement via Frequency Overrides Hierarchy, even if they sit under a secondary Job.');
+            }
+
+            // Depth recommendation
+            if (scope.depth === '3+ levels' && !paradigm.depth) {
+                items.push('<strong>Depth handling:</strong> Your hierarchy has 3+ levels. Breadcrumb + drill-down is recommended for the Depth slot.');
+            } else if (scope.depth === '3+ levels' && paradigm.depth) {
+                items.push('<strong>Depth handling:</strong> ' + paradigm.depth + ' selected &mdash; appropriate for your 3+ level hierarchy.');
+            } else if ((scope.depth === '1 level' || scope.depth === '2 levels') && !paradigm.depth) {
+                items.push('<strong>Depth handling:</strong> At ' + scope.depth + ', depth navigation is optional. Skipping is fine.');
+            }
+
+            // Accelerator suggestion
+            if (scope.expertise === 'Moderate spread' || scope.expertise === 'Extreme spread') {
+                if (!paradigm.accelerators) {
+                    items.push('<strong>Accelerators:</strong> With ' + scope.expertise.toLowerCase() + ' in user expertise, &#8984;K or command palette is recommended as an escape hatch for power users.');
+                }
+            }
+
+            // Scope conflicts relevant to paradigm selection
+            if ((scope.jobs === '5-15' || scope.jobs === '15+') && (scope.platform === 'Responsive web' || scope.platform === 'Multi-platform') && paradigm.primary === 'Side navigation') {
+                items.push('<strong>Scope conflict:</strong> Side navigation with ' + scope.jobs + ' Jobs on ' + scope.platform.toLowerCase() + ' requires an explicit collapse strategy. Define: breakpoint, collapsed state (hamburger/bottom tab subset/off-canvas), and which Jobs remain visible.');
+            }
+            if (scope.depth === '3+ levels' && scope.tolerance === 'Near-zero') {
+                items.push('<strong>Scope conflict:</strong> Deep hierarchy + near-zero learning tolerance. Flatten visible hierarchy to 2 levels max. Ensure &#8984;K or search is available as a mandatory fallback.');
+            }
+            if (scope.concentration === 'Highly concentrated' && (scope.jobs === '5-15' || scope.jobs === '15+')) {
+                items.push('<strong>Scope conflict:</strong> Concentrated usage + many Jobs. Consider a "Quick Actions" or "Pinned" section at the top of primary nav for high-frequency Tasks, with full Job structure below.');
+            }
+
+            if (items.length === 0) {
+                panel.classList.add('hidden');
+                return;
+            }
+
+            var html = '<span class="inference-label">Based on your prior inputs</span>';
+            html += items.map(function(item) { return '<div class="inference-item">' + item + '</div>'; }).join('');
+            panel.innerHTML = html;
+            panel.classList.remove('hidden');
+
+            // Also update downstream panels
+            generateNavStructureInference();
+            generateRisksInference();
+        }
+
+        // ===== STEP 6 INFERENCE =====
+        function generateNavStructureInference() {
+            var anchor = getAnchorData();
+            var paradigm = getParadigmData();
+            var panel = document.getElementById('nav-structure-inference');
+
+            if (!paradigm.primary) {
+                panel.classList.add('hidden');
+                return;
+            }
+
+            var jobNames = jobsState.filter(function(j) { return j.name; }).map(function(j) { return j.name; });
+            var html = '<span class="inference-label">Generated starter outline</span>';
+
+            // Primary
+            var primaryLabel = paradigm.primary.toLowerCase();
+            html += '<div class="inference-item"><strong>Primary (' + escapeHtml(primaryLabel) + '):</strong> ';
+            if (jobNames.length > 0) {
+                // If queue anchor and hybrid, show queue + entity items
+                if (anchor.primary === 'Queue-First' && anchor.isHybrid) {
+                    html += jobNames.map(function(n) { return escapeHtml(n); }).join(' &middot; ') + ' &middot; [Queue view]';
+                } else {
+                    html += jobNames.map(function(n) { return escapeHtml(n); }).join(' &middot; ');
+                }
+                // Add daily+blocking tasks that might earn primary placement
+                var elevatedTasks = [];
+                jobsState.forEach(function(job) {
+                    job.tasks.forEach(function(task) {
+                        if (task.frequency === 'Daily' && task.criticality === 'Blocking' && task.name) {
+                            elevatedTasks.push(task.name);
+                        }
+                    });
+                });
+                if (elevatedTasks.length > 0) {
+                    html += ' &middot; <em>' + elevatedTasks.map(function(t) { return escapeHtml(t) + ' (pinned)'; }).join(' &middot; ') + '</em>';
+                }
+            } else {
+                html += '[Add Jobs in Step 1 to populate]';
+            }
+            html += '</div>';
+
+            // Secondary
+            if (paradigm.secondary) {
+                html += '<div class="inference-item"><strong>Secondary (' + escapeHtml(paradigm.secondary.toLowerCase()) + '):</strong> ';
+                if (jobNames.length > 0) {
+                    // Show tasks of first job as example
+                    var firstJobWithTasks = jobsState.find(function(j) { return j.tasks.length > 0 && j.name; });
+                    if (firstJobWithTasks) {
+                        var taskNames = firstJobWithTasks.tasks.filter(function(t) { return t.name; }).map(function(t) { return t.name; });
+                        if (taskNames.length > 0) {
+                            html += 'Within ' + escapeHtml(firstJobWithTasks.name) + ': ' + taskNames.map(function(n) { return escapeHtml(n); }).join(' | ');
+                        } else {
+                            html += '[Add Tasks in Step 1 to populate]';
+                        }
+                    } else {
+                        html += '[Add Tasks in Step 1 to populate]';
+                    }
+                } else {
+                    html += '[Add Jobs with Tasks in Step 1 to populate]';
+                }
+                html += '</div>';
+            }
+
+            // Depth
+            if (paradigm.depth) {
+                html += '<div class="inference-item"><strong>Depth (' + escapeHtml(paradigm.depth.toLowerCase()) + '):</strong> ';
+                if (jobNames.length > 0) {
+                    html += escapeHtml(jobNames[0]) + ' &rarr; [Entity/Item] &rarr; [Detail]';
+                } else {
+                    html += 'Job &rarr; Entity &rarr; Detail';
+                }
+                html += '</div>';
+            }
+
+            // Accelerators
+            if (paradigm.accelerators) {
+                var accelVal = paradigm.accelerators;
+                var accelParts = [];
+                if (accelVal.indexOf('Command palette') !== -1 || accelVal === 'All') accelParts.push('&#8984;K for cross-entity search');
+                if (accelVal.indexOf('Contextual') !== -1 || accelVal.indexOf('contextual') !== -1 || accelVal === 'All') accelParts.push('Contextual actions on items');
+                if (accelVal.indexOf('AI') !== -1 || accelVal === 'All') accelParts.push('AI-assisted intent resolution (conversational / copilot)');
+                html += '<div class="inference-item"><strong>Accelerators:</strong> ' + accelParts.join(' + ') + '</div>';
+                if (accelVal.indexOf('AI') !== -1 || accelVal === 'All') {
+                    html += '<div class="inference-item"><strong>AI resilience:</strong> Verify that all destinations remain reachable through structural navigation if the AI layer is unavailable. AI should make navigation faster, not make it possible.</div>';
+                }
+            }
+
+            panel.innerHTML = html;
+            panel.classList.remove('hidden');
+        }
+
+        // ===== STEP 7 INFERENCE =====
+        function generateRisksInference() {
+            var anchor = getAnchorData();
+            var scope = getScopeData();
+            var paradigm = getParadigmData();
+            var panel = document.getElementById('risks-inference');
+            var risks = [];
+
+            // Scoring ambiguity
+            if (document.getElementById('scoring-matrix-check').checked) {
+                var resultEl = document.getElementById('scoring-result');
+                if (resultEl && !resultEl.classList.contains('hidden')) {
+                    var resultText = resultEl.textContent || '';
+                    if (resultText.indexOf('Near-tie') !== -1) {
+                        risks.push('<strong>Anchor ambiguity:</strong> Scoring matrix produced a near-tie. The hybrid resolution pattern chosen should be validated with usability testing &mdash; users may not navigate fluidly between both models.');
+                    } else if (resultText.indexOf('Strong lean') !== -1) {
+                        risks.push('<strong>Anchor lean:</strong> Scoring showed a strong lean rather than clear dominant. Monitor whether the runner-up anchor\'s Tasks feel buried in the final navigation.');
+                    }
+                }
+            }
+
+            // Scope conflicts
+            if ((scope.jobs === '5-15' || scope.jobs === '15+') && (scope.platform === 'Responsive web' || scope.platform === 'Multi-platform')) {
+                risks.push('<strong>Responsive collapse:</strong> ' + scope.jobs + ' Jobs on ' + scope.platform.toLowerCase() + '. If using side nav, the collapse strategy needs usability testing on tablet and mobile breakpoints.');
+            }
+            if (scope.depth === '3+ levels' && scope.tolerance === 'Near-zero') {
+                risks.push('<strong>Navigation depth vs. tolerance:</strong> 3+ level hierarchy with near-zero learning tolerance. Test whether users can reach deep content without getting lost.');
+            }
+            if (scope.concentration === 'Highly concentrated' && (scope.jobs === '5-15' || scope.jobs === '15+')) {
+                risks.push('<strong>Shortcut layer visibility:</strong> Concentrated usage across many Jobs. Verify that the pinned/quick-action section doesn\'t make remaining Jobs feel demoted.');
+            }
+            if (scope.expertise === 'Extreme spread' && (scope.platform === 'Native mobile')) {
+                risks.push('<strong>Mobile expertise gap:</strong> Extreme expertise spread on native mobile. Progressive disclosure for experts needs testing &mdash; long-press and gesture shortcuts have low discoverability.');
+            }
+
+            // Cross-job Tasks
+            var crossJobTasks = [];
+            jobsState.forEach(function(job) {
+                job.tasks.forEach(function(task) {
+                    if (task.isCrossJob && task.name) crossJobTasks.push({name: task.name, canonicalHome: task.canonicalHome || '(unassigned)'});
+                });
+            });
+            if (crossJobTasks.length > 0) {
+                crossJobTasks.forEach(function(t) {
+                    risks.push('<strong>Cross-job discoverability:</strong> &ldquo;' + escapeHtml(t.name) + '&rdquo; (canonical home: ' + escapeHtml(t.canonicalHome) + '). Validate that users from other Jobs can discover this Task.');
+                });
+            }
+
+            // Role approach edge cases
+            var roleApproach = document.getElementById('role-approach').value;
+            var overlapRatio = document.getElementById('overlap-ratio').value;
+            if (roleApproach === 'Role-filtered') {
+                risks.push('<strong>Ghost navigation risk:</strong> Role-filtered approach selected. Users may sense hidden items. Test whether users feel something is missing or perceive the nav as incomplete.');
+            }
+            if (roleApproach === 'Separate apps') {
+                risks.push('<strong>Maintenance overhead:</strong> Separate apps approach selected. Navigation structures diverge over time. Ensure shared JTBD hierarchy stays synchronized across apps.');
+            }
+
+            // Paradigm deviations from recommendation
+            if (anchor.primary) {
+                var rec = getRecommendedPrimary(anchor.primary, scope);
+                if (rec && paradigm.primary && paradigm.primary !== rec && rec.indexOf(paradigm.primary) === -1) {
+                    risks.push('<strong>Paradigm deviation:</strong> Framework recommends ' + rec + ' for ' + anchor.primary + ' anchor, but you selected ' + paradigm.primary + '. This is a conscious trade-off &mdash; document the reasoning and test the alternative.');
+                }
+            }
+
+            // Low-frequency primary items
+            var lowFreqPrimary = [];
+            jobsState.forEach(function(job) {
+                if (job.name) {
+                    var hasOnlyLowFreq = job.tasks.length > 0 && job.tasks.every(function(t) {
+                        return t.frequency === 'Quarterly' || t.frequency === 'Monthly';
+                    });
+                    if (hasOnlyLowFreq) lowFreqPrimary.push(job.name);
+                }
+            });
+            if (lowFreqPrimary.length > 0) {
+                risks.push('<strong>Low-frequency primary items:</strong> ' + lowFreqPrimary.map(function(n) { return '&ldquo;' + escapeHtml(n) + '&rdquo;'; }).join(', ') + ' contains only Monthly/Quarterly Tasks. Users may struggle to find these in primary nav. Monitor findability.');
+            }
+
+            // AI unavailability risk
+            var accelVal = paradigm.accelerators || '';
+            if (accelVal.indexOf('AI') !== -1 || accelVal === 'All') {
+                risks.push('<strong>AI layer dependency:</strong> AI-assisted navigation is selected as an accelerator. If the AI layer is unavailable, slow, or returns incorrect results, users must still reach all destinations through structural navigation alone. Test the three highest-frequency Tasks with the AI layer disabled to verify structural fallback coverage.');
+            }
+
+            if (risks.length === 0) {
+                panel.classList.add('hidden');
+                return;
+            }
+
+            var html = '<span class="inference-label">Auto-detected risks from your inputs</span>';
+            html += risks.map(function(r) { return '<div class="inference-item">' + r + '</div>'; }).join('');
+            panel.innerHTML = html;
+            panel.classList.remove('hidden');
+        }
+
+        function exportWorkbook() {
+            const exportData = {
+                title: 'Sightline Navigation Outline',
+                sections: {}
+            };
+
+            // Section 1: JTBD Hierarchy
+            exportData.sections['1. JTBD Hierarchy'] = jobsState.map(job => {
+                let jobText = `Job: ${job.name || '(untitled)'}`;
+                if (job.tasks.length > 0) {
+                    jobText += '\n' + job.tasks.map(task => {
+                        let taskText = `  - Task: ${task.name || '(untitled)'}`;
+                        if (task.frequency) taskText += ` | ${task.frequency}`;
+                        if (task.criticality) taskText += ` / ${task.criticality}`;
+                        if (task.isCrossJob && task.canonicalHome) taskText += ` | Cross-Job (home: ${task.canonicalHome})`;
+                        return taskText;
+                    }).join('\n');
+                }
+                return jobText;
+            }).join('\n\n');
+
+            // Section 2: Navigation Anchor
+            let anchorText = 'Primary Anchor: ' + (getSelectedRadio('primary-anchor') || '(not selected)');
+            if (document.getElementById('hybrid-anchor').checked) {
+                anchorText += '\nSecondary Anchor: ' + (getSelectedRadio('secondary-anchor') || '(not selected)');
+            }
+            anchorText += '\n\nDiagnostic Rationale:\n' + (document.getElementById('diagnostic-rationale').value || '(not provided)');
+            if (document.getElementById('scoring-matrix-check').checked) {
+                anchorText += '\n\nScoring Matrix (raw scores, weight-adjusted totals):';
+                var diagLabels = {'language': 'Language (\u00d71.0)', 'trigger': 'Session Trigger (\u00d71.5)', 'shape': 'Session Shape (\u00d71.5)', 'blank': 'Blank Screen (\u00d71.0)'};
+                diagnostics.forEach(function(diag) {
+                    anchorText += '\n  ' + diagLabels[diag] + ': ';
+                    anchorText += anchors.map(function(a) {
+                        return anchorNames[a].replace('-First','') + '=' + document.getElementById('diag-' + diag + '-' + a).value;
+                    }).join(', ');
+                });
+                anchorText += '\n  Weighted Totals: ';
+                var totals = {};
+                anchors.forEach(function(a) { totals[a] = 0; });
+                diagnostics.forEach(function(diag) {
+                    anchors.forEach(function(a) {
+                        totals[a] += parseInt(document.getElementById('diag-' + diag + '-' + a).value) * diagnosticWeights[diag];
+                    });
+                });
+                anchorText += anchors.map(function(a) { return anchorNames[a] + ': ' + totals[a].toFixed(1); }).join(', ');
+            }
+            exportData.sections['2. Navigation Anchor'] = anchorText;
+
+            // Section 3: Scope Profile
+            let scopeText = '';
+            scopeText += 'Top-level Jobs: ' + (getSelectedRadio('top-level-jobs') || '\u2014') + '\n';
+            scopeText += 'Task Tree Depth: ' + (getSelectedRadio('task-depth') || '\u2014') + '\n';
+            scopeText += 'User Expertise: ' + (getSelectedRadio('user-expertise') || '\u2014') + '\n';
+            scopeText += 'Usage Concentration: ' + (getSelectedRadio('usage-concentration') || '\u2014') + '\n';
+            scopeText += 'Learning Tolerance: ' + (getSelectedRadio('learning-tolerance') || '\u2014') + '\n';
+            scopeText += 'Platform: ' + (getSelectedRadio('platform') || '\u2014') + '\n';
+            scopeText += '\nConflicts Triggered:\n' + (document.getElementById('conflicts-triggered').value || '(not provided)');
+            exportData.sections['3. Scope Profile'] = scopeText;
+
+            // Section 4: Role & Context
+            let roleText = 'Role Approach: ' + (document.getElementById('role-approach').value || '\u2014') + '\n';
+            roleText += 'Overlap Ratio: ' + (document.getElementById('overlap-ratio').value || '\u2014') + '\n';
+            roleText += '\nAdaptive Navigation Types:\n' + (document.getElementById('adaptive-navigation').value || '(not provided)');
+            exportData.sections['4. Role & Context Decisions'] = roleText;
+
+            // Section 5: Paradigm Composition
+            let paradigmText = 'Desktop Composition:\n';
+            paradigmText += '  Primary: ' + (document.getElementById('paradigm-primary').value || '\u2014') + '\n';
+            paradigmText += '  Secondary: ' + (document.getElementById('paradigm-secondary').value || '\u2014') + '\n';
+            paradigmText += '  Depth: ' + (document.getElementById('paradigm-depth').value || '\u2014') + '\n';
+            paradigmText += '  Accelerators: ' + (document.getElementById('paradigm-accelerators').value || '\u2014') + '\n';
+            paradigmText += '\nRationale:\n' + (document.getElementById('paradigm-rationale').value || '(not provided)');
+
+            if (document.getElementById('multiplatform-check').checked) {
+                paradigmText += '\n\nMobile Composition:\n';
+                paradigmText += '  Primary: ' + (document.getElementById('paradigm-primary-mobile').value || '\u2014') + '\n';
+                paradigmText += '  Secondary: ' + (document.getElementById('paradigm-secondary-mobile').value || '\u2014') + '\n';
+                paradigmText += '  Depth: ' + (document.getElementById('paradigm-depth-mobile').value || '\u2014') + '\n';
+                paradigmText += '  Accelerators: ' + (document.getElementById('paradigm-accelerators-mobile').value || '\u2014') + '\n';
+                paradigmText += '\nMobile Rationale:\n' + (document.getElementById('paradigm-rationale-mobile').value || '(not provided)');
+            }
+            exportData.sections['5. Paradigm Composition'] = paradigmText;
+
+            // Section 6: Navigation Structure
+            var navInference = document.getElementById('nav-structure-inference');
+            var navInferenceText = (!navInference.classList.contains('hidden') && navInference.textContent) ? 'Generated outline:\n' + navInference.textContent.replace(/Based on your prior inputs|Generated starter outline/g, '').trim() + '\n\n' : '';
+            exportData.sections['6. Resulting Navigation Structure'] = navInferenceText + (document.getElementById('nav-structure').value || '(not provided)');
+
+            // Section 7: Risks & Questions
+            var risksInference = document.getElementById('risks-inference');
+            var risksInferenceText = (!risksInference.classList.contains('hidden') && risksInference.textContent) ? 'Auto-detected risks:\n' + risksInference.textContent.replace(/Auto-detected risks from your inputs/g, '').trim() + '\n\n' : '';
+            exportData.sections['7. Known Risks & Open Questions'] = risksInferenceText + 'Additional notes:\n' + (document.getElementById('risks-questions').value || '(not provided)');
+
+            // Format and copy
+            let fullText = `${exportData.title}\n${'='.repeat(40)}\n\n`;
+            Object.entries(exportData.sections).forEach(([title, content]) => {
+                fullText += `${title}\n${'-'.repeat(40)}\n${content}\n\n`;
+            });
+
+            navigator.clipboard.writeText(fullText).then(() => {
+                showExportFeedback();
+            }).catch(() => {
+                alert('Failed to copy to clipboard. Please try again.');
+            });
+        }
+
+        function showExportFeedback() {
+            const feedback = document.createElement('div');
+            feedback.className = 'export-feedback';
+            feedback.textContent = 'Copied to clipboard!';
+            document.body.appendChild(feedback);
+
+            setTimeout(() => {
+                feedback.remove();
+            }, 3000);
+        }
+
+        // ===== DARK MODE TOGGLE =====
+        var themeToggle = document.getElementById('themeToggle');
+        var lightToggle = document.getElementById('lightToggle');
+        var darkToggle = document.getElementById('darkToggle');
+        var htmlEl = document.documentElement;
+
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                htmlEl.setAttribute('data-theme', 'dark');
+                lightToggle.classList.remove('active');
+                darkToggle.classList.add('active');
+            } else {
+                htmlEl.removeAttribute('data-theme');
+                lightToggle.classList.add('active');
+                darkToggle.classList.remove('active');
+            }
+        }
+
+        themeToggle.addEventListener('click', function() {
+            var isDark = htmlEl.getAttribute('data-theme') === 'dark';
+            setTheme(isDark ? 'light' : 'dark');
+        });
+
+        // Read theme from URL parameter (carried from framework)
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('theme') === 'light') {
+            setTheme('light');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderJobs();
+        });
+    </script>
+</body>
+</html>
