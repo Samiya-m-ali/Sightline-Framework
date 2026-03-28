@@ -234,6 +234,8 @@
     padding: 32px 0;
     overflow-y: auto;
     z-index: 100;
+    display: flex;
+    flex-direction: column;
     opacity: 0;
     transform: translateX(-20px);
     transition: opacity 0.35s ease, transform 0.35s ease;
@@ -266,6 +268,13 @@
     text-transform: uppercase;
     color: var(--text-muted);
     padding: 16px 24px 8px;
+  }
+  .sidebar-version {
+    font-size: 11px;
+    color: var(--text-muted);
+    padding: 24px 24px 16px;
+    margin-top: auto;
+    opacity: 0.5;
   }
   .sidebar a.nav-link {
     display: flex;
@@ -1094,9 +1103,10 @@
 
   <div class="sidebar-section-label">Reference</div>
   <a href="#questions" data-section="questions" class="nav-link"><span class="nav-num"></span> Common Questions</a>
-  <a href="#ai-nav" data-section="ai-nav" class="nav-link"><span class="nav-num"></span> AI &amp; Navigation</a>
   <a href="#appendix" data-section="appendix" class="nav-link"><span class="nav-num"></span> Appendix</a>
   <a href="#buyin" data-section="buyin" class="nav-link"><span class="nav-num"></span> Getting Buy-In</a>
+  <a href="#ai-nav" data-section="ai-nav" class="nav-link"><span class="nav-num"></span> AI &amp; Navigation</a>
+  <div class="sidebar-version">v8.4</div>
 </nav>
 
 <!-- ============================================================ -->
@@ -1149,7 +1159,7 @@
 
   <h3>The Companion Workbook</h3>
 
-  <p>Each step in the framework produces decisions and artifacts that feed the next step. The <a href="sightline-workbook-v8.3.html" target="_blank"><strong>Sightline Workbook</strong></a> gives you a structured place to capture these as you go &mdash; your JTBD hierarchy, diagnostic scores, scope profile, role decisions, paradigm composition, and the resulting navigation outline. Open it alongside this document and fill in each section as the framework prompts you.</p>
+  <p>Each step in the framework produces decisions and artifacts that feed the next step. The <a href="sightline-workbook-v8.4.html" target="_blank"><strong>Sightline Workbook</strong></a> gives you a structured place to capture these as you go &mdash; your JTBD hierarchy, diagnostic scores, scope profile, role decisions, paradigm composition, and the resulting navigation outline. Open it alongside this document and fill in each section as the framework prompts you.</p>
 
 </div>
 </div>
@@ -1227,7 +1237,7 @@
   <p>This hierarchy is also the semantic backbone that AI-assisted navigation needs to resolve user intent. When a user tells a copilot "show me the compliance report," the system needs to know that compliance reporting is a Task under a specific Job, and that the report itself is an Activity within that Task. A clean JTBD hierarchy makes both structural navigation <em>and</em> AI-assisted navigation work better &mdash; the two aren't competing investments.</p>
 </div>
 
-<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.3.html" target="_blank">Workbook</a> &mdash; Record your Jobs, Tasks, and Activities in Section 1.</div>
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.4.html" target="_blank">Workbook</a> &mdash; Record your Jobs, Tasks, and Activities in Section 1.</div>
 
 <div class="callout-warm callout" id="s1-cross-job">
   <span class="callout-label">A Note on Cross-Job Tasks</span>
@@ -1278,7 +1288,7 @@
   <p>Task: "Run retrospective" &mdash; Frequency: <strong>Quarterly</strong> (per sprint cycle), Criticality: <strong>Supporting</strong></p>
 </div>
 
-<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.3.html" target="_blank">Workbook</a> &mdash; Add frequency and criticality annotations to each Task in Section 1.</div>
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.4.html" target="_blank">Workbook</a> &mdash; Add frequency and criticality annotations to each Task in Section 1.</div>
 
 <h3 id="s1-multi">Defining for Multiple User Types</h3>
 
@@ -1290,7 +1300,7 @@
 
 <p><strong>Note your overlaps and divergences</strong> &mdash; they feed directly into the role-based navigation decisions in <a href="#s4">Step 04</a>.</p>
 
-<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.3.html" target="_blank">Workbook</a> &mdash; If you have multiple personas, note overlaps and divergences in Section 1.</div>
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.4.html" target="_blank">Workbook</a> &mdash; If you have multiple personas, note overlaps and divergences in Section 1.</div>
 
 </div>
 </div>
@@ -1502,7 +1512,7 @@
 
 <p>A clean 3-of-4 or 4-of-4 result is ideal, but many products &mdash; especially enterprise tools, agile workflows, and multi-role platforms &mdash; will produce a 2/2 split or a 3/1 with a strong dissenting signal. The product genuinely serves multiple mental models, and the navigation needs to account for that explicitly rather than forcing a single anchor.</p>
 
-<p><strong>Score the diagnostics.</strong> Assign each of the four diagnostics (Language, Session Trigger, Session Shape, Blank Screen) to the model it most clearly supports. If a diagnostic genuinely could go either way, mark it as split rather than forcing it into one column. Count the results:</p>
+<p><strong><a href="#appendix-scoring">Score the diagnostics.</a></strong> Assign each of the four diagnostics (Language, Session Trigger, Session Shape, Blank Screen) to the model it most clearly supports. If a diagnostic genuinely could go either way, mark it as split rather than forcing it into one column. Count the results:</p>
 
 <table>
   <tr><th>Result</th><th>Interpretation</th><th>Action</th></tr>
@@ -1559,12 +1569,12 @@
   <p>When resolving a hybrid, use this threshold: if the secondary model drives &ge;30% of sessions or &ge;30% of active session time, it earns co-equal primary placement rather than being subordinated to the secondary tier. Below 30%, the secondary model can be served through pinned shortcuts, filtered views, or &#8984;K without needing its own primary-level anchor.</p>
 </div>
 
-<p>For a quantitative scoring approach to the diagnostics, see the <a href="#appendix-scoring">Diagnostic Scoring Matrix</a> in the Appendix.</p>
+<p>For a quantitative scoring approach to the diagnostics, see the <a href="#appendix-scoring">Diagnostic Scoring Matrix</a> in Common Questions.</p>
 
 </div>
 </details>
 
-<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.3.html" target="_blank">Workbook</a> &mdash; Record your navigation anchor and diagnostic rationale in Section 2.</div>
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.4.html" target="_blank">Workbook</a> &mdash; Record your navigation anchor and diagnostic rationale in Section 2.</div>
 
 <div class="callout-warm callout" id="s2-ai">
   <span class="callout-label">AI Connection</span>
@@ -1597,7 +1607,7 @@
 
 <p>Job Gravity is the recommended default. The four pointer mechanisms: <strong>1.</strong> Cross-link in secondary nav. <strong>2.</strong> Contextual shortcut inline. <strong>3.</strong> Search / &#8984;K result. <strong>4.</strong> User-pinned favorite.</p>
 
-<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.3.html" target="_blank">Workbook</a> &mdash; Note any cross-Job Task placements and pointer mechanisms in Section 2.</div>
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.4.html" target="_blank">Workbook</a> &mdash; Note any cross-Job Task placements and pointer mechanisms in Section 2.</div>
 
 </div>
 </div>
@@ -1674,7 +1684,7 @@
   <p>Your profile across these six dimensions acts as a filter for Step 05. You'll use it there to narrow which paradigms are viable and resolve conflicts between competing dimensions.</p>
 </div>
 
-<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.3.html" target="_blank">Workbook</a> &mdash; Record your scope profile answers in Section 3.</div>
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.4.html" target="_blank">Workbook</a> &mdash; Record your scope profile answers in Section 3.</div>
 
 </div>
 </div>
@@ -1731,7 +1741,7 @@
   <p>Never remove navigation options silently. If something will disappear, move, or change, the user needs to understand why. Adaptive navigation must be <em>transparently</em> adaptive.</p>
 </div>
 
-<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.3.html" target="_blank">Workbook</a> &mdash; Record your role approach and adaptive navigation decisions in Section 4.</div>
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.4.html" target="_blank">Workbook</a> &mdash; Record your role approach and adaptive navigation decisions in Section 4.</div>
 
 </div>
 </div>
@@ -1941,7 +1951,7 @@ Mutually exclusive at the same level.</p>
   <p>AI-assisted navigation &mdash; copilots, conversational agents, intent-driven routing &mdash; fits in the accelerator slot. It extends the &#8984;K pattern with natural language: instead of typing a known command, the user describes what they need. Like all accelerators, it layers on top of structural navigation rather than replacing it. The critical design constraint: if the AI layer is unavailable, slow, or returns a wrong result, the user must still be able to reach any destination through the primary and secondary structure. AI is a fast path, not the only path.</p>
 </div>
 
-<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.3.html" target="_blank">Workbook</a> &mdash; Record your paradigm composition formula and rationale in Section 5.</div>
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.4.html" target="_blank">Workbook</a> &mdash; Record your paradigm composition formula and rationale in Section 5.</div>
 
 <h3 id="s5-conflicts">Scope Conflicts: When Dimensions Collide</h3>
 
@@ -2023,7 +2033,7 @@ Mutually exclusive at the same level.</p>
 
 <h3 id="s5-output">Your Navigation Outline</h3>
 
-<p>Step 05 ends when you've produced a <strong>Navigation Outline</strong> &mdash; the deliverable that feeds Step 06's audit and becomes the reference artifact for your team. Use the <a href="sightline-workbook-v8.3.html" target="_blank">Sightline Workbook</a> to fill this out interactively, or follow the structure below.</p>
+<p>Step 05 ends when you've produced a <strong>Navigation Outline</strong> &mdash; the deliverable that feeds Step 06's audit and becomes the reference artifact for your team. Use the <a href="sightline-workbook-v8.4.html" target="_blank">Sightline Workbook</a> to fill this out interactively, or follow the structure below.</p>
 
 <div class="example-block">
   <span class="callout-label">Worked example: Agile PM Navigation Outline</span>
@@ -2061,7 +2071,7 @@ Mutually exclusive at the same level.</p>
   <p style="padding-left: 16px; border-left: 2px solid var(--mustard-200);">Retrospectives may feel lost in primary rail given quarterly frequency &mdash; monitor whether users can find it. Standup pinning may confuse users who don't do daily standups (different team cadences).</p>
 </div>
 
-<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.3.html" target="_blank">Workbook</a> &mdash; Write out your resulting navigation structure in Section 6 and note any risks in Section 7.</div>
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.4.html" target="_blank">Workbook</a> &mdash; Write out your resulting navigation structure in Section 6 and note any risks in Section 7.</div>
 
 </div>
 </div>
@@ -2167,11 +2177,107 @@ Mutually exclusive at the same level.</p>
 
 <div class="qa-card">
   <h4>How do I handle navigation for AI-assisted features?</h4>
-  <p>AI-assisted navigation fits in the <a href="#s5-ai">accelerator slot</a> of your composition formula. Treat it as a layer that sits alongside structural navigation, not within it. A copilot, conversational agent, "Suggested" section in a queue, or inline AI suggestions within a Task view are all valid accelerator patterns.</p>
-  <p>The key principle: AI-surfaced items should <strong>never replace or reorder structural navigation without user consent</strong>. They're accelerators &mdash; additive, not structural. Apply the <a href="#s6-ai">AI Resilience Check</a> to verify that all destinations remain reachable without the AI layer. For the full argument on why structural navigation remains essential alongside AI, see <a href="#ai-nav">What About AI?</a></p>
+  <p>AI fits in the <a href="#s5-ai">accelerator slot</a> of your composition formula. Apply the <a href="#s6-ai">AI Resilience Check</a> in your audit. For the full argument on why structural navigation remains essential alongside AI, see <a href="#ai-nav">What About AI?</a></p>
 </div>
 
-<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.3.html" target="_blank">Workbook</a> &mdash; Record audit results and unresolved risks in Section 7.</div>
+<div class="qa-card" id="appendix-scoring">
+  <h4>How does the Diagnostic Scoring Matrix work?</h4>
+
+  <p>This is an optional quantitative supplement to the decision tree in <a href="#s2-resolve">Step 02</a>. Use it when the qualitative patterns don't clearly match your situation, or when you need a defensible numerical rationale for stakeholders.</p>
+
+  <p><strong>How to score:</strong> For each diagnostic, assign a confidence score from 0 to 3 for each of the four models. 0 = no signal, 1 = weak signal, 2 = moderate signal, 3 = strong signal. A single diagnostic can give partial scores to multiple models (e.g., Language might score Entity 2, Process 1 if users reference both entities and phases but lean toward entities).</p>
+
+  <table>
+    <tr><th>Diagnostic</th><th>Weight</th><th>Process</th><th>Entity</th><th>Queue</th><th>Activity</th></tr>
+    <tr><td>Language</td><td>&times;1.0</td><td>0&ndash;3</td><td>0&ndash;3</td><td>0&ndash;3</td><td>0&ndash;3</td></tr>
+    <tr><td>Session Trigger</td><td>&times;1.5</td><td>0&ndash;3</td><td>0&ndash;3</td><td>0&ndash;3</td><td>0&ndash;3</td></tr>
+    <tr><td>Session Shape</td><td>&times;1.5</td><td>0&ndash;3</td><td>0&ndash;3</td><td>0&ndash;3</td><td>0&ndash;3</td></tr>
+    <tr><td>Blank Screen</td><td>&times;1.0</td><td>0&ndash;3</td><td>0&ndash;3</td><td>0&ndash;3</td><td>0&ndash;3</td></tr>
+  </table>
+
+  <p><strong>Why Session Trigger and Session Shape are weighted higher:</strong> They reflect observable behavior rather than self-reported framing. Language and Blank Screen capture how users <em>talk about</em> their work; Trigger and Shape capture how they <em>actually behave</em>. When the two diverge, behavior is the more reliable navigation signal.</p>
+
+  <p><strong>Reading the results:</strong></p>
+
+  <p><strong>Clear dominant (highest score &ge;1.5&times; the runner-up):</strong> Use that model as your sole primary anchor.</p>
+
+  <p><strong>Strong lean (highest score is 1.2&ndash;1.5&times; the runner-up):</strong> Primary anchor is the leader. Check whether the runner-up model drives any Task with daily-or-higher frequency. If so, apply Frequency Overrides Hierarchy: that Task earns primary-level placement even though its model isn't dominant.</p>
+
+  <p><strong>Near-tie (highest score is &lt;1.2&times; the runner-up):</strong> Genuine hybrid. Identify which of the three hybrid patterns in Step 02 matches, and apply the corresponding resolution. If none match, use the 30% Rule: whichever secondary model drives &ge;30% of sessions or session time earns co-equal primary placement.</p>
+
+  <div class="example-block"><span class="callout-label">Worked example: Agile PM tool</span>
+    <p>Language: Entity 2, Process 1 (users say "ticket" more than "sprint planning," but both appear). Session Trigger: Process 3 (sessions start with "time for standup" or "sprint review day"). Session Shape: Process 2, Entity 1 (sessions follow sprint-phase patterns but include deep entity dives). Blank Screen: Entity 2 (users would say "show me PROJ-142").</p>
+    <p>Weighted scores &mdash; Process: (1&times;1) + (3&times;1.5) + (2&times;1.5) + (0&times;1) = <strong>8.5</strong>. Entity: (2&times;1) + (0&times;1.5) + (1&times;1.5) + (2&times;1) = <strong>5.5</strong>. Ratio: 8.5/5.5 = 1.55 &mdash; clear dominant. Process-primary, with entity detail as secondary tier. High-frequency entity Tasks (daily standup prep around specific tickets) earn primary shortcuts via Frequency Overrides Hierarchy.</p>
+  </div>
+</div>
+
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.4.html" target="_blank">Workbook</a> &mdash; Record audit results and unresolved risks in Section 7.</div>
+
+</div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- APPENDIX -->
+<!-- ============================================================ -->
+<div class="section" id="appendix">
+<div class="content">
+
+<span class="step-label">Appendix</span>
+<h2>Origins &amp; Further Reading</h2>
+
+<p>This framework draws from two intellectual traditions.</p>
+
+<h3>Jobs to Be Done (The Job Level)</h3>
+
+<p>JTBD theory holds that users "hire" products to make progress. The Job is the fundamental unit &mdash; stable, emotionally resonant, product-independent.</p>
+
+<p><strong>Clayton Christensen</strong> popularized JTBD for innovation strategy. <strong>Tony Ulwick</strong> (Outcome-Driven Innovation) systematized it into a quantitative methodology. <strong>Bob Moesta</strong> (The Switch Framework) focuses on emotional dimensions &mdash; his work directly informs the user context section in <a href="#s4">Step 04</a>.</p>
+
+<h3>Hierarchical Task Analysis (The Task &amp; Activity Levels)</h3>
+
+<p>HTA (Annett &amp; Duncan, 1967) decomposes work into goals, sub-goals, operations, and plans. Activity Theory (Kaptelinin &amp; Nardi) extends this with attention to tools and social dynamics.</p>
+
+<div class="ref-list">
+  <div class="ref-item">Christensen &mdash; <a href="https://hbr.org/2016/09/know-your-customers-jobs-to-be-done">"Know Your Customers' Jobs to Be Done"</a> (HBR, 2016)</div>
+  <div class="ref-item">Ulwick &mdash; ODI overview at <a href="https://strategyn.com">strategyn.com</a> &middot; <em>Jobs to Be Done: Theory to Practice</em></div>
+  <div class="ref-item">Moesta &mdash; <a href="https://demandside.com">demandside.com</a> &middot; <em>Demand-Side Sales 101</em></div>
+  <div class="ref-item">HTA &mdash; Annett &amp; Duncan (1967) &middot; Stanton, <em>Handbook of Human Factors and Ergonomtic Methods</em></div>
+  <div class="ref-item">Activity Theory &mdash; Kaptelinin &amp; Nardi, <em>Acting with Technology</em> (MIT Press, 2006)</div>
+</div>
+
+<h3>Templates &amp; Resources</h3>
+
+<p>Defining Jobs, Tasks, and Activities is the hardest part of the framework. These practical tools can help you do the upstream work.</p>
+
+<div class="ref-list">
+  <div class="ref-item"><a href="https://rosenfeldmedia.com/books/jobs-to-be-done-book/">Jim Kalbach, <em>The Jobs To Be Done Playbook</em></a> &mdash; The most hands-on JTBD book available. Includes worksheets for job mapping, job stories, and outcome statements. Companion toolkit at <a href="https://www.jtbdtoolkit.com/">jtbdtoolkit.com</a>.</div>
+  <div class="ref-item"><a href="https://jobs-to-be-done.com/mapping-the-job-to-be-done-45336427b3bc">Tony Ulwick's Job Map</a> &mdash; The canonical 8-step template for breaking a Job into process stages (define, locate, prepare, confirm, execute, monitor, modify, conclude). Free walkthrough on <a href="https://strategyn.com/jobs-to-be-done/customer-centered-innovation-map/">strategyn.com</a>.</div>
+  <div class="ref-item"><a href="https://learn.jobstobedone.org/">Bob Moesta's Switch Interview</a> &mdash; A structured interview method for uncovering Jobs through the story of how someone decided to switch to a new solution. Focuses on the emotional and situational forces behind the decision. See also <a href="https://jobstobedone.org/">jobstobedone.org</a>.</div>
+  <div class="ref-item"><a href="https://miro.com/templates/jobs-to-be-done/">Miro JTBD Canvas</a> &mdash; A free collaborative template for running JTBD workshops. Good starting point for teams doing their first job mapping session together. Also available on <a href="https://www.figma.com/templates/jobs-to-be-done-examples/">FigJam</a> and <a href="https://www.mural.co/templates/jobs-to-be-done">Mural</a>.</div>
+  <div class="ref-item"><a href="https://www.viima.com/jobs-to-be-done-toolkit">Viima JTBD Toolkit</a> &mdash; A comprehensive free toolkit including the JTBD Canvas, Job Map template, interview scripts, and Forces of Progress Canvas. Useful for teams applying the full methodology end-to-end.</div>
+</div>
+
+</div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- GETTING BUY-IN -->
+<!-- ============================================================ -->
+<div class="section watermark-bg" id="buyin">
+<div class="content">
+
+<span class="step-label">Reference</span>
+<h2>Getting Buy-In for a Navigation Sprint</h2>
+
+<div class="exec-summary">
+  <p>Navigation breaks silently. Users can't find features, onboarding drags, and support tickets pile up around "how do I..." questions &mdash; but the root cause is rarely obvious because no one made a wrong decision. The decisions just weren't connected to each other.</p>
+  <p>Sightline is a structured method that connects what users are trying to accomplish to how they navigate your product. It produces a navigation architecture &mdash; documented, auditable, and anchored to user intent rather than the feature roadmap. The architecture survives feature launches, new user roles, and platform additions because it's grounded in what changes slowly (user goals) rather than what changes constantly (the interface).</p>
+  <p>The process adds roughly one design sprint to the project timeline. The return is a navigation structure that doesn't need to be redesigned every quarter.</p>
+</div>
+
+  <p class="back-link" style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border);">Ready to start? <a href="#s1">Go to Step 01: Define &rarr;</a></p>
 
 </div>
 </div>
@@ -2214,97 +2320,7 @@ Mutually exclusive at the same level.</p>
 
   <p>A well-structured JTBD hierarchy doesn't compete with AI-assisted navigation &mdash; it makes it better. The AI needs the same semantic structure to resolve intent correctly. When a user says "show me last quarter's compliance report," the system needs to know that "compliance reporting" is a Task under the "Regulatory Oversight" Job, that the user's role has access to it, and that "last quarter" maps to a specific filter state. That mapping is exactly what Steps 01 through 04 produce. The framework builds the architecture that AI shortcuts through, not architecture that AI replaces.</p>
 
-</div>
-</div>
-
-<!-- ============================================================ -->
-<!-- APPENDIX -->
-<!-- ============================================================ -->
-<div class="section" id="appendix">
-<div class="content">
-
-<span class="step-label">Appendix</span>
-<h2>Origins &amp; Further Reading</h2>
-
-<p>This framework draws from two intellectual traditions.</p>
-
-<h3>Jobs to Be Done (The Job Level)</h3>
-
-<p>JTBD theory holds that users "hire" products to make progress. The Job is the fundamental unit &mdash; stable, emotionally resonant, product-independent.</p>
-
-<p><strong>Clayton Christensen</strong> popularized JTBD for innovation strategy. <strong>Tony Ulwick</strong> (Outcome-Driven Innovation) systematized it into a quantitative methodology. <strong>Bob Moesta</strong> (The Switch Framework) focuses on emotional dimensions &mdash; his work directly informs the user context section in <a href="#s4">Step 04</a>.</p>
-
-<h3>Hierarchical Task Analysis (The Task &amp; Activity Levels)</h3>
-
-<p>HTA (Annett &amp; Duncan, 1967) decomposes work into goals, sub-goals, operations, and plans. Activity Theory (Kaptelinin &amp; Nardi) extends this with attention to tools and social dynamics.</p>
-
-<div class="ref-list">
-  <div class="ref-item">Christensen &mdash; <a href="https://hbr.org/2016/09/know-your-customers-jobs-to-be-done">"Know Your Customers' Jobs to Be Done"</a> (HBR, 2016)</div>
-  <div class="ref-item">Ulwick &mdash; ODI overview at <a href="https://strategyn.com">strategyn.com</a> &middot; <em>Jobs to Be Done: Theory to Practice</em></div>
-  <div class="ref-item">Moesta &mdash; <a href="https://demandside.com">demandside.com</a> &middot; <em>Demand-Side Sales 101</em></div>
-  <div class="ref-item">HTA &mdash; Annett &amp; Duncan (1967) &middot; Stanton, <em>Handbook of Human Factors and Ergonomtic Methods</em></div>
-  <div class="ref-item">Activity Theory &mdash; Kaptelinin &amp; Nardi, <em>Acting with Technology</em> (MIT Press, 2006)</div>
-</div>
-
-<h3 id="appendix-scoring">Diagnostic Scoring Matrix</h3>
-
-<p>This is an optional quantitative supplement to the decision tree in <a href="#s2-resolve">Step 02</a>. Use it when the qualitative patterns don't clearly match your situation, or when you need a defensible numerical rationale for stakeholders.</p>
-
-<p><strong>How to score:</strong> For each diagnostic, assign a confidence score from 0 to 3 for each of the four models. 0 = no signal, 1 = weak signal, 2 = moderate signal, 3 = strong signal. A single diagnostic can give partial scores to multiple models (e.g., Language might score Entity 2, Process 1 if users reference both entities and phases but lean toward entities).</p>
-
-<table>
-  <tr><th>Diagnostic</th><th>Weight</th><th>Process</th><th>Entity</th><th>Queue</th><th>Activity</th></tr>
-  <tr><td>Language</td><td>&times;1.0</td><td>0&ndash;3</td><td>0&ndash;3</td><td>0&ndash;3</td><td>0&ndash;3</td></tr>
-  <tr><td>Session Trigger</td><td>&times;1.5</td><td>0&ndash;3</td><td>0&ndash;3</td><td>0&ndash;3</td><td>0&ndash;3</td></tr>
-  <tr><td>Session Shape</td><td>&times;1.5</td><td>0&ndash;3</td><td>0&ndash;3</td><td>0&ndash;3</td><td>0&ndash;3</td></tr>
-  <tr><td>Blank Screen</td><td>&times;1.0</td><td>0&ndash;3</td><td>0&ndash;3</td><td>0&ndash;3</td><td>0&ndash;3</td></tr>
-</table>
-
-<p><strong>Why Session Trigger and Session Shape are weighted higher:</strong> They reflect observable behavior rather than self-reported framing. Language and Blank Screen capture how users <em>talk about</em> their work; Trigger and Shape capture how they <em>actually behave</em>. When the two diverge, behavior is the more reliable navigation signal.</p>
-
-<p><strong>Reading the results:</strong></p>
-
-<p><strong>Clear dominant (highest score &ge;1.5&times; the runner-up):</strong> Use that model as your sole primary anchor.</p>
-
-<p><strong>Strong lean (highest score is 1.2&ndash;1.5&times; the runner-up):</strong> Primary anchor is the leader. Check whether the runner-up model drives any Task with daily-or-higher frequency. If so, apply Frequency Overrides Hierarchy: that Task earns primary-level placement even though its model isn't dominant.</p>
-
-<p><strong>Near-tie (highest score is &lt;1.2&times; the runner-up):</strong> Genuine hybrid. Identify which of the three hybrid patterns in Step 02 matches, and apply the corresponding resolution. If none match, use the 30% Rule: whichever secondary model drives &ge;30% of sessions or session time earns co-equal primary placement.</p>
-
-<div class="example-block"><span class="callout-label">Worked example: Agile PM tool</span>
-  <p>Language: Entity 2, Process 1 (users say "ticket" more than "sprint planning," but both appear). Session Trigger: Process 3 (sessions start with "time for standup" or "sprint review day"). Session Shape: Process 2, Entity 1 (sessions follow sprint-phase patterns but include deep entity dives). Blank Screen: Entity 2 (users would say "show me PROJ-142").</p>
-  <p>Weighted scores &mdash; Process: (1&times;1) + (3&times;1.5) + (2&times;1.5) + (0&times;1) = <strong>8.5</strong>. Entity: (2&times;1) + (0&times;1.5) + (1&times;1.5) + (2&times;1) = <strong>5.5</strong>. Ratio: 8.5/5.5 = 1.55 &mdash; clear dominant. Process-primary, with entity detail as secondary tier. High-frequency entity Tasks (daily standup prep around specific tickets) earn primary shortcuts via Frequency Overrides Hierarchy.</p>
-</div>
-
-<h3>Templates &amp; Resources</h3>
-
-<p>Defining Jobs, Tasks, and Activities is the hardest part of the framework. These practical tools can help you do the upstream work.</p>
-
-<div class="ref-list">
-  <div class="ref-item"><a href="https://rosenfeldmedia.com/books/jobs-to-be-done-book/">Jim Kalbach, <em>The Jobs To Be Done Playbook</em></a> &mdash; The most hands-on JTBD book available. Includes worksheets for job mapping, job stories, and outcome statements. Companion toolkit at <a href="https://www.jtbdtoolkit.com/">jtbdtoolkit.com</a>.</div>
-  <div class="ref-item"><a href="https://jobs-to-be-done.com/mapping-the-job-to-be-done-45336427b3bc">Tony Ulwick's Job Map</a> &mdash; The canonical 8-step template for breaking a Job into process stages (define, locate, prepare, confirm, execute, monitor, modify, conclude). Free walkthrough on <a href="https://strategyn.com/jobs-to-be-done/customer-centered-innovation-map/">strategyn.com</a>.</div>
-  <div class="ref-item"><a href="https://learn.jobstobedone.org/">Bob Moesta's Switch Interview</a> &mdash; A structured interview method for uncovering Jobs through the story of how someone decided to switch to a new solution. Focuses on the emotional and situational forces behind the decision. See also <a href="https://jobstobedone.org/">jobstobedone.org</a>.</div>
-  <div class="ref-item"><a href="https://miro.com/templates/jobs-to-be-done/">Miro JTBD Canvas</a> &mdash; A free collaborative template for running JTBD workshops. Good starting point for teams doing their first job mapping session together. Also available on <a href="https://www.figma.com/templates/jobs-to-be-done-examples/">FigJam</a> and <a href="https://www.mural.co/templates/jobs-to-be-done">Mural</a>.</div>
-  <div class="ref-item"><a href="https://www.viima.com/jobs-to-be-done-toolkit">Viima JTBD Toolkit</a> &mdash; A comprehensive free toolkit including the JTBD Canvas, Job Map template, interview scripts, and Forces of Progress Canvas. Useful for teams applying the full methodology end-to-end.</div>
-</div>
-
-</div>
-</div>
-
-
-<!-- ============================================================ -->
-<!-- GETTING BUY-IN -->
-<!-- ============================================================ -->
-<div class="section watermark-bg" id="buyin">
-<div class="content">
-
-<span class="step-label">Reference</span>
-<h2>Getting Buy-In for a Navigation Sprint</h2>
-
-<div class="exec-summary">
-  <p>Navigation breaks silently. Users can't find features, onboarding drags, and support tickets pile up around "how do I..." questions &mdash; but the root cause is rarely obvious because no one made a wrong decision. The decisions just weren't connected to each other.</p>
-  <p>Sightline is a structured method that connects what users are trying to accomplish to how they navigate your product. It produces a navigation architecture &mdash; documented, auditable, and anchored to user intent rather than the feature roadmap. The architecture survives feature launches, new user roles, and platform additions because it's grounded in what changes slowly (user goals) rather than what changes constantly (the interface).</p>
-  <p>The process adds roughly one design sprint to the project timeline. The return is a navigation structure that doesn't need to be redesigned every quarter.</p>
-</div>
+  <p class="back-link" style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border);">Convinced? <a href="#s1">Start with Step 01: Define &rarr;</a></p>
 
 </div>
 </div>
