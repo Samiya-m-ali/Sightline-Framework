@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -136,7 +136,7 @@
   [data-theme="dark"] .scope-range strong { color: #E3C97A; }
   [data-theme="dark"] a { color: #D4B04A; border-bottom-color: #3D3018; }
   [data-theme="dark"] a:hover { border-bottom-color: #D4B04A; }
-  [data-theme="dark"] .watermark-bg::before { opacity: 0.025; }
+  [data-theme="dark"] .watermark-bg::before { opacity: 0.06; }
   [data-theme="dark"] .step-header { background: #1A1A1E; }
   [data-theme="dark"] table { background: #222226; border-color: #2E2E32; }
   [data-theme="dark"] th { background: #1A1A1E; color: #8A8A8E; border-bottom-color: #2E2E32; }
@@ -615,7 +615,7 @@
     font-weight: 500;
   }
   .hero.watermark-bg::before {
-    opacity: 0.04;
+    opacity: 0.08;
   }
 
   /* Watermark background styling */
@@ -633,7 +633,7 @@
     background-image: url("data:image/svg+xml,%3Csvg width='300' height='200' viewBox='0 0 300 200' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='30' y1='100' x2='120' y2='100' stroke='currentColor' stroke-width='3'/%3E%3Cline x1='180' y1='100' x2='270' y2='100' stroke='currentColor' stroke-width='3'/%3E%3Crect x='135' y='80' width='30' height='30' transform='rotate(45 150 95)' fill='currentColor'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-size: contain;
-    opacity: 0.035;
+    opacity: 0.07;
     pointer-events: none;
     z-index: 0;
   }
@@ -1052,10 +1052,10 @@
 
 <!-- THEME TOGGLE -->
 <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
-  <span class="toggle-option" id="lightToggle">
+  <span class="toggle-option active" id="lightToggle">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
   </span>
-  <span class="toggle-option active" id="darkToggle">
+  <span class="toggle-option" id="darkToggle">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
   </span>
 </button>
@@ -1145,13 +1145,13 @@
 
   <p>Sightline focuses on the <em>orientation layer</em> &mdash; keeping users grounded in where they are, where they can go, and how to get back. Other aspects of information architecture benefit from purpose-built methods. Here's how to connect them.</p>
 
-  <p><strong>For identifying Jobs, Tasks, and Activities (feeds Step 01):</strong> Use JTBD interview techniques to gather the raw material that Step 01 structures. Bob Moesta's Switch Interview uncovers the emotional and situational forces behind user behavior. Tony Ulwick's Outcome-Driven Innovation provides quantitative job mapping. Jim Kalbach's <em>JTBD Playbook</em> has the most hands-on worksheets. The quality of your Step 01 output depends directly on the quality of this upstream research.</p>
+  <p><strong>For identifying Jobs, Tasks, and Activities (feeds Step 01):</strong> JTBD interview techniques (Moesta, Ulwick, Kalbach &mdash; see <a href="#appendix">Appendix</a>) give you the raw material that Step 01 structures. The quality of your Step 01 output depends directly on the quality of this upstream research.</p>
 
-  <p><strong>For modeling entities and their relationships (runs alongside Steps 01&ndash;02):</strong> If your product manages persistent objects &mdash; accounts, projects, documents, devices &mdash; run an Object-Oriented UX (OOUX) mapping in parallel with Sightline's first two steps. OOUX will give you the entity model that Sightline's Entity-First anchor builds on. Sightline tells you how to structure navigation around those entities; OOUX tells you what the entities are and how they relate to each other.</p>
+  <p><strong>For modeling entities and their relationships (runs alongside Steps 01&ndash;02):</strong> If your product manages persistent objects, run an Object-Oriented UX (OOUX) mapping in parallel. OOUX defines the entity model that Sightline's Entity-First anchor builds on.</p>
 
-  <p><strong>For cataloging navigation system types (extends Step 05):</strong> Rosenfeld &amp; Morville's IA taxonomy &mdash; global, local, contextual, and supplemental navigation &mdash; provides a finer-grained classification system than Sightline's eight paradigms. After Step 05 gives you a paradigm composition, use their taxonomy to specify exactly which navigation components appear on each screen and how they interrelate.</p>
+  <p><strong>For cataloging navigation system types (extends Step 05):</strong> Rosenfeld &amp; Morville's IA taxonomy (global, local, contextual, supplemental) provides finer-grained navigation component classification after Step 05 gives you a paradigm composition.</p>
 
-  <p><strong>For validating the result (extends Step 06):</strong> Sightline's seven audit principles test whether the navigation achieves its structural intent. They don't replace usability testing. Once you've built (or prototyped) the navigation, run standard usability evaluation &mdash; tree tests, first-click tests, task-based walkthroughs &mdash; to verify that real users can navigate the structure you've designed. The audit catches architectural problems; usability testing catches interaction-level problems.</p>
+  <p><strong>For validating the result (extends Step 06):</strong> The audit tests structural intent. Pair it with usability testing &mdash; tree tests, first-click tests, task-based walkthroughs &mdash; to catch interaction-level problems the audit won't surface.</p>
 
   <h3>What Sightline Does Not Cover</h3>
 
@@ -2354,7 +2354,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var wbLinks = document.querySelectorAll('.wb-prompt a, a[href*="sightline-workbook"]');
     wbLinks.forEach(function(link) {
       var href = link.getAttribute('href').split('?')[0];
-      link.setAttribute('href', theme === 'light' ? href + '?theme=light' : href);
+      link.setAttribute('href', theme === 'dark' ? href + '?theme=dark' : href);
     });
   }
 
