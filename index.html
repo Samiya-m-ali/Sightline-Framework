@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sightline — A Framework for Intent-Driven Navigation Design</title>
+<title>Sightline — A Practitioner's Guide to Intent-Driven Navigation Design</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap');
 
@@ -1071,8 +1071,8 @@
     <rect x="8.6" y="5.6" width="2.8" height="2.8" transform="rotate(45 10 7)" fill="currentColor"/>
   </svg>
   <h1>Sightline</h1>
-  <p class="subtitle">A Framework for Intent-Driven Navigation Design — by Samiya Ali</p>
-  <p class="lead">A structured method for translating user intent — Jobs, Tasks, and Activities — into navigation architecture. Built for product designers, developers, and product managers who need to design, build, and communicate navigation decisions.</p>
+  <p class="subtitle">A Practitioner's Guide to Intent-Driven Navigation Design — by Samiya Ali</p>
+  <p class="lead">Sightline answers one question: <strong>given what your users are trying to accomplish, how should you structure the navigation?</strong> It takes you from user intent to a navigation architecture. Built for product designers, developers, and product managers who need to design, build, and communicate navigation decisions.</p>
 </div>
 </div>
 
@@ -1089,8 +1089,8 @@
   </svg>Sightline<span>.</span></div>
 
   <div class="sidebar-section-label">Overview</div>
-  <a href="#problem" data-section="problem" class="nav-link"><span class="nav-num"></span> Why It Breaks</a>
-  <a href="#using" data-section="using" class="nav-link"><span class="nav-num"></span> Using This Framework</a>
+  <a href="#problem" data-section="problem" class="nav-link"><span class="nav-num"></span> Why Navigation Breaks</a>
+  <a href="#using" data-section="using" class="nav-link"><span class="nav-num"></span> Using This Guide</a>
 
   <div class="sidebar-section-label">The Process</div>
 
@@ -1106,7 +1106,7 @@
   <a href="#appendix" data-section="appendix" class="nav-link"><span class="nav-num"></span> Appendix</a>
   <a href="#buyin" data-section="buyin" class="nav-link"><span class="nav-num"></span> Getting Buy-In</a>
   <a href="#ai-nav" data-section="ai-nav" class="nav-link"><span class="nav-num"></span> AI &amp; Navigation</a>
-  <div class="sidebar-version">v8.4</div>
+  <div class="sidebar-version">v8.5</div>
 </nav>
 
 <!-- ============================================================ -->
@@ -1121,7 +1121,7 @@
   <h2>Why Does Navigation Keep Breaking?</h2>
   <p>Navigation is one of the hardest parts of product design to get right &mdash; and one of the easiest to get wrong incrementally. Teams invest real thought into their information architecture. The challenge is that navigation decisions compound: each feature launch, each new user role, each platform addition adds pressure to a structure that was built for a simpler version of the product.</p>
   <p>Over time, patterns emerge. <strong>Users struggle to find features that exist</strong> because labels reflect internal team structures rather than user goals. <strong>Navigation changes with each release cycle</strong> because it's anchored to the feature roadmap rather than stable user outcomes. <strong>Onboarding takes longer than it should</strong> because new users have to reverse-engineer the product's internal logic. <strong>Support tickets accumulate</strong> around "how do I..." questions that the navigation should have answered on its own.</p>
-  <p>The underlying challenge isn't a lack of effort &mdash; it's a lack of shared structure. The work of connecting user intent to navigation decisions tends to happen informally: in someone's head, on a whiteboard that gets erased, in a design file that diverges from implementation. The thinking happens, but it doesn't persist across the team or survive the pressures of a shipping schedule.</p>
+  <p>The underlying challenge isn't a lack of effort &mdash; it's a lack of shared structure. <strong>The work of connecting user intent to navigation decisions tends to happen informally</strong>: in someone's head, on a whiteboard that gets erased, in a design file that diverges from implementation. <strong>The thinking happens, but it doesn't persist across the team or survive the pressures of a shipping schedule.</strong></p>
   <p>AI-assisted navigation &mdash; copilots, conversational agents, intent-driven routing &mdash; is reshaping how users reach destinations, and its adoption is accelerating. But these tools route users <em>through</em> a navigation architecture; they don't remove the need for one. The AI needs the same semantic structure &mdash; what are the Jobs, what are the Tasks, which mental model dominates &mdash; to resolve intent correctly. Where AI changes the calculus is covered in <a href="#ai-nav">What About AI?</a></p>
   <p>Sightline gives that thinking a structured, repeatable home. It provides a shared language for connecting what users are trying to accomplish to how they navigate your product &mdash; so the architecture stays grounded in intent as the product evolves.</p>
 </div>
@@ -1133,9 +1133,9 @@
 <div class="section" id="using">
 <div class="content">
   <span class="step-label">Context</span>
-  <h2>Using This Framework</h2>
+  <h2>Using This Guide</h2>
 
-  <p>Sightline answers one question: <strong>given what your users are trying to accomplish, how should you structure the navigation?</strong> It takes you from user intent to a defensible navigation architecture. That's its scope &mdash; and knowing where it starts and stops will help you get the most out of it.</p>
+  <p>Sightline focuses on the <em>orientation layer</em> &mdash; keeping users grounded in where they are, where they can go, and how to get back. Knowing where it starts and stops will help you get the most out of it.</p>
 
   <h3>When to Reach for Sightline</h3>
 
@@ -1159,7 +1159,7 @@
 
   <h3>The Companion Workbook</h3>
 
-  <p>Each step in the framework produces decisions and artifacts that feed the next step. The <a href="sightline-workbook-v8.4.html" target="_blank"><strong>Sightline Workbook</strong></a> gives you a structured place to capture these as you go &mdash; your JTBD hierarchy, diagnostic scores, scope profile, role decisions, paradigm composition, and the resulting navigation outline. Open it alongside this document and fill in each section as the framework prompts you.</p>
+  <p>Each step in Sightline produces decisions and artifacts that feed the next step. The <a href="sightline-workbook-v8.5.html" target="_blank"><strong>Sightline Workbook</strong></a> gives you a structured place to capture these as you go &mdash; your JTBD hierarchy, diagnostic scores, scope profile, role decisions, paradigm composition, and the resulting navigation outline. Open it alongside this document and fill in each section as the guide prompts you.</p>
 
 </div>
 </div>
@@ -1223,7 +1223,8 @@
     <div><div class="card-meta-label">Example</div><div class="card-meta-value">"Select date range, pull data, choose template, export PDF" &mdash; each would change if the reporting tool was redesigned.</div></div>
   </div>
   <div class="card-meta" style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border);">
-    <div style="grid-column: 1 / -1;"><div class="card-meta-label">Litmus Test</div><div class="card-meta-value">Ask: <strong>"Does this require a specific UI element to exist?"</strong> Activities are tool-dependent. If the action would change significantly with a redesigned interface, it's an Activity. <strong>Still not sure?</strong> Ask: <strong>"Would the user plan a session around doing this?"</strong> If they'd set aside time, it's a Task. The individual interactions within that session are Activities.</div></div>
+    <div style="grid-column: 1 / -1;"><div class="card-meta-label">Litmus Test 1</div><div class="card-meta-value">Ask: <strong>"Does this require a specific UI element to exist?"</strong> Activities are tool-dependent. If the action would change significantly with a redesigned interface, it's an Activity.</div></div>
+    <div style="grid-column: 1 / -1;"><div class="card-meta-label">Litmus Test 2</div><div class="card-meta-value">Ask: <strong>"Would the user plan a session around doing this?"</strong> If they'd set aside time, it's a Task. The individual interactions within that session are Activities.</div></div>
   </div>
 </div>
 
@@ -1237,7 +1238,7 @@
   <p>This hierarchy is also the semantic backbone that AI-assisted navigation needs to resolve user intent. When a user tells a copilot "show me the compliance report," the system needs to know that compliance reporting is a Task under a specific Job, and that the report itself is an Activity within that Task. A clean JTBD hierarchy makes both structural navigation <em>and</em> AI-assisted navigation work better &mdash; the two aren't competing investments.</p>
 </div>
 
-<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.4.html" target="_blank">Workbook</a> &mdash; Record your Jobs, Tasks, and Activities in Section 1.</div>
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.5.html" target="_blank">Workbook</a> &mdash; Record your Jobs, Tasks, and Activities in Section 1.</div>
 
 <div class="callout-warm callout" id="s1-cross-job">
   <span class="callout-label">A Note on Cross-Job Tasks</span>
@@ -1283,12 +1284,12 @@
 
 <div class="example-block"><span class="callout-label">Example annotations</span>
   <p><strong>Job: Advance sprint deliverables</strong></p>
-  <p>Task: "Prepare daily standup notes" &mdash; Frequency: <strong>Daily</strong>, Criticality: <strong>Blocking</strong> (missed standup = misaligned team)</p>
-  <p>Task: "Review and approve pull requests" &mdash; Frequency: <strong>Daily</strong>, Criticality: <strong>Important</strong></p>
+  <p>Task: "Prepare daily standup notes" &mdash; Frequency: <strong>Daily</strong>, Criticality: <strong>Supporting</strong> (keeps team aligned, but no work is blocked if missed)</p>
+  <p>Task: "Review and approve pull requests" &mdash; Frequency: <strong>Daily</strong>, Criticality: <strong>Blocking</strong> (unreviewed PRs stall merges)</p>
   <p>Task: "Run retrospective" &mdash; Frequency: <strong>Quarterly</strong> (per sprint cycle), Criticality: <strong>Supporting</strong></p>
 </div>
 
-<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.4.html" target="_blank">Workbook</a> &mdash; Add frequency and criticality annotations to each Task in Section 1.</div>
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.5.html" target="_blank">Workbook</a> &mdash; Add frequency and criticality annotations to each Task in Section 1.</div>
 
 <h3 id="s1-multi">Defining for Multiple User Types</h3>
 
@@ -1300,7 +1301,7 @@
 
 <p><strong>Note your overlaps and divergences</strong> &mdash; they feed directly into the role-based navigation decisions in <a href="#s4">Step 04</a>.</p>
 
-<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.4.html" target="_blank">Workbook</a> &mdash; If you have multiple personas, note overlaps and divergences in Section 1.</div>
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.5.html" target="_blank">Workbook</a> &mdash; If you have multiple personas, note overlaps and divergences in Section 1.</div>
 
 </div>
 </div>
@@ -1462,7 +1463,7 @@
 
 <h3 id="s2-dominant">Identifying Your Dominant Model</h3>
 
-<p>Run these four diagnostic checks at the <strong>session level</strong> &mdash; scoped to how users begin, move through, and end a work session. If three or more point to the same model, you have a clear dominant anchor.</p>
+<p>Run these four diagnostic checks at the <strong>session level</strong> &mdash; a session being one continuous period of product use, from the moment a user opens or switches to your product to the moment they leave. Scope each diagnostic to how users begin, move through, and end that session. If three or more point to the same model, you have a clear dominant anchor.</p>
 
 <div class="card">
   <div class="card-header"><div class="card-name">1. Listen to the Language</div></div>
@@ -1566,7 +1567,7 @@
 
 <div class="callout">
   <span class="callout-label">The 30% Rule for Hybrid Elevation</span>
-  <p>When resolving a hybrid, use this threshold: if the secondary model drives &ge;30% of sessions or &ge;30% of active session time, it earns co-equal primary placement rather than being subordinated to the secondary tier. Below 30%, the secondary model can be served through pinned shortcuts, filtered views, or &#8984;K without needing its own primary-level anchor.</p>
+  <p>When resolving a hybrid, use this threshold: if the secondary model drives &ge;30% of sessions or &ge;30% of active session time, it earns co-equal primary placement rather than being subordinated to the secondary tier. Below 30%, the secondary model can be served through pinned shortcuts, filtered views, or command palette without needing its own primary-level anchor.</p>
 </div>
 
 <p>For a quantitative scoring approach to the diagnostics, see the <a href="#appendix-scoring">Diagnostic Scoring Matrix</a> in Common Questions.</p>
@@ -1574,7 +1575,7 @@
 </div>
 </details>
 
-<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.4.html" target="_blank">Workbook</a> &mdash; Record your navigation anchor and diagnostic rationale in Section 2.</div>
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.5.html" target="_blank">Workbook</a> &mdash; Record your navigation anchor and diagnostic rationale in Section 2.</div>
 
 <div class="callout-warm callout" id="s2-ai">
   <span class="callout-label">AI Connection</span>
@@ -1605,9 +1606,9 @@
   <tr><td>Job Gravity</td><td>Single canonical home under the most-used Job. Pointers from other Jobs.</td><td>Multiple Jobs legitimately need the Task.</td><td>Pointer mechanisms add work.</td></tr>
 </table>
 
-<p>Job Gravity is the recommended default. The four pointer mechanisms: <strong>1.</strong> Cross-link in secondary nav. <strong>2.</strong> Contextual shortcut inline. <strong>3.</strong> Search / &#8984;K result. <strong>4.</strong> User-pinned favorite.</p>
+<p>Job Gravity is the recommended default. The four pointer mechanisms: <strong>1.</strong> Cross-link in secondary nav. <strong>2.</strong> Contextual shortcut inline. <strong>3.</strong> Search / command palette result. <strong>4.</strong> User-pinned favorite.</p>
 
-<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.4.html" target="_blank">Workbook</a> &mdash; Note any cross-Job Task placements and pointer mechanisms in Section 2.</div>
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.5.html" target="_blank">Workbook</a> &mdash; Note any cross-Job Task placements and pointer mechanisms in Section 2.</div>
 
 </div>
 </div>
@@ -1639,7 +1640,7 @@
 <div class="scope-card">
   <div class="scope-card-question">1. How many top-level Jobs does your product support?</div>
   <div class="scope-range"><strong>&le;5 Jobs:</strong> Expose all in a single layer &mdash; top bar or bottom tabs.</div>
-  <div class="scope-range"><strong>5&ndash;15 Jobs:</strong> Side navigation with groupings, or a hub with categorized entry points. Consider &#8984;K as an accelerator.</div>
+  <div class="scope-range"><strong>5&ndash;15 Jobs:</strong> Side navigation with groupings, or a hub with categorized entry points. Consider command palette as an accelerator.</div>
   <div class="scope-range"><strong>15+ Jobs:</strong> Compound approach &mdash; hub-and-spoke plus search, or role-based filtering.</div>
 </div>
 
@@ -1653,7 +1654,7 @@
 <div class="scope-card">
   <div class="scope-card-question">3. How varied is your user expertise?</div>
   <div class="scope-range"><strong>Uniform:</strong> One navigation system. Optimize for the dominant expertise level.</div>
-  <div class="scope-range"><strong>Moderate spread:</strong> Structural nav for everyone, &#8984;K for power users. Role-aware defaults help.</div>
+  <div class="scope-range"><strong>Moderate spread:</strong> Structural nav for everyone, command palette for power users. Role-aware defaults help.</div>
   <div class="scope-range"><strong>Extreme spread:</strong> Layered navigation &mdash; visible structural nav for discovery, keyboard shortcuts for speed, guided flows for onboarding.</div>
 </div>
 
@@ -1661,7 +1662,7 @@
   <div class="scope-card-question">4. How concentrated is usage?</div>
   <div class="scope-range"><strong>Highly concentrated</strong> (~80% of sessions involve 2&ndash;3 Tasks): Elevate those Tasks to Job-level prominence.</div>
   <div class="scope-range"><strong>Evenly distributed:</strong> Navigation needs equal weight across many options &mdash; side nav or hub patterns.</div>
-  <div class="scope-range"><strong>Mixed</strong> (daily + quarterly Tasks): Quarterly Tasks can't be buried. Search and &#8984;K become safety nets.</div>
+  <div class="scope-range"><strong>Mixed</strong> (daily + quarterly Tasks): Quarterly Tasks can't be buried. Search and command palette become safety nets.</div>
 </div>
 
 <div class="scope-card">
@@ -1675,7 +1676,7 @@
   <div class="scope-card-question">6. What platforms does your product serve?</div>
   <div class="scope-range"><strong>Desktop-only:</strong> Full access to side nav, hover states, keyboard shortcuts, multi-panel layouts.</div>
   <div class="scope-range"><strong>Responsive web:</strong> Your composition formula needs a responsive strategy. Side nav collapses; hover interactions need touch alternatives.</div>
-  <div class="scope-range"><strong>Native mobile:</strong> Platform conventions apply. iOS favors bottom tabs; Android favors top tabs and drawers. &#8984;K becomes pull-down search.</div>
+  <div class="scope-range"><strong>Native mobile:</strong> Platform conventions apply. iOS favors bottom tabs; Android favors top tabs and drawers. Command palette becomes pull-down search.</div>
   <div class="scope-range"><strong>Multi-platform:</strong> Two composition formulas sharing a JTBD hierarchy but using different paradigms per platform.</div>
 </div>
 
@@ -1684,7 +1685,7 @@
   <p>Your profile across these six dimensions acts as a filter for Step 05. You'll use it there to narrow which paradigms are viable and resolve conflicts between competing dimensions.</p>
 </div>
 
-<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.4.html" target="_blank">Workbook</a> &mdash; Record your scope profile answers in Section 3.</div>
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.5.html" target="_blank">Workbook</a> &mdash; Record your scope profile answers in Section 3.</div>
 
 </div>
 </div>
@@ -1741,7 +1742,7 @@
   <p>Never remove navigation options silently. If something will disappear, move, or change, the user needs to understand why. Adaptive navigation must be <em>transparently</em> adaptive.</p>
 </div>
 
-<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.4.html" target="_blank">Workbook</a> &mdash; Record your role approach and adaptive navigation decisions in Section 4.</div>
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.5.html" target="_blank">Workbook</a> &mdash; Record your role approach and adaptive navigation decisions in Section 4.</div>
 
 </div>
 </div>
@@ -1829,13 +1830,13 @@
 <!-- PARADIGM 5 -->
 <div class="paradigm">
   <h3>5. Command Palette / Search-first</h3>
-  <div class="paradigm-meta"><span>Cross-cutting</span><span>On-demand (&#8984;K)</span><span>Infinite</span></div>
+  <div class="paradigm-meta"><span>Cross-cutting</span><span>On-demand (command palette)</span><span>Infinite</span></div>
   <p>Search interface for jumping to any destination by intent. Bypasses hierarchy entirely.</p>
   <div class="two-col">
     <div class="strength"><div class="col-header">Strengths</div><div class="col-item">Intent-driven, hierarchy-free</div><div class="col-item">Scales infinitely</div><div class="col-item">Power users love it</div><div class="col-item">Surfaces recents and actions</div></div>
     <div class="weakness"><div class="col-header">Weaknesses</div><div class="col-item">Zero discoverability</div><div class="col-item">Requires knowing what you want</div><div class="col-item">Naming matters critically</div><div class="col-item">Needs structural fallback</div></div>
   </div>
-  <div class="example-block"><span class="callout-label">Examples</span><strong>Linear</strong> &mdash; &#8984;K is central but paired with full sidebar. <strong>macOS Spotlight</strong> &mdash; consumer archetype.</div>
+  <div class="example-block"><span class="callout-label">Examples</span><strong>Linear</strong> &mdash; command palette is central but paired with full sidebar. <strong>macOS Spotlight</strong> &mdash; consumer archetype.</div>
   <div class="anti-pattern"><span class="callout-label">Anti-pattern: Search as Sole Navigation</span>No structural fallback = new users can't browse or build a mental model.</div>
 </div>
 
@@ -1891,9 +1892,9 @@
 
 <div class="example-block">
   <span class="callout-label">Composition Examples</span>
-  <p><strong>Salesforce</strong> (entity-first): Side nav + Tabs + Breadcrumbs + &#8984;K</p>
+  <p><strong>Salesforce</strong> (entity-first): Side nav + Tabs + Breadcrumbs + command palette</p>
   <p><strong>Instagram</strong> (process-first): Bottom tab bar + Full-screen pages + None + Contextual actions</p>
-  <p><strong>Figma</strong> (activity-first): Mode-switch + Side panel + None + &#8984;K + Contextual toolbar</p>
+  <p><strong>Figma</strong> (activity-first): Mode-switch + Side panel + None + command palette + Contextual toolbar</p>
   <p><strong>Zendesk</strong> (queue-first): Work queue + Tabs + None + Macros + Keyboard shortcuts</p>
 </div>
 
@@ -1908,7 +1909,7 @@
     <div><div class="card-meta-label">Scope</div><div class="card-meta-value">6&ndash;8 Jobs, 2&ndash;3 level depth, moderate expertise, mixed usage, desktop + responsive</div></div>
   </div>
   <div class="card-meta" style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
-    <div style="grid-column: 1 / -1;"><div class="card-meta-label">Composition</div><div class="card-meta-value"><strong>Primary:</strong> Side navigation with two sections &mdash; entity items (Assets, Contracts, Vendors, Licenses) and a co-equal "Maintenance Queue" filtered-list view. <strong>Secondary:</strong> Tab bar within entity detail (Overview, History, Related Items, Compliance). <strong>Depth:</strong> Breadcrumbs (Assets &rarr; Asset SN-4421 &rarr; Maintenance History). <strong>Accelerators:</strong> &#8984;K for cross-entity search, pinned shortcut for "New Request" (Daily + Blocking).</div></div>
+    <div style="grid-column: 1 / -1;"><div class="card-meta-label">Composition</div><div class="card-meta-value"><strong>Primary:</strong> Side navigation with two sections &mdash; entity items (Assets, Contracts, Vendors, Licenses) and a co-equal "Maintenance Queue" filtered-list view. <strong>Secondary:</strong> Tab bar within entity detail (Overview, History, Related Items, Compliance). <strong>Depth:</strong> Breadcrumbs (Assets &rarr; Asset SN-4421 &rarr; Maintenance History). <strong>Accelerators:</strong> command palette for cross-entity search, pinned shortcut for "New Request" (Daily + Blocking).</div></div>
   </div>
   <div class="card-meta" style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
     <div style="grid-column: 1 / -1;"><div class="card-meta-label">Why this works</div><div class="card-meta-value">The queue earns primary placement because maintenance technicians spend the majority of session time there. Entity nav persists alongside it rather than containing it. Cross-Job Tasks ("Run compliance audit") get a pinned shortcut in the primary rail rather than being buried under an entity. The secondary tab bar within entities mirrors the process phases (lifecycle stages) without forcing a process-primary structure.</div></div>
@@ -1922,7 +1923,7 @@
     <div><div class="card-meta-label">Scope</div><div class="card-meta-value">4 Jobs, 2-level depth, moderate expertise, concentrated usage (standup + board dominate), responsive web</div></div>
   </div>
   <div class="card-meta" style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
-    <div style="grid-column: 1 / -1;"><div class="card-meta-label">Composition</div><div class="card-meta-value"><strong>Primary:</strong> Side navigation organized by process phase &mdash; "Standup" (pinned, Daily + Blocking), Board, Backlog, Reports, Retrospectives. <strong>Secondary:</strong> Tab bar within each phase (Board view: Board | List | Timeline). <strong>Depth:</strong> Breadcrumbs (Active Sprint &rarr; Story-123 &rarr; Subtask). <strong>Accelerators:</strong> &#8984;K for ticket lookup by ID, contextual actions on cards.</div></div>
+    <div style="grid-column: 1 / -1;"><div class="card-meta-label">Composition</div><div class="card-meta-value"><strong>Primary:</strong> Side navigation organized by process phase &mdash; "Standup" (pinned, Daily + Blocking), Board, Backlog, Reports, Retrospectives. <strong>Secondary:</strong> Tab bar within each phase (Board view: Board | List | Timeline). <strong>Depth:</strong> Breadcrumbs (Active Sprint &rarr; Story-123 &rarr; Subtask). <strong>Accelerators:</strong> command palette for ticket lookup by ID, contextual actions on cards.</div></div>
   </div>
   <div class="card-meta" style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
     <div style="grid-column: 1 / -1;"><div class="card-meta-label">Why this works</div><div class="card-meta-value">Process-primary because session shape follows sprint phases. Standup earns a dedicated primary slot despite being a Task, not a Job &mdash; its Daily + Blocking frequency annotation overrides hierarchy. Retrospectives stays in the primary rail despite 10x lower frequency because it maps to a distinct Job (process improvement), not because of frequency. The entity layer (individual tickets) lives in secondary tabs and depth navigation, which matches how users interact with entities: within the context of whatever sprint phase they're in.</div></div>
@@ -1944,14 +1945,14 @@ Mutually exclusive at the same level.</p>
 <p>Only needed beyond 2 levels. <strong>Breadcrumb + drill-down</strong> is the standard depth handler. Skip this for shallow products.</p>
 
 <h3 style="font-size: 17px; font-weight: 500; margin-top: 40px;">Accelerators <span style="font-weight: 300; color: var(--text-muted); font-size: 14px;">(additive)</span></h3>
-<p><strong>&#8984;K</strong> for users who know what they want. <strong>Contextual actions</strong> for Activity-level interactions. Both can coexist. Neither counts toward structural complexity.</p>
+<p><strong>Command palette</strong> for users who know what they want. <strong>Contextual actions</strong> for Activity-level interactions. Both can coexist. Neither counts toward structural complexity.</p>
 
 <div class="callout-warm callout" id="s5-ai">
   <span class="callout-label">AI Connection</span>
-  <p>AI-assisted navigation &mdash; copilots, conversational agents, intent-driven routing &mdash; fits in the accelerator slot. It extends the &#8984;K pattern with natural language: instead of typing a known command, the user describes what they need. Like all accelerators, it layers on top of structural navigation rather than replacing it. The critical design constraint: if the AI layer is unavailable, slow, or returns a wrong result, the user must still be able to reach any destination through the primary and secondary structure. AI is a fast path, not the only path.</p>
+  <p>AI-assisted navigation &mdash; copilots, conversational agents, intent-driven routing &mdash; fits in the accelerator slot. It extends the command palette pattern with natural language: instead of typing a known command, the user describes what they need. Like all accelerators, it layers on top of structural navigation rather than replacing it. The critical design constraint: if the AI layer is unavailable, slow, or returns a wrong result, the user must still be able to reach any destination through the primary and secondary structure. AI is a fast path, not the only path.</p>
 </div>
 
-<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.4.html" target="_blank">Workbook</a> &mdash; Record your paradigm composition formula and rationale in Section 5.</div>
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.5.html" target="_blank">Workbook</a> &mdash; Record your paradigm composition formula and rationale in Section 5.</div>
 
 <h3 id="s5-conflicts">Scope Conflicts: When Dimensions Collide</h3>
 
@@ -1971,7 +1972,7 @@ Mutually exclusive at the same level.</p>
   <div class="card-def">3+ Task tree levels with near-zero navigation learning tolerance.</div>
   <div class="card-meta">
     <div><div class="card-meta-label">Conflict</div><div class="card-meta-value">Deep hierarchies require breadcrumbs and drill-down, but users with low tolerance won't invest in learning a multi-level structure. Nested accordions are especially hostile in this profile.</div></div>
-    <div><div class="card-meta-label">Rule</div><div class="card-meta-value">Flatten the visible hierarchy to 2 levels maximum. Use breadcrumbs for depth beyond level 2, but ensure the primary and secondary tiers are visible and labeled at all times. Add &#8984;K or search as a mandatory escape hatch &mdash; users who can't find something structurally must have a text-based alternative.</div></div>
+    <div><div class="card-meta-label">Rule</div><div class="card-meta-value">Flatten the visible hierarchy to 2 levels maximum. Use breadcrumbs for depth beyond level 2, but ensure the primary and secondary tiers are visible and labeled at all times. Add command palette or search as a mandatory escape hatch &mdash; users who can't find something structurally must have a text-based alternative.</div></div>
   </div>
 </div>
 
@@ -2013,7 +2014,7 @@ Mutually exclusive at the same level.</p>
   <tr><td>Work queue</td><td>Full-screen list with pull-to-refresh</td></tr>
   <tr><td>Tab bar (secondary)</td><td>Scrollable top tabs or segmented control</td></tr>
   <tr><td>Breadcrumbs</td><td>Back button + page title (native stack nav)</td></tr>
-  <tr><td>&#8984;K command palette</td><td>Pull-down search or dedicated search tab</td></tr>
+  <tr><td>Command palette</td><td>Pull-down search or dedicated search tab</td></tr>
   <tr><td>Contextual / floating</td><td>FAB, swipe gestures, long-press menus</td></tr>
 </table>
 
@@ -2024,24 +2025,24 @@ Mutually exclusive at the same level.</p>
 <table>
   <tr><th>Context</th><th>What it feels like</th><th>Does your composition...</th></tr>
   <tr><td><strong>Anxiety / First-time</strong></td><td>Fear of making a mistake, uncertainty about consequences.</td><td>Narrow choices and guide with steppers or linear flows? Can a new user reach their first Task without choosing from the full nav?</td></tr>
-  <tr><td><strong>Confidence / Expertise</strong></td><td>Mastery, impatience with unnecessary steps. "I know exactly what I need."</td><td>Provide shortcuts that bypass hierarchy? &#8984;K, direct-action buttons, keyboard navigation?</td></tr>
+  <tr><td><strong>Confidence / Expertise</strong></td><td>Mastery, impatience with unnecessary steps. "I know exactly what I need."</td><td>Provide shortcuts that bypass hierarchy? command palette, direct-action buttons, keyboard navigation?</td></tr>
   <tr><td><strong>Exploration / Discovery</strong></td><td>Uncertainty about what questions to ask. "I don't know what I don't know."</td><td>Expose multiple entry points with enough context to help self-selection? Hub layouts, visible tabs, summary cards?</td></tr>
   <tr><td><strong>Urgency / Crisis</strong></td><td>Pressure, tunnel vision. "Something is broken and I need to fix it now."</td><td>Surface critical Tasks in one click from anywhere? Strip non-essential options when urgency is detected?</td></tr>
 </table>
 
-<p>If your composition fails any row &mdash; for a context that your users actually encounter &mdash; adjust before proceeding. Common fixes: add &#8984;K for confidence, add a guided flow entry point for anxiety, add a dashboard or hub landing for exploration, add a pinned crisis shortcut for urgency.</p>
+<p>If your composition fails any row &mdash; for a context that your users actually encounter &mdash; adjust before proceeding. Common fixes: add command palette for confidence, add a guided flow entry point for anxiety, add a dashboard or hub landing for exploration, add a pinned crisis shortcut for urgency.</p>
 
 <h3 id="s5-output">Your Navigation Outline</h3>
 
-<p>Step 05 ends when you've produced a <strong>Navigation Outline</strong> &mdash; the deliverable that feeds Step 06's audit and becomes the reference artifact for your team. Use the <a href="sightline-workbook-v8.4.html" target="_blank">Sightline Workbook</a> to fill this out interactively, or follow the structure below.</p>
+<p>Step 05 ends when you've produced a <strong>Navigation Outline</strong> &mdash; the deliverable that feeds Step 06's audit and becomes the reference artifact for your team. Use the <a href="sightline-workbook-v8.5.html" target="_blank">Sightline Workbook</a> to fill this out interactively, or follow the structure below.</p>
 
 <div class="example-block">
   <span class="callout-label">Worked example: Agile PM Navigation Outline</span>
   <p><strong>1. JTBD Hierarchy</strong></p>
   <p style="padding-left: 16px; border-left: 2px solid var(--mustard-200);">Job 1: Advance sprint deliverables<br>
-  &emsp;Task 1.1: Prepare daily standup notes &mdash; <strong>Daily / Blocking</strong><br>
+  &emsp;Task 1.1: Prepare daily standup notes &mdash; <strong>Daily / Supporting</strong><br>
   &emsp;Task 1.2: Implement &amp; commit work &mdash; <strong>Daily / Important</strong><br>
-  &emsp;Task 1.3: Review &amp; approve PRs &mdash; <strong>Daily / Important</strong><br>
+  &emsp;Task 1.3: Review &amp; approve PRs &mdash; <strong>Daily / Blocking</strong><br>
   Job 2: Coordinate with team<br>
   &emsp;Task 2.1: Resolve blockers &mdash; <strong>Weekly / Blocking</strong><br>
   Job 3: Monitor project health<br>
@@ -2059,19 +2060,19 @@ Mutually exclusive at the same level.</p>
   <p style="padding-left: 16px; border-left: 2px solid var(--mustard-200);">Single persona (developer). Role-aware defaults. Data-state adaptive for blocked items only.</p>
 
   <p><strong>5. Paradigm Composition</strong></p>
-  <p style="padding-left: 16px; border-left: 2px solid var(--mustard-200);">[Side nav] + [Tab bar] + [Breadcrumbs] + [&#8984;K]. Side nav chosen over top nav because responsive collapse is straightforward with 4 Jobs.</p>
+  <p style="padding-left: 16px; border-left: 2px solid var(--mustard-200);">[Side nav] + [Tab bar] + [Breadcrumbs] + [command palette]. Side nav chosen over top nav because responsive collapse is straightforward with 4 Jobs.</p>
 
   <p><strong>6. Resulting Structure</strong></p>
   <p style="padding-left: 16px; border-left: 2px solid var(--mustard-200);"><strong>Primary (persistent left rail):</strong> Standup (pinned) &middot; Board &middot; Backlog &middot; Reports &middot; Retrospectives<br>
   <strong>Secondary (tabs within Board):</strong> Board | List | Timeline<br>
   <strong>Depth:</strong> Active Sprint &rarr; Story-123 &rarr; Subtask<br>
-  <strong>Accelerator:</strong> &#8984;K for ticket lookup by ID</p>
+  <strong>Accelerator:</strong> command palette for ticket lookup by ID</p>
 
   <p><strong>7. Known Risks</strong></p>
   <p style="padding-left: 16px; border-left: 2px solid var(--mustard-200);">Retrospectives may feel lost in primary rail given quarterly frequency &mdash; monitor whether users can find it. Standup pinning may confuse users who don't do daily standups (different team cadences).</p>
 </div>
 
-<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.4.html" target="_blank">Workbook</a> &mdash; Write out your resulting navigation structure in Section 6 and note any risks in Section 7.</div>
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.5.html" target="_blank">Workbook</a> &mdash; Write out your resulting navigation structure in Section 6 and note any risks in Section 7.</div>
 
 </div>
 </div>
@@ -2110,44 +2111,44 @@ Mutually exclusive at the same level.</p>
 <h3>Principle 1: Frequency Overrides Hierarchy</h3>
 <div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>If 80% of sessions involve the same Task, that Task earns Job-level prominence &mdash; regardless of logical position.</p></div></div>
 <div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content"><p><strong>Question:</strong> Are your 3 highest-frequency Tasks reachable in &le;1 click?</p><p><strong>Heuristic:</strong> &gt;40% of sessions = persistent shortcut.</p></div></div>
-<div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>"Create Invoice" lives under Finance &rarr; Billing &rarr; Invoices, but it's the most-used Task. Give it a "+" button in the header, a &#8984;K shortcut, and a pinned sidebar entry.</p></div></div>
-<div class="aud-test"><span class="aud-tag">Test</span><div class="aud-content"><p><strong>Data needed:</strong> Step 01 frequency annotations. <strong>Method:</strong> List every Task annotated as Daily frequency. For each, count clicks from the product's landing state to that Task. <strong>Pass:</strong> Every Daily + Blocking Task is reachable in &le;1 click. Every Daily + Important Task is reachable in &le;2 clicks. <strong>Fail:</strong> Any Daily + Blocking Task requires &ge;2 clicks.</p></div></div>
+<div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>"Create Invoice" lives under Finance &rarr; Billing &rarr; Invoices, but it's the most-used Task. Give it a "+" button in the header, a command palette shortcut, and a pinned sidebar entry.</p></div></div>
+<div class="aud-test"><span class="aud-tag">Test</span><div class="aud-content"><p><strong>Data needed:</strong> Step 01 frequency annotations.</p><p><strong>Method:</strong> List every Task annotated as Daily frequency. For each, count clicks from the product's landing state to that Task.</p><p><strong>Pass:</strong> Every Daily + Blocking Task is reachable in &le;1 click. Every Daily + Important Task is reachable in &le;2 clicks.</p><p><strong>Fail:</strong> Any Daily + Blocking Task requires &ge;2 clicks.</p></div></div>
 
 <h3>Principle 2: Stability Matches Persistence</h3>
 <div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>Top nav should change as rarely as your Jobs &mdash; almost never. In-page controls can change every release.</p></div></div>
 <div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content"><p><strong>Question:</strong> Has top-level nav changed in 6 months?</p><p><strong>Heuristic:</strong> Primary nav &le;1x/year. Secondary quarterly. In-page every sprint.</p></div></div>
 <div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>GitHub's top nav (Code, Issues, PRs, Actions, Projects) has been stable for years. New features add within sections, not alongside them.</p></div></div>
-<div class="aud-test"><span class="aud-tag">Test</span><div class="aud-content"><p><strong>Data needed:</strong> Git history or release notes for the past 12 months (existing product) or the navigation outline's tier assignments (new product). <strong>Method:</strong> For existing products, count how many times primary nav items were added, removed, or renamed. For new products, check whether any item in the primary tier maps to something that changes with feature releases (Activities, specific Task workflows) rather than stable Jobs. <strong>Pass:</strong> Primary nav changed &le;1x in 12 months; all primary items map to Jobs or to Tasks that earned primary placement through Principle 1 (frequency override). <strong>Fail:</strong> Primary nav changed &ge;2x, or contains Task/Activity-level items that lack a frequency-based justification for their placement.</p></div></div>
+<div class="aud-test"><span class="aud-tag">Test</span><div class="aud-content"><p><strong>Data needed:</strong> Git history or release notes for the past 12 months (existing product) or the navigation outline's tier assignments (new product).</p><p><strong>Method:</strong> For existing products, count how many times primary nav items were added, removed, or renamed. For new products, check whether any item in the primary tier maps to something that changes with feature releases (Activities, specific Task workflows) rather than stable Jobs.</p><p><strong>Pass:</strong> Primary nav changed &le;1x in 12 months; all primary items map to Jobs or to Tasks that earned primary placement through Principle 1 (frequency override).</p><p><strong>Fail:</strong> Primary nav changed &ge;2x, or contains Task/Activity-level items that lack a frequency-based justification for their placement.</p></div></div>
 
 <h3>Principle 3: Context Must Be Preserved</h3>
 <div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>Switching Tasks within a Job should preserve state. It should feel like switching tabs, not closing one app and opening another.</p></div></div>
 <div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content"><p><strong>Question:</strong> Task A &rarr; Task B &rarr; Task A &mdash; is state preserved?</p><p><strong>Heuristic:</strong> If switching causes data loss or scroll reset, it's broken.</p></div></div>
 <div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>Notion: switching database views preserves filters, sort order, and scroll position. The lens changes; the context persists.</p></div></div>
-<div class="aud-test"><span class="aud-tag">Test</span><div class="aud-content"><p><strong>Data needed:</strong> Navigation outline from Step 05. <strong>Method:</strong> For every pair of sibling Tasks within a Job, trace the transition: Task A &rarr; Task B &rarr; Task A. Identify what state is at risk (form inputs, scroll position, filter selections, unsaved work). <strong>Pass:</strong> All sibling-Task transitions preserve user-created state or prompt before discarding it. <strong>Fail:</strong> Any sibling transition silently resets state (scroll position, filters, form data).</p></div></div>
+<div class="aud-test"><span class="aud-tag">Test</span><div class="aud-content"><p><strong>Data needed:</strong> Navigation outline from Step 05.</p><p><strong>Method:</strong> For every pair of sibling Tasks within a Job, trace the transition: Task A &rarr; Task B &rarr; Task A. Identify what state is at risk (form inputs, scroll position, filter selections, unsaved work).</p><p><strong>Pass:</strong> All sibling-Task transitions preserve user-created state or prompt before discarding it.</p><p><strong>Fail:</strong> Any sibling transition silently resets state (scroll position, filters, form data).</p></div></div>
 
 <h3>Principle 4: Progressive Disclosure, Not Confusion</h3>
 <div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>Don't expose Activity-level nav until the user commits to a Task. Each tier reveals the next. But the user must always see which Job and Task they're inside.</p></div></div>
 <div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content"><p><strong>Question:</strong> At the deepest point, can the user tell which Job and Task they're inside?</p><p><strong>Heuristic:</strong> If only a page title is visible &mdash; add breadcrumbs.</p></div></div>
 <div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>Stripe: sidebar shows Job section, header shows Task entity, breadcrumbs show depth. All three tiers visible simultaneously.</p></div></div>
-<div class="aud-test"><span class="aud-tag">Test</span><div class="aud-content"><p><strong>Data needed:</strong> Navigation outline. <strong>Method:</strong> Navigate to the deepest point in the hierarchy. Check: (1) Can you identify the current Job without scrolling? (2) Can you identify the current Task? (3) Are the adjacent options (sibling Tasks, parent Job) visible or one click away? <strong>Pass:</strong> All three tiers are identifiable from the deepest point. <strong>Fail:</strong> Only page title is visible with no breadcrumb, sidebar highlight, or other tier indicator.</p></div></div>
+<div class="aud-test"><span class="aud-tag">Test</span><div class="aud-content"><p><strong>Data needed:</strong> Navigation outline.</p><p><strong>Method:</strong> Navigate to the deepest point in the hierarchy. Check: (1) Can you identify the current Job without scrolling? (2) Can you identify the current Task? (3) Are the adjacent options (sibling Tasks, parent Job) visible or one click away?</p><p><strong>Pass:</strong> All three tiers are identifiable from the deepest point.</p><p><strong>Fail:</strong> Only page title is visible with no breadcrumb, sidebar highlight, or other tier indicator.</p></div></div>
 
 <h3>Principle 5: Escape Velocity</h3>
 <div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>From any point, a user should reach any higher level in &le;2 interactions.</p></div></div>
 <div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content"><p><strong>Question:</strong> How many clicks from deepest point to Job level?</p><p><strong>Heuristic:</strong> &le;2 = good. 3 = okay with breadcrumbs. 4+ = broken.</p></div></div>
 <div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>Three escape mechanisms: persistent sidebar, un-truncated breadcrumbs, command palette. Most complex products need at least two.</p></div></div>
-<div class="aud-test"><span class="aud-tag">Test</span><div class="aud-content"><p><strong>Data needed:</strong> Navigation outline with depth measurements. <strong>Method:</strong> From the deepest point in each Job's hierarchy, count interactions required to reach the Job level (primary nav). An interaction = one click, one keyboard shortcut, or one gesture. <strong>Pass:</strong> &le;2 interactions for every path. <strong>Fail:</strong> Any path requires &ge;4 interactions. Borderline (3 interactions) passes only if breadcrumbs are present.</p></div></div>
+<div class="aud-test"><span class="aud-tag">Test</span><div class="aud-content"><p><strong>Data needed:</strong> Navigation outline with depth measurements.</p><p><strong>Method:</strong> From the deepest point in each Job's hierarchy, count interactions required to reach the Job level (primary nav). An interaction = one click, one keyboard shortcut, or one gesture.</p><p><strong>Pass:</strong> &le;2 interactions for every path.</p><p><strong>Fail:</strong> Any path requires &ge;4 interactions. Borderline (3 interactions) passes only if breadcrumbs are present.</p></div></div>
 
 <h3>Principle 6: Navigation as Wayfinding</h3>
 <div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>At every moment, navigation must answer three questions. If any is unanswerable, the system is broken.</p></div></div>
 <div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content"><p><strong>Three questions your navigation must answer at every moment:</strong></p><p><strong>1. Where am I?</strong> &rarr; Active states, breadcrumbs, page titles.</p><p><strong>2. Where can I go?</strong> &rarr; Visible nav options, available actions.</p><p><strong>3. How do I get back?</strong> &rarr; Back buttons, breadcrumbs, persistent nav.</p><p>If any answer is unclear at any point, the navigation system is broken.</p></div></div>
 <div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>"Where am I?" &mdash; Active sidebar highlighted. "Where can I go?" &mdash; Sibling Tasks as tabs. "How do I get back?" &mdash; Clickable breadcrumb, persistent sidebar, working browser back.</p></div></div>
-<div class="aud-test"><span class="aud-tag">Test</span><div class="aud-content"><p><strong>Data needed:</strong> Navigation outline or prototype. <strong>Method:</strong> Pick 5 random screens. For each, answer the three wayfinding questions without interacting with the page (visual inspection only). <strong>Pass:</strong> All three questions answerable on all 5 screens. <strong>Fail:</strong> Any question unanswerable on any screen. Common failure: "How do I get back?" unanswerable when breadcrumbs are absent and sidebar doesn't show active state.</p></div></div>
+<div class="aud-test"><span class="aud-tag">Test</span><div class="aud-content"><p><strong>Data needed:</strong> Navigation outline or prototype.</p><p><strong>Method:</strong> Pick 5 random screens. For each, answer the three wayfinding questions without interacting with the page (visual inspection only).</p><p><strong>Pass:</strong> All three questions answerable on all 5 screens.</p><p><strong>Fail:</strong> Any question unanswerable on any screen. Common failure: "How do I get back?" unanswerable when breadcrumbs are absent and sidebar doesn't show active state.</p></div></div>
 
 <h3>Principle 7: Navigation Must Feel Instant</h3>
 <div class="aud-concept"><span class="aud-tag">Conceptual</span><div class="aud-content"><p>Structural correctness means nothing if navigation feels slow. Every transition should feel like it happens in response to the user's action, not after it.</p></div></div>
 <div class="aud-decide"><span class="aud-tag">Decision</span><div class="aud-content"><p><strong>Question:</strong> Do your three highest-frequency transitions complete in under 200ms perceived time?</p><p><strong>Heuristic:</strong> Primary switches &lt;100ms. Secondary &lt;300ms. Depth transitions &lt;500ms with a loading indicator within 100ms.</p></div></div>
 <div class="aud-implement"><span class="aud-tag">Implementation</span><div class="aud-content"><p>Optimistic UI for tab switches. Preload adjacent views on hover. Skeleton screens for deeper transitions. Linear and Notion pre-cache sidebar items so page switches feel instant.</p></div></div>
-<div class="aud-test"><span class="aud-tag">Test</span><div class="aud-content"><p><strong>Data needed:</strong> Prototype or production build with browser dev tools. <strong>Method:</strong> Measure perceived transition time for the 3 highest-frequency navigation actions (identified by Step 01 frequency annotations). Use Performance tab or stopwatch timing. <strong>Pass:</strong> Primary nav switches &lt;100ms. Secondary switches &lt;300ms. Depth transitions show a loading indicator within 100ms and complete within 500ms. <strong>Fail:</strong> Any of the 3 highest-frequency transitions exceeds its tier's threshold.</p></div></div>
+<div class="aud-test"><span class="aud-tag">Test</span><div class="aud-content"><p><strong>Data needed:</strong> Prototype or production build with browser dev tools.</p><p><strong>Method:</strong> Measure perceived transition time for the 3 highest-frequency navigation actions (identified by Step 01 frequency annotations). Use Performance tab or stopwatch timing.</p><p><strong>Pass:</strong> Primary nav switches &lt;100ms. Secondary switches &lt;300ms. Depth transitions show a loading indicator within 100ms and complete within 500ms.</p><p><strong>Fail:</strong> Any of the 3 highest-frequency transitions exceeds its tier's threshold.</p></div></div>
 
 <div class="callout-warm callout" id="s6-ai">
   <span class="callout-label">AI Resilience Check</span>
@@ -2166,7 +2167,7 @@ Mutually exclusive at the same level.</p>
 
 <span class="step-label">Reference</span>
 <h2>Common Questions</h2>
-<p>Edge cases and ambiguities that come up when applying the framework to real products.</p>
+<p>Edge cases and ambiguities that come up when applying Sightline to real products.</p>
 
 <div class="qa-card">
   <h4>A Task looks the same in two different Jobs &mdash; do I need Job Gravity?</h4>
@@ -2211,7 +2212,7 @@ Mutually exclusive at the same level.</p>
   </div>
 </div>
 
-<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.4.html" target="_blank">Workbook</a> &mdash; Record audit results and unresolved risks in Section 7.</div>
+<div class="wb-prompt"><span class="wb-icon">&#9998;</span> <a href="sightline-workbook-v8.5.html" target="_blank">Workbook</a> &mdash; Record audit results and unresolved risks in Section 7.</div>
 
 </div>
 </div>
@@ -2226,7 +2227,7 @@ Mutually exclusive at the same level.</p>
 <span class="step-label">Appendix</span>
 <h2>Origins &amp; Further Reading</h2>
 
-<p>This framework draws from two intellectual traditions.</p>
+<p>Sightline draws from two intellectual traditions.</p>
 
 <h3>Jobs to Be Done (The Job Level)</h3>
 
@@ -2248,7 +2249,7 @@ Mutually exclusive at the same level.</p>
 
 <h3>Templates &amp; Resources</h3>
 
-<p>Defining Jobs, Tasks, and Activities is the hardest part of the framework. These practical tools can help you do the upstream work.</p>
+<p>Defining Jobs, Tasks, and Activities is the hardest part of Sightline. These practical tools can help you do the upstream work.</p>
 
 <div class="ref-list">
   <div class="ref-item"><a href="https://rosenfeldmedia.com/books/jobs-to-be-done-book/">Jim Kalbach, <em>The Jobs To Be Done Playbook</em></a> &mdash; The most hands-on JTBD book available. Includes worksheets for job mapping, job stories, and outcome statements. Companion toolkit at <a href="https://www.jtbdtoolkit.com/">jtbdtoolkit.com</a>.</div>
@@ -2291,7 +2292,7 @@ Mutually exclusive at the same level.</p>
   <span class="step-label">Reference</span>
   <h2>What About AI?</h2>
 
-  <p>A reasonable question before investing in a navigation framework: does structural navigation still matter when AI can take users directly where they need to go?</p>
+  <p>A reasonable question before investing in navigation architecture: does structural navigation still matter when AI can take users directly where they need to go?</p>
 
   <p>The argument is real, not hypothetical. Intent-driven interfaces are shipping now. A user says "show me last quarter's compliance report" and the system resolves that to the right screen, the right filters, the right data &mdash; no sidebar, no breadcrumbs, no hierarchy to learn. Command palettes, conversational copilots, and contextual AI agents are all moving in this direction. The pattern is accelerating across enterprise and consumer products alike.</p>
 
@@ -2299,17 +2300,17 @@ Mutually exclusive at the same level.</p>
 
   <h3>Where Structural Navigation Remains Essential</h3>
 
-  <p><strong>Mental model formation.</strong> Navigation doesn't just take users somewhere &mdash; it teaches them what the product <em>is</em>. A sidebar with six items communicates "this system does six things, and they're roughly equal in importance." Remove that structure, and users can request what they already know to ask for, but they cannot form a picture of the whole. This matters most during onboarding, when the product's scope is unfamiliar, and whenever a user's role or responsibilities expand. AI answers questions; structure teaches users which questions exist.</p>
+  <p><strong>Discoverability and serendipity.</strong> Conversational interfaces are request-response &mdash; they answer what you ask. Structural navigation supports browsing, which is how users discover capabilities they didn't know existed. A user scanning a sidebar might notice "Audit Log" and realize "I didn't know we had that." No one types "show me features I don't know about" into a chat. The gap between <em>requesting</em> and <em>exploring</em> is a real cost when it disappears.</p>
 
   <p><strong>Failure recovery.</strong> When AI routes a user to the wrong place &mdash; and the error rate doesn't need to be high for this to matter &mdash; the user needs a structural fallback. Without one, a bad AI response leaves them in a dead end with no option except rephrasing the query. Structural navigation is deterministic: same item, same destination, every time. That predictability is what makes recovery possible. The more critical the workflow, the more this matters.</p>
 
-  <p><strong>Discoverability and serendipity.</strong> Conversational interfaces are request-response &mdash; they answer what you ask. Structural navigation supports browsing, which is how users discover capabilities they didn't know existed. A user scanning a sidebar might notice "Audit Log" and realize "I didn't know we had that." No one types "show me features I don't know about" into a chat. The gap between <em>requesting</em> and <em>exploring</em> is a real cost when it disappears.</p>
-
   <p><strong>Shared reference.</strong> "Go to Settings, then Integrations, then Webhooks" is a stable address that works in a support ticket, a training video, a Slack message, or an onboarding doc. "Ask the AI to take you to the webhook configuration" produces variable results depending on context, permissions, and model behavior. Navigation creates a shared vocabulary between users, support teams, and documentation. Remove the structure and you lose the ability to give directions.</p>
 
-  <h3>Where AI Fits in the Framework</h3>
+  <p><strong>Mental model formation.</strong> Navigation doesn't just take users somewhere &mdash; it teaches them what the product <em>is</em>. A sidebar with six items communicates "this system does six things, and they're roughly equal in importance." Remove that structure, and users can request what they already know to ask for, but they cannot form a picture of the whole. This matters most during onboarding, when the product's scope is unfamiliar, and whenever a user's role or responsibilities expand. AI answers questions; structure teaches users which questions exist.</p>
 
-  <p>The framework's own JTBD hierarchy predicts where AI augments navigation versus where structure remains essential. Jobs are stable and define the product's scope &mdash; AI is weakest here because users need to see the full picture to build a mental model. Tasks change periodically and represent the core workflows &mdash; AI is moderately effective here for expert users with clear intent, but structure is still needed for browsing and discovery. Activities change frequently and represent the in-context actions &mdash; AI is strongest here, resolving the right action within a known context faster than any menu can.</p>
+  <h3>Where AI Fits in Sightline</h3>
+
+  <p>Jobs are stable and define the product's scope &mdash; AI is weakest here because users need to see the full picture to build a mental model. Tasks change periodically and represent the core workflows &mdash; AI is moderately effective here for expert users with clear intent, but structure is still needed for browsing and discovery. Activities change frequently and represent the in-context actions &mdash; AI is strongest here, resolving the right action within a known context faster than any menu can.</p>
 
   <div class="callout">
     <span class="callout-label">The Practical Division</span>
@@ -2318,9 +2319,9 @@ Mutually exclusive at the same level.</p>
     <p><strong>In-context navigation (Activities):</strong> AI's strongest territory. Contextual actions, smart defaults, and intent resolution outperform static menus at this level.</p>
   </div>
 
-  <p>A well-structured JTBD hierarchy doesn't compete with AI-assisted navigation &mdash; it makes it better. The AI needs the same semantic structure to resolve intent correctly. When a user says "show me last quarter's compliance report," the system needs to know that "compliance reporting" is a Task under the "Regulatory Oversight" Job, that the user's role has access to it, and that "last quarter" maps to a specific filter state. That mapping is exactly what Steps 01 through 04 produce. The framework builds the architecture that AI shortcuts through, not architecture that AI replaces.</p>
+  <p><strong>A well-structured JTBD hierarchy doesn't compete with AI-assisted navigation &mdash; it makes it better.</strong> The AI needs the same semantic structure to resolve intent correctly. Sightline builds the architecture that AI shortcuts through, not architecture that AI replaces.</p>
 
-  <p class="back-link" style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border);">Convinced? <a href="#s1">Start with Step 01: Define &rarr;</a></p>
+  <p class="back-link" style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border);">Continue reading <a href="#problem">&rarr;</a></p>
 
 </div>
 </div>
