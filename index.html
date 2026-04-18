@@ -196,6 +196,108 @@
     height: 16px;
   }
 
+  /* ========== FEEDBACK FAB ========== */
+  .feedback-fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 300;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
+    color: var(--accent);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-md);
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .feedback-fab:hover {
+    background: var(--accent);
+    color: #FFFFFF;
+    box-shadow: 0 4px 14px rgba(26,25,23,0.16);
+    transform: translateY(-1px);
+  }
+  [data-theme="dark"] .feedback-fab:hover {
+    color: #1A1A1E;
+  }
+  .feedback-fab svg { width: 20px; height: 20px; }
+
+  .feedback-panel {
+    position: fixed;
+    bottom: 84px;
+    right: 24px;
+    z-index: 300;
+    width: 300px;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+    padding: 18px 18px 16px;
+    box-shadow: 0 8px 24px rgba(26,25,23,0.14);
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+    font-family: 'Century Gothic', 'AppleGothic', 'Futura', sans-serif;
+  }
+  .feedback-panel.open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .feedback-panel h4 {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 6px;
+    letter-spacing: 0.01em;
+  }
+  .feedback-panel p {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+  }
+  .feedback-panel a.feedback-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #FFFFFF;
+    background: var(--accent);
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.2s ease;
+  }
+  .feedback-panel a.feedback-cta:hover { background: var(--accent-dark); }
+  [data-theme="dark"] .feedback-panel a.feedback-cta { color: #1A1A1E; }
+  .feedback-panel .feedback-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .feedback-panel .feedback-close:hover { background: var(--warm-100); color: var(--text); }
+
+  @media (max-width: 1080px) {
+    .feedback-fab { bottom: 16px; right: 16px; }
+    .feedback-panel { right: 16px; bottom: 76px; width: calc(100vw - 32px); max-width: 300px; }
+  }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
@@ -1059,6 +1161,22 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
   </span>
 </button>
+
+<!-- FEEDBACK FAB -->
+<button class="feedback-fab" id="feedbackFab" aria-label="Leave feedback" aria-expanded="false" aria-controls="feedbackPanel" title="Leave feedback">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+</button>
+<div class="feedback-panel" id="feedbackPanel" role="dialog" aria-labelledby="feedbackPanelTitle">
+  <button class="feedback-close" id="feedbackClose" aria-label="Close feedback panel">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <h4 id="feedbackPanelTitle">Leave feedback</h4>
+  <p>Have a suggestion, correction, or question about Sightline? Open an issue on GitHub &mdash; I read every one.</p>
+  <a class="feedback-cta" href="https://github.com/Samiya-m-ali/Sightline-Framework/issues" target="_blank" rel="noopener noreferrer">
+    Open GitHub Issues
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+  </a>
+</div>
 
 <!-- ============================================================ -->
 <!-- HERO BANNER -->
@@ -2436,6 +2554,35 @@ document.addEventListener('DOMContentLoaded', function() {
       if (panel) panel.classList.add('active');
     });
   });
+
+  // ===== FEEDBACK FAB =====
+  var feedbackFab = document.getElementById('feedbackFab');
+  var feedbackPanel = document.getElementById('feedbackPanel');
+  var feedbackClose = document.getElementById('feedbackClose');
+  if (feedbackFab && feedbackPanel) {
+    var setFeedbackOpen = function(open) {
+      feedbackPanel.classList.toggle('open', open);
+      feedbackFab.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+    feedbackFab.addEventListener('click', function(e) {
+      e.stopPropagation();
+      setFeedbackOpen(!feedbackPanel.classList.contains('open'));
+    });
+    if (feedbackClose) {
+      feedbackClose.addEventListener('click', function(e) {
+        e.stopPropagation();
+        setFeedbackOpen(false);
+      });
+    }
+    document.addEventListener('click', function(e) {
+      if (!feedbackPanel.contains(e.target) && !feedbackFab.contains(e.target)) {
+        setFeedbackOpen(false);
+      }
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') setFeedbackOpen(false);
+    });
+  }
 
   // ===== WORKBOOK PROMPT VIEWPORT ANIMATION =====
   var wbPrompts = document.querySelectorAll('.wb-prompt');
